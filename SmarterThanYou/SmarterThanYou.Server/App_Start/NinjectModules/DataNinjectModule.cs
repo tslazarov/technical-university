@@ -20,6 +20,7 @@ namespace SmarterThanYou.Server.App_Start.NinjectModules
                 );
 
             this.Rebind<ISmarterThanYouContext>().To<SmarterThanYouContext>().InRequestScope();
+            this.Rebind<ÌSmarterThanYouData>().To<SmarterThanYouData>();
             this.Bind<IUsersFactory>().ToFactory();
             this.Bind<IQuestionsFactory>().ToFactory();
         }

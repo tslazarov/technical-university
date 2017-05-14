@@ -26,6 +26,7 @@ namespace SmarterThanYou.Services
         public Question GetQuestion()
         {
             return this.data.QuestionsRepository.All()
+                .OrderBy(q => q.Id)
                 .Skip(this.GetRandomNumber() - 1)
                 .Take(1)
                 .FirstOrDefault();
@@ -35,6 +36,7 @@ namespace SmarterThanYou.Services
         {
             return this.data.QuestionsRepository.All()
                 .Where(q => q.Category.Name == category.Name)
+                .OrderBy(q => q.Id)
                 .Skip(this.GetRandomNumber() - 1)
                 .Take(1)
                 .FirstOrDefault();
