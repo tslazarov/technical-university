@@ -22,6 +22,7 @@ namespace SmarterThanYou.Services
         public void CreateUser(User user)
         {
             this.data.UsersRepository.Add(user);
+            this.data.SaveChanges();
         }
 
         public User GetUser(int id)

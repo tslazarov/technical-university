@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartherThanYou.Models
 {
@@ -21,6 +22,7 @@ namespace SmartherThanYou.Models
         [Required]
         [MinLength(3)]
         [MaxLength(30)]
+        [Index(IsUnique = true)]
         public string Username { get; set; }
 
         [Required]

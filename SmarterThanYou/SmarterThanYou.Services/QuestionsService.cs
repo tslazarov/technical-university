@@ -53,7 +53,7 @@ namespace SmarterThanYou.Services
 
             if(upperBound > 1)
             {
-                return random.Next(1, upperBound);
+                return random.Next(1, upperBound + 1);
             }
 
             return 1;
