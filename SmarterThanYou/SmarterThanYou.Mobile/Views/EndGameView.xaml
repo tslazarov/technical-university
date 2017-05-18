@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="SmarterThanYou.Mobile.Views.EndGameView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmarterThanYou.Mobile.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center" Width="300">
+            <TextBlock Text="SCORE" TextAlignment="Center" FontSize="24"/>
+            <TextBlock Text="1100" TextAlignment="Center" FontSize="72"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Width="300">
+            <Button Name="btnRetry" HorizontalAlignment="Left" Content="Retry" BorderThickness="0" Margin="0, 0, 40, 20"/>
+            <Button Name="btnBack" HorizontalAlignment="Right" Content="Back" BorderThickness="0" Margin="40, 0, 0, 20"/>
+        </StackPanel>
+    </Grid>
+</Page>
