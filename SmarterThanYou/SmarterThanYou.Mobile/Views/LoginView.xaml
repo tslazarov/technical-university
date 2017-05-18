@@ -7,10 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-
     <Grid>
         <Grid.Background>
-            <ImageBrush></ImageBrush>
+            <ImageBrush ImageSource="../Assets/background.png"></ImageBrush>
         </Grid.Background>
         <StackPanel VerticalAlignment="Center" Width="300">
             <TextBox Background="Transparent" PlaceholderText="Username" Text="{Binding Path=CurrentUser.Username, Mode=TwoWay}"/>
@@ -20,3 +19,4 @@
         </StackPanel>
     </Grid>
 </Page>
+    

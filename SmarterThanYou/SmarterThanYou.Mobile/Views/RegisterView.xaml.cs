@@ -29,5 +29,18 @@ namespace SmarterThanYou.Mobile.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
         }
+
+        private void btnRegister_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            this.RegisterUser();
+        }
+
+        private async void RegisterUser()
+        {
+            if (await this.viewModel.RegisterUser())
+            {
+                this.Frame.Navigate(typeof(InGameView));
+            }
+        }
     }
 }

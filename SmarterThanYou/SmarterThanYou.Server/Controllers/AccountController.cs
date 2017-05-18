@@ -44,10 +44,10 @@ namespace SmarterThanYou.Server.Controllers
             }
             catch
             {
-                return JsonConvert.SerializeObject(new { Status="0"  });
+                return JsonConvert.SerializeObject(new { Status = 0 });
             }
 
-            return JsonConvert.SerializeObject(new { Status = "1" });
+            return JsonConvert.SerializeObject(new { Status = 1 });
         }
 
         // POST api/account/login

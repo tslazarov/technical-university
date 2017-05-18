@@ -20,9 +20,9 @@ namespace SmarterThanYou.Mobile.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class InGameVIew : Page
+    public sealed partial class InGameView : Page
     {
-        public InGameVIew()
+        public InGameView()
         {
             this.InitializeComponent();
         }
