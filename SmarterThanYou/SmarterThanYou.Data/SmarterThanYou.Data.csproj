@@ -58,6 +58,7 @@
     <Compile Include="Contracts\ISmarterThanYouContext.cs" />
     <Compile Include="Contracts\ISmarterThanYouData.cs" />
     <Compile Include="EfRepository.cs" />
+    <Compile Include="Factories\IAnswersFactory.cs" />
     <Compile Include="Factories\IQuestionsFactory.cs" />
     <Compile Include="Factories\IScoresFactory.cs" />
     <Compile Include="Factories\IUsersFactory.cs" />

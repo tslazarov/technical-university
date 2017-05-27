@@ -22,6 +22,11 @@ namespace SmarterThanYou.Services
             this.random = new Random();
         }
 
+        public void CreateQuestion(Question question)
+        {
+            this.data.QuestionsRepository.Add(question);
+            this.data.SaveChanges();
+        }
 
         public Question GetQuestion()
         {

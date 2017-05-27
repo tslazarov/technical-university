@@ -16,7 +16,7 @@ namespace SmarterThanYou.Mobile.Views
         public RegisterView()
         {
             this.viewModel = new RegisterViewModel();
-            this.DataContext = viewModel;
+            this.DataContext = this.viewModel;
 
             this.InitializeComponent();
         }

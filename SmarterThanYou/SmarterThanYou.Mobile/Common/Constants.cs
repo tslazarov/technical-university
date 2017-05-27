@@ -11,8 +11,8 @@
         public static string ApiSubmitScore = "api/scoreboard/submit";
         public static string ApiScoreboard = "api/scoreboard/all";
 
-        public static string LoginErrorMessage = "Username or password is incorrect";
-        public static string RegisterErrorMessage = "A user with such username exists";
-        public static string HighScoreMessage = "NEW HIGH SCORE";
+        public static string LoginErrorMessage = "Невалидно име или парола";
+        public static string RegisterErrorMessage = "Потребител със същото име съществува";
+        public static string HighScoreMessage = "НОВ ЛИЧЕН РЕКОРД";
     }
 }

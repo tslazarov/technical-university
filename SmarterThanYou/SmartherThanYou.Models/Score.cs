@@ -21,7 +21,7 @@ namespace SmartherThanYou.Models
 
         public int? UserId { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         [Required]
         public long Points { get; set; }

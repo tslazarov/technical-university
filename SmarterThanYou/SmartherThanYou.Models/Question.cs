@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartherThanYou.Models
 {
@@ -48,6 +49,7 @@ namespace SmartherThanYou.Models
 
         public int? AnswerId { get; set; }
 
+        [ForeignKey("AnswerId")]
         public virtual Answer Answer { get; set; }
     }
 }

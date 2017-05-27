@@ -86,7 +86,7 @@ namespace SmarterThanYou.Server.Controllers
         {
             var resp = new HttpResponseMessage()
             {
-                Content = new StringContent(JsonConvert.SerializeObject(this.scoresService.GetTopScores(10)))
+                Content = new StringContent(JsonConvert.SerializeObject(new { Scoreboard = this.scoresService.GetTopScores(10).ToList().Select(s => new { Username = s.User.Username, Points = s.Points })}))
             };
 
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");

@@ -24,6 +24,7 @@ namespace SmarterThanYou.Server.App_Start.NinjectModules
             this.Bind<IUsersFactory>().ToFactory();
             this.Bind<IQuestionsFactory>().ToFactory();
             this.Bind<IScoresFactory>().ToFactory();
+            this.Bind<IAnswersFactory>().ToFactory();
         }
     }
 }

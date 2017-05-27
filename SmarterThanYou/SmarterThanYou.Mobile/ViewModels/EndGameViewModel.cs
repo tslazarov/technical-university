@@ -27,8 +27,12 @@ namespace SmarterThanYou.Mobile.ViewModels
             this.score.Points = ViewBag.Score;
             this.HighscoreMessage = string.Empty;
 
+            this.Username = ViewBag.Username;
+
             this.SubmitScore();
         }
+
+        public string Username { get; set; }
 
         public string HighscoreMessage
         {
@@ -72,8 +76,10 @@ namespace SmarterThanYou.Mobile.ViewModels
 
             if (response.Status == "1")
             {
-                this.HighscoreMessage = "NEW HIGH SCORE";
+                this.HighscoreMessage = Constants.HighScoreMessage;
             }
+
+            ViewBag.Score = 0;
         }
 
         public async Task<string> SubmitScoreRemote()

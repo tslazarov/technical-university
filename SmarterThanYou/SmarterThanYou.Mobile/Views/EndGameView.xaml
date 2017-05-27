@@ -13,14 +13,14 @@
             <ImageBrush ImageSource="../Assets/background.png"></ImageBrush>
         </Grid.Background>
         <StackPanel VerticalAlignment="Center" Width="300">
-            <TextBlock Text="SCORE" TextAlignment="Center" FontSize="24"/>
+            <TextBlock Text="РЕЗУЛТАТ" TextAlignment="Center" FontSize="24"/>
             <TextBlock Text="{Binding Path=Score.Points}" TextAlignment="Center" FontSize="72"/>
             <TextBlock Text="{Binding Path=HighscoreMessage}" TextAlignment="Center" FontSize="18"/>
 
         </StackPanel>
         <Grid VerticalAlignment="Bottom" Width="300">
-            <Button Name="btnRetry" HorizontalAlignment="Left" Content="Retry" BorderThickness="0" Margin="0, 0, 40, 20" Click="btnRetry_Click"/>
-            <Button Name="btnBack" HorizontalAlignment="Right" Content="Back" BorderThickness="0" Margin="40, 0, 0, 20" Click="btnBack_Click"/>
+            <Button Name="btnRetry" HorizontalAlignment="Left" Content="Опитай пак" BorderThickness="0" Margin="0, 0, 40, 20" Click="btnRetry_Click"/>
+            <Button Name="btnBack" HorizontalAlignment="Right" Content="Назад" BorderThickness="0" Margin="40, 0, 0, 20" Click="btnBack_Click"/>
         </Grid>
     </Grid>
 </Page>

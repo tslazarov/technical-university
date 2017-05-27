@@ -166,7 +166,7 @@ namespace SmarterThanYou.Mobile.ViewModels
 
         public void FriendAnswer()
         {
-            this.Answer = $"The Answer is '{this.Question.Answer.Member}'";
+            this.Answer = $"Отговорът е '{this.Question.Answer.Member}'";
         }
     }
 }

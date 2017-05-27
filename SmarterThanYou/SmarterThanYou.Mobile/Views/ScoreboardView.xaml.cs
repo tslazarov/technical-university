@@ -21,14 +21,14 @@ namespace SmarterThanYou.Mobile.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MenuView : Page
+    public sealed partial class ScoreboardView : Page
     {
-        private MenuViewModel viewModel;
+        private ScoreboardViewModel viewModel;
 
-        public MenuView()
+        public ScoreboardView()
         {
-            this.viewModel = new MenuViewModel();
-            this.DataContext = viewModel;
+            this.viewModel = new ScoreboardViewModel();
+            this.DataContext = this.viewModel;
 
             this.InitializeComponent();
         }
@@ -42,19 +42,9 @@ namespace SmarterThanYou.Mobile.Views
         {
         }
 
-        private void btnNewGame_Click(object sender, RoutedEventArgs e)
+        private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(InGameView));
-        }
-
-        private void btnScoreboard_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(ScoreboardView));
-        }
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Exit();
+            this.Frame.Navigate(typeof(MenuView));
         }
     }
 }

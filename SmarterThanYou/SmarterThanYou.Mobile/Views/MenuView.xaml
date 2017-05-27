@@ -12,13 +12,10 @@
         <Grid.Background>
             <ImageBrush ImageSource="../Assets/background.png"></ImageBrush>
         </Grid.Background>
-        <Grid VerticalAlignment="Top">
-            <TextBlock Foreground="White" Text="{Binding Path=Username}" HorizontalAlignment="Left" FontSize="20" Margin="50,5,0,0" />
-        </Grid>
         <StackPanel VerticalAlignment="Center" Width="300">
-            <Button Name="btnNewGame" Background="Transparent" BorderThickness="0" Content="New Game" HorizontalAlignment="Stretch" FontSize="24" Margin="0, 10" Click="btnNewGame_Click"/>
-            <Button Name="btnScoreboard" Background="Transparent" BorderThickness="0" Content="Scoreboard" HorizontalAlignment="Stretch" FontSize="24" Margin="0, 10" Click="btnScoreboard_Click"/>
-            <Button Name="btnExit" Background="Transparent" BorderThickness="0" Content="Exit" HorizontalAlignment="Stretch" FontSize="24" Margin="0, 10" Click="btnExit_Click"/>
+            <Button Name="btnNewGame" Background="Transparent" BorderThickness="0" Content="Нова игра" HorizontalAlignment="Stretch" FontSize="24" Margin="0, 10" Click="btnNewGame_Click"/>
+            <Button Name="btnScoreboard" Background="Transparent" BorderThickness="0" Content="Класиране" HorizontalAlignment="Stretch" FontSize="24" Margin="0, 10" Click="btnScoreboard_Click"/>
+            <Button Name="btnExit" Background="Transparent" BorderThickness="0" Content="Изход" HorizontalAlignment="Stretch" FontSize="24" Margin="0, 10" Click="btnExit_Click"/>
         </StackPanel>
     </Grid>
 </Page>

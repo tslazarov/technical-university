@@ -13,10 +13,10 @@
         </Grid.Background>
         <StackPanel VerticalAlignment="Center" Width="300">
             <TextBlock Foreground="White" Text="{Binding Path=ErrorMessage}" TextAlignment="Center" FontSize="18"/>
-            <TextBox Foreground="White" Background="Transparent" PlaceholderText="Username" Text="{Binding Path=CurrentUser.Username, Mode=TwoWay}"/>
-            <PasswordBox Background="Transparent" Foreground="White" PlaceholderText="Password" Password="{Binding Path=CurrentUser.Password, Mode=TwoWay}" Margin="0, 10, 0, 10"/>
-            <Button Name="btnLogin" Background="White" Foreground="Black" Content="Login" HorizontalAlignment="Stretch" Click="btnLogin_Click"/>
-            <Button Name="btnRegisterUser" Background="Transparent" BorderThickness="0" Content="Don't have account? Register now." HorizontalAlignment="Stretch" Click="btnNavigateRegisterUser_Click"/>
+            <TextBox Foreground="White" Background="Transparent" PlaceholderText="Потребител" Text="{Binding Path=CurrentUser.Username, Mode=TwoWay}"/>
+            <PasswordBox Background="Transparent" Foreground="White" PlaceholderText="Парола" Password="{Binding Path=CurrentUser.Password, Mode=TwoWay}" Margin="0, 10, 0, 10"/>
+            <Button Name="btnLogin" Background="White" Foreground="Black" Content="Вход" HorizontalAlignment="Stretch" Click="btnLogin_Click"/>
+            <Button Name="btnRegisterUser" Background="Transparent" BorderThickness="0" FontSize="16" Content="Нямате акаунт? Регистрирайте се." HorizontalAlignment="Stretch" Click="btnNavigateRegisterUser_Click"/>
         </StackPanel>
     </Grid>
 </Page>
