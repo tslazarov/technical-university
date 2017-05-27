@@ -17,24 +17,38 @@ namespace SmarterThanYou.Mobile.ViewModels
     public class RegisterViewModel : INotifyPropertyChanged
     {
         private User currentUser;
-        private ICommand registerUserCommand;
+        private string errorMessage;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public RegisterViewModel()
         {
             this.currentUser = new User();
+            this.ErrorMessage = string.Empty;
+        }
+
+        public string ErrorMessage
+        {
+            get
+            {
+                return this.errorMessage;
+            }
+            set
+            {
+                this.errorMessage = value;
+                NotifyPropertyChanged();
+            }
         }
 
         public User CurrentUser
         {
             get
             {
-                return currentUser;
+                return this.currentUser;
             }
             set
             {
-                currentUser = value;
+                this.currentUser = value;
                 NotifyPropertyChanged();
             }
         }
@@ -50,32 +64,32 @@ namespace SmarterThanYou.Mobile.ViewModels
         public async Task<bool> RegisterUser()
         {
             var responseString = await this.RegisterUserRemote();
-            Debug.WriteLine(responseString);
 
             var response = JsonConvert.DeserializeObject<GeneralResponse>(responseString);
 
-            if(response.Status == 1)
+            if (response.Status == "1")
             {
                 return true;
             }
             else
             {
+                this.ErrorMessage = Constants.RegisterErrorMessage;
                 return false;
             }
         }
 
         public async Task<string> RegisterUserRemote()
         {
-            using (var client = new System.Net.Http.HttpClient())
+            using (var client = new HttpClient())
             {
                 // New code:
-                client.BaseAddress = new Uri("http://cd5cfc6f.ngrok.io/");
+                client.BaseAddress = new Uri(Constants.BaseUri);
                 client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.MediaType));
 
-                var json_object = JsonConvert.SerializeObject(this.CurrentUser);
+                var user = JsonConvert.SerializeObject(this.CurrentUser);
 
-                var response = await client.PostAsync("api/account/register", new StringContent(json_object.ToString(), Encoding.UTF8, "application/json"));
+                var response = await client.PostAsync(Constants.ApiRegister, new StringContent(user.ToString(), Encoding.UTF8, Constants.MediaType));
                 return await response.Content.ReadAsStringAsync();
             }
         }

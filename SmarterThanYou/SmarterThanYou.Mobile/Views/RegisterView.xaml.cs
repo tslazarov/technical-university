@@ -39,7 +39,7 @@ namespace SmarterThanYou.Mobile.Views
         {
             if (await this.viewModel.RegisterUser())
             {
-                this.Frame.Navigate(typeof(InGameView));
+                this.Frame.Navigate(typeof(LoginView));
             }
         }
     }

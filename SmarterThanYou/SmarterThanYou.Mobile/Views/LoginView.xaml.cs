@@ -15,7 +15,7 @@ namespace SmarterThanYou.Mobile.Views
 
         public LoginView()
         {
-            this.viewModel = new LoginViewModel(this.Frame);
+            this.viewModel = new LoginViewModel();
             this.DataContext = viewModel;
 
             this.InitializeComponent();
@@ -32,7 +32,15 @@ namespace SmarterThanYou.Mobile.Views
 
         private void btnLogin_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            this.viewModel.LoginUser();
+            this.LoginUser();
+        }
+
+        private async void LoginUser()
+        {
+            if (await this.viewModel.LoginUser())
+            {
+                this.Frame.Navigate(typeof(MenuView));
+            }
         }
 
         private void btnNavigateRegisterUser_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

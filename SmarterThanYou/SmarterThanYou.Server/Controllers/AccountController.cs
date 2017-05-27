@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace SmarterThanYou.Server.Controllers
@@ -34,9 +35,10 @@ namespace SmarterThanYou.Server.Controllers
         // POST api/account/register
         [System.Web.Http.AcceptVerbs("POST")]
         [System.Web.Http.HttpPost]
-        public string Register(UserViewModel model)
+        public HttpResponseMessage Register(UserViewModel model)
         {
             var user = this.usersFactory.CreateUser(model.Username, model.Password);
+            var resp = new HttpResponseMessage();
 
             try
             {
@@ -44,27 +46,40 @@ namespace SmarterThanYou.Server.Controllers
             }
             catch
             {
-                return JsonConvert.SerializeObject(new { Status = 0 });
+                resp.Content = new StringContent(JsonConvert.SerializeObject(new { Status = "0" }));
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                return resp;
             }
 
-            return JsonConvert.SerializeObject(new { Status = 1 });
+            resp.Content = new StringContent(JsonConvert.SerializeObject(new { Status = "1" }));
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
         }
 
         // POST api/account/login
         [System.Web.Http.AcceptVerbs("POST")]
         [System.Web.Http.HttpPost]
-        public string Login(UserViewModel model)
+        public HttpResponseMessage Login(UserViewModel model)
         {
             var user = this.usersService.GetUsers()
                 .Where(u => u.Username == model.Username && u.Password == model.Password)
                 .FirstOrDefault();
 
-            if(user == null)
+            var resp = new HttpResponseMessage();
+
+            if (user == null)
             {
-                return JsonConvert.SerializeObject(new { Status = "0" });
+                resp.Content = new StringContent(JsonConvert.SerializeObject(new { Status = "0" }));
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            } else
+            {
+                resp.Content = new StringContent(JsonConvert.SerializeObject(new { Status = "1", Username = user.Username }));
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             }
 
-            return JsonConvert.SerializeObject(new { Status = "1", Username = user.Username });
+            return resp;
         }
     }
 }

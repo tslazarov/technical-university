@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmarterThanYou.Mobile.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,8 +23,13 @@ namespace SmarterThanYou.Mobile.Views
     /// </summary>
     public sealed partial class MenuView : Page
     {
+        private MenuViewModel viewModel;
+
         public MenuView()
         {
+            this.viewModel = new MenuViewModel();
+            this.DataContext = viewModel;
+
             this.InitializeComponent();
         }
 
@@ -34,6 +40,21 @@ namespace SmarterThanYou.Mobile.Views
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+        }
+
+        private void btnNewGame_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(InGameView));
+        }
+
+        private void btnScoreboard_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(LoginView));
+        }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
         }
     }
 }

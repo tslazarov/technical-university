@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmarterThanYou.Mobile.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,19 @@ namespace SmarterThanYou.Mobile.Views
     /// </summary>
     public sealed partial class InGameView : Page
     {
+        private DispatcherTimer dispatcherTimer;
+        private InGameViewModel viewModel;
+
         public InGameView()
         {
+            this.viewModel = new InGameViewModel();
+            this.DataContext = viewModel;
+
             this.InitializeComponent();
+            dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler<object>(this.dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
         }
 
         /// <summary>
@@ -34,6 +45,15 @@ namespace SmarterThanYou.Mobile.Views
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+        }
+
+        private void dispatcherTimer_Tick(object sender, object e)
+        {
+            if (this.viewModel.CheckTimer())
+            {
+                this.dispatcherTimer.Stop();
+                this.Frame.Navigate(typeof(EndGameView));
+            }
         }
     }
 }

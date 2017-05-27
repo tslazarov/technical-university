@@ -13,8 +13,9 @@
             <ImageBrush ImageSource="../Assets/background.png"></ImageBrush>
         </Grid.Background>
         <StackPanel VerticalAlignment="Center" Width="300">
-            <TextBox Background="Transparent" PlaceholderText="Username" Text="{Binding Path=CurrentUser.Username, Mode=TwoWay}"/>
-            <PasswordBox Background="Transparent" PlaceholderText="Password" Password="{Binding Path=CurrentUser.Password, Mode=TwoWay}" Margin="0, 10, 0, 10"/>
+            <TextBlock Foreground="White" Text="{Binding Path=ErrorMessage}" TextAlignment="Center" FontSize="18"/>
+            <TextBox Foreground="White" Background="Transparent" PlaceholderText="Username" Text="{Binding Path=CurrentUser.Username, Mode=TwoWay}"/>
+            <PasswordBox Foreground="White" Background="Transparent" PlaceholderText="Password" Password="{Binding Path=CurrentUser.Password, Mode=TwoWay}" Margin="0, 10, 0, 10"/>
             <Button Name="btnRegister" Background="White" Foreground="Black" Content="Register" HorizontalAlignment="Stretch" Click="btnRegister_Click"/>
         </StackPanel>
     </Grid>

@@ -9,10 +9,18 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Assets/background.png"></ImageBrush>
+        </Grid.Background>
+        <Grid VerticalAlignment="Top">
+            <TextBlock Foreground="White" Text="{Binding Path=Username}" HorizontalAlignment="Left" FontSize="20" Margin="50,5,0,0" />
+            <TextBlock Foreground="White" Text="{Binding Path=Score}" HorizontalAlignment="Right" FontSize="20" Margin="0,5,50,0" />
+        </Grid>
         <StackPanel VerticalAlignment="Top" Width="300">
-            <TextBlock Text="CATEGORY" TextAlignment="Center" FontSize="12"/>
+            <TextBlock Text="CATEGORY" TextAlignment="Center" FontSize="12" Margin="0,30,0,0"/>
             <TextBlock Text="Geography" TextAlignment="Center" FontSize="16"/>
-            <TextBlock Text="Which of these countries is the best place to live in?" TextWrapping="WrapWholeWords" TextAlignment="Center" Margin="0, 200, 0, 50" FontSize="24"/>
+            <TextBlock Text="{Binding Path=Timer}" TextAlignment="Center" FontSize="36" Margin="0, 20"/>
+            <TextBlock Text="Which of these countries is the best place to live in?" TextWrapping="WrapWholeWords" TextAlignment="Center" Margin="0, 50, 0, 50" FontSize="24"/>
         </StackPanel>
         <StackPanel VerticalAlignment="Bottom" Width="300">
             <Button Name="choiceA" Content="Bulgaria" HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}"/>

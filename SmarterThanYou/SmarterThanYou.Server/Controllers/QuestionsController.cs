@@ -1,6 +1,8 @@
 ﻿using Bytes2you.Validation;
 using Newtonsoft.Json;
 using SmarterThanYou.Services.Contracts;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace SmarterThanYou.Server.Controllers
@@ -21,9 +23,15 @@ namespace SmarterThanYou.Server.Controllers
         // GET api/questions/random
         [System.Web.Http.AcceptVerbs("GET")]
         [System.Web.Http.HttpGet]
-        public string Random()
+        public HttpResponseMessage Random()
         {
-            return JsonConvert.SerializeObject(this.questionsService.GetQuestion());
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(this.questionsService.GetQuestion()))
+            };
+
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
         }
     }
 }
