@@ -14,8 +14,8 @@
             <TextBlock Text="1100" TextAlignment="Center" FontSize="72"/>
         </StackPanel>
         <Grid VerticalAlignment="Bottom" Width="300">
-            <Button Name="btnRetry" HorizontalAlignment="Left" Content="Retry" BorderThickness="0" Margin="0, 0, 40, 20"/>
-            <Button Name="btnBack" HorizontalAlignment="Right" Content="Back" BorderThickness="0" Margin="40, 0, 0, 20"/>
+            <Button Name="btnRetry" HorizontalAlignment="Left" Content="Retry" BorderThickness="0" Margin="0, 0, 40, 20" Click="btnRetry_Click"/>
+            <Button Name="btnBack" HorizontalAlignment="Right" Content="Back" BorderThickness="0" Margin="40, 0, 0, 20" Click="btnBack_Click"/>
         </Grid>
     </Grid>
 </Page>

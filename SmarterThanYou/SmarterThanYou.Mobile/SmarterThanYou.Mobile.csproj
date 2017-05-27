@@ -91,6 +91,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\GeneralQuestion.cs" />
     <Compile Include="Models\GeneralResponse.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

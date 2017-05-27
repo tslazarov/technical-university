@@ -35,5 +35,15 @@ namespace SmarterThanYou.Mobile.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
         }
+
+        private void btnRetry_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(InGameView));
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MenuView));
+        }
     }
 }

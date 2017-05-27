@@ -18,15 +18,21 @@
         </Grid>
         <StackPanel VerticalAlignment="Top" Width="300">
             <TextBlock Text="CATEGORY" TextAlignment="Center" FontSize="12" Margin="0,30,0,0"/>
-            <TextBlock Text="Geography" TextAlignment="Center" FontSize="16"/>
+            <TextBlock Text="{Binding Path=Question.Category.Name}" TextAlignment="Center" FontSize="16"/>
             <TextBlock Text="{Binding Path=Timer}" TextAlignment="Center" FontSize="36" Margin="0, 20"/>
-            <TextBlock Text="Which of these countries is the best place to live in?" TextWrapping="WrapWholeWords" TextAlignment="Center" Margin="0, 50, 0, 50" FontSize="24"/>
+            <TextBlock Text="{Binding Path=Question.Quest}" TextWrapping="WrapWholeWords" TextAlignment="Center" Margin="0, 70, 0, 50" FontSize="24"/>
         </StackPanel>
+        <Grid VerticalAlignment="Center" Width="300" Margin="0, 70, 0, 0">
+            <TextBlock Text="{Binding Path=Answer}" TextAlignment="Center" FontSize="16"/>
+            <Button Name="btn5050" HorizontalAlignment="Left" Content="50:50" BorderThickness="0" Margin="0, 20, 0,0" Click="btn5050_Click"/>
+            <Button Name="btnSkip" HorizontalAlignment="Center" Content="SKIP" BorderThickness="0" Margin="0, 20, 0, 0" Click="btnSkip_Click"/>
+            <Button Name="btnFriend" HorizontalAlignment="Right" Content="FRIEND" BorderThickness="0" Margin="0, 20, 0, 0" Click="btnFriend_Click"/>
+        </Grid>
         <StackPanel VerticalAlignment="Bottom" Width="300">
-            <Button Name="choiceA" Content="Bulgaria" HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}"/>
-            <Button Name="choiceB" Content="Serbia" HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}"/>
-            <Button Name="choiceC" Content="Hungary" HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}"/>
-            <Button Name="choiceD" Content="United Kingdom" HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}" Margin="0, 0, 0, 30"/>
+            <Button Name="choiceA" Content="{Binding Path=Question.Answers[0].Member}" HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}" Click="choice_Click"/>
+            <Button Name="choiceB" Content="{Binding Path=Question.Answers[1].Member}" HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}" Click="choice_Click"/>
+            <Button Name="choiceC" Content="{Binding Path=Question.Answers[2].Member}" HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}" Click="choice_Click"/>
+            <Button Name="choiceD" Content="{Binding Path=Question.Answers[3].Member}" HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}" Click="choice_Click" Margin="0, 0, 0, 30" />
         </StackPanel>
     </Grid>
 </Page>
