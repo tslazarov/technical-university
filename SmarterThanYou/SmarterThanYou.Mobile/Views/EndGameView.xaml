@@ -9,9 +9,14 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Assets/background.png"></ImageBrush>
+        </Grid.Background>
         <StackPanel VerticalAlignment="Center" Width="300">
             <TextBlock Text="SCORE" TextAlignment="Center" FontSize="24"/>
-            <TextBlock Text="1100" TextAlignment="Center" FontSize="72"/>
+            <TextBlock Text="{Binding Path=Score.Points}" TextAlignment="Center" FontSize="72"/>
+            <TextBlock Text="{Binding Path=HighscoreMessage}" TextAlignment="Center" FontSize="18"/>
+
         </StackPanel>
         <Grid VerticalAlignment="Bottom" Width="300">
             <Button Name="btnRetry" HorizontalAlignment="Left" Content="Retry" BorderThickness="0" Margin="0, 0, 40, 20" Click="btnRetry_Click"/>

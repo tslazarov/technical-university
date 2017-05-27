@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmarterThanYou.Mobile.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,8 +23,12 @@ namespace SmarterThanYou.Mobile.Views
     /// </summary>
     public sealed partial class EndGameView : Page
     {
+        private EndGameViewModel viewModel;
         public EndGameView()
         {
+            this.viewModel = new EndGameViewModel();
+            this.DataContext = viewModel;
+
             this.InitializeComponent();
         }
 

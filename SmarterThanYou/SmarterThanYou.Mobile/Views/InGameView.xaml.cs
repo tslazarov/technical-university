@@ -102,6 +102,7 @@ namespace SmarterThanYou.Mobile.Views
         private void btnSkip_Click(object sender, RoutedEventArgs e)
         {
             this.viewModel.GetQuestion();
+            this.viewModel.ResetTimer();
             this.btnSkip.IsEnabled = false;
             this.btnSkip.Content = string.Empty;
         }

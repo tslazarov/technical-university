@@ -3,6 +3,8 @@ using SmarterThanYou.Data.Contracts;
 using SmarterThanYou.Services.Contracts;
 using System.Collections.Generic;
 using SmartherThanYou.Models;
+using System;
+using System.Linq;
 
 namespace SmarterThanYou.Services
 {
@@ -28,6 +30,11 @@ namespace SmarterThanYou.Services
         public User GetUser(int id)
         {
             return this.data.UsersRepository.GetById(id);
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            return this.data.UsersRepository.All().Where(u => u.Username == username).FirstOrDefault();
         }
 
         public IEnumerable<User> GetUsers()

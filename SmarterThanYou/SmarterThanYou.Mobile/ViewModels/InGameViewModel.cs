@@ -119,14 +119,20 @@ namespace SmarterThanYou.Mobile.ViewModels
         {
             if(this.Question.Answer.Member == answer)
             {
+                ViewBag.Score += 100;
                 this.Score += 100;
-                this.Timer = 15;
+                this.ResetTimer();
                 this.GetQuestion();
 
                 return false;
             }
 
             return true;
+        }
+
+        public void ResetTimer()
+        {
+            this.Timer = 15;
         }
 
         public async void GetQuestion()

@@ -9,6 +9,8 @@ namespace SmarterThanYou.Services.Contracts
 
         User GetUser(int id);
 
+        User GetUserByUsername(string username);
+
         IEnumerable<User> GetUsers();
     }
 }

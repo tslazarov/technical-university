@@ -59,6 +59,7 @@
     <Compile Include="Contracts\ISmarterThanYouData.cs" />
     <Compile Include="EfRepository.cs" />
     <Compile Include="Factories\IQuestionsFactory.cs" />
+    <Compile Include="Factories\IScoresFactory.cs" />
     <Compile Include="Factories\IUsersFactory.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

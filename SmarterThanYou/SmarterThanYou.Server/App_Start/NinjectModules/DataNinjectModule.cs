@@ -23,6 +23,7 @@ namespace SmarterThanYou.Server.App_Start.NinjectModules
             this.Rebind<ÌSmarterThanYouData>().To<SmarterThanYouData>();
             this.Bind<IUsersFactory>().ToFactory();
             this.Bind<IQuestionsFactory>().ToFactory();
+            this.Bind<IScoresFactory>().ToFactory();
         }
     }
 }
