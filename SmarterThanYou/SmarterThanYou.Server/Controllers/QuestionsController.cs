@@ -55,12 +55,11 @@ namespace SmarterThanYou.Server.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Random()
         {
-            var resp = new HttpResponseMessage()
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(this.questionsService.GetQuestion()))
-            };
+            var resp = new HttpResponseMessage();
 
+            resp.Content = new StringContent(JsonConvert.SerializeObject(this.questionsService.GetQuestion()));
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
             return resp;
         }
 

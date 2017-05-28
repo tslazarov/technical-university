@@ -1,12 +1,8 @@
-﻿using SmarterThanYou.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SmartherThanYou.Models;
+﻿using Bytes2you.Validation;
 using SmarterThanYou.Data.Contracts;
-using Bytes2you.Validation;
+using SmarterThanYou.Services.Contracts;
+using SmartherThanYou.Models;
+using System.Linq;
 
 namespace SmarterThanYou.Services
 {

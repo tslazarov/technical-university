@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SmarterThanYou.Mobile.Common;
 using SmarterThanYou.Mobile.Models;
-using SmarterThanYou.Mobile.Views;
 using System;
 using System.ComponentModel;
 using System.Net.Http;
@@ -9,8 +8,6 @@ using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Windows.UI.Xaml.Controls;
 
 namespace SmarterThanYou.Mobile.ViewModels
 {
@@ -83,7 +80,6 @@ namespace SmarterThanYou.Mobile.ViewModels
         {
             using (var client = new HttpClient())
             {
-                // New code:
                 client.BaseAddress = new Uri(Constants.BaseUri);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.MediaType));

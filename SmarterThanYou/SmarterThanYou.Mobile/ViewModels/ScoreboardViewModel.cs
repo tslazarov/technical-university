@@ -3,12 +3,9 @@ using SmarterThanYou.Mobile.Common;
 using SmarterThanYou.Mobile.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmarterThanYou.Mobile.ViewModels
@@ -21,11 +18,8 @@ namespace SmarterThanYou.Mobile.ViewModels
 
         public ScoreboardViewModel()
         {
-            this.Username = ViewBag.Username;
             this.GetScoreboard();
         }
-
-        public string Username { get; set; }
 
         public IEnumerable<Scoreboard> Scoreboard
         {

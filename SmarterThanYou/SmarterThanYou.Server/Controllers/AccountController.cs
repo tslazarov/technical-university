@@ -3,10 +3,7 @@ using Newtonsoft.Json;
 using SmarterThanYou.Data.Factories;
 using SmarterThanYou.Server.Models;
 using SmarterThanYou.Services.Contracts;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
@@ -73,7 +70,8 @@ namespace SmarterThanYou.Server.Controllers
             {
                 resp.Content = new StringContent(JsonConvert.SerializeObject(new { Status = "0" }));
                 resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            } else
+            }
+            else
             {
                 resp.Content = new StringContent(JsonConvert.SerializeObject(new { Status = "1", Username = user.Username }));
                 resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");

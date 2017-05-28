@@ -2,9 +2,7 @@
 using SmarterThanYou.Mobile.Common;
 using SmarterThanYou.Mobile.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
@@ -27,12 +25,8 @@ namespace SmarterThanYou.Mobile.ViewModels
             this.score.Points = ViewBag.Score;
             this.HighscoreMessage = string.Empty;
 
-            this.Username = ViewBag.Username;
-
             this.SubmitScore();
         }
-
-        public string Username { get; set; }
 
         public string HighscoreMessage
         {
@@ -86,7 +80,6 @@ namespace SmarterThanYou.Mobile.ViewModels
         {
             using (var client = new HttpClient())
             {
-                // New code:
                 client.BaseAddress = new Uri(Constants.BaseUri);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.MediaType));

@@ -3,12 +3,9 @@ using Newtonsoft.Json;
 using SmarterThanYou.Data.Factories;
 using SmarterThanYou.Server.Models;
 using SmarterThanYou.Services.Contracts;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Web;
 using System.Web.Http;
 
 namespace SmarterThanYou.Server.Controllers
@@ -58,6 +55,8 @@ namespace SmarterThanYou.Server.Controllers
 
                 resp.Content = new StringContent(JsonConvert.SerializeObject(new { Status = "1" }));
                 resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                return resp;
             }
             else
             {
@@ -84,12 +83,11 @@ namespace SmarterThanYou.Server.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage All()
         {
-            var resp = new HttpResponseMessage()
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(new { Scoreboard = this.scoresService.GetTopScores(10).ToList().Select(s => new { Username = s.User.Username, Points = s.Points })}))
-            };
+            var resp = new HttpResponseMessage();
 
+            resp.Content = new StringContent(JsonConvert.SerializeObject(new { Scoreboard = this.scoresService.GetTopScores(10).ToList().Select(s => new { Username = s.User.Username, Points = s.Points }) }));
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
             return resp;
         }
     }

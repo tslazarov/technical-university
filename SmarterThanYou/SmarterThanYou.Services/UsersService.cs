@@ -1,9 +1,8 @@
 ﻿using Bytes2you.Validation;
 using SmarterThanYou.Data.Contracts;
 using SmarterThanYou.Services.Contracts;
-using System.Collections.Generic;
 using SmartherThanYou.Models;
-using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SmarterThanYou.Services
