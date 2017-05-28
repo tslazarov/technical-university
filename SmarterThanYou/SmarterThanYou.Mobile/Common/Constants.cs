@@ -2,7 +2,7 @@
 {
     public static class Constants
     {
-        public static string BaseUri = "http://75b2b70f.ngrok.io";
+        public static string BaseUri = "http://a54301da.ngrok.io";
         public static string MediaType = "application/json";
 
         public static string ApiLogin = "api/account/login";
@@ -12,7 +12,7 @@
         public static string ApiScoreboard = "api/scoreboard/all";
 
         public static string LoginErrorMessage = "Невалидно име или парола";
-        public static string RegisterErrorMessage = "Потребител със същото име съществува";
+        public static string RegisterErrorMessage = "Вече съществува такъв потребител";
         public static string HighScoreMessage = "НОВ ЛИЧЕН РЕКОРД";
     }
 }

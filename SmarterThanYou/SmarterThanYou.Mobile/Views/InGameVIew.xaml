@@ -12,12 +12,12 @@
         <Grid.Background>
             <ImageBrush ImageSource="../Assets/background.png"></ImageBrush>
         </Grid.Background>
-        <Grid VerticalAlignment="Top">
+        <Grid VerticalAlignment="Top" Margin="0, 10">
             <TextBlock Foreground="White" Text="{Binding Path=Username}" HorizontalAlignment="Left" FontSize="20" Margin="50,5,0,0" />
             <TextBlock Foreground="White" Text="{Binding Path=Score}" HorizontalAlignment="Right" FontSize="20" Margin="0,5,50,0" />
         </Grid>
         <StackPanel VerticalAlignment="Top" Width="300">
-            <TextBlock Text="КАТЕГОРИЯ" TextAlignment="Center" FontSize="12" Margin="0,30,0,0"/>
+            <TextBlock Text="КАТЕГОРИЯ" TextAlignment="Center" FontSize="12" Margin="0,40,0,0"/>
             <TextBlock Text="{Binding Path=Question.Category.Name}" TextAlignment="Center" FontSize="16"/>
             <TextBlock Text="{Binding Path=Timer}" TextAlignment="Center" FontSize="36" Margin="0, 20"/>
             <TextBlock Text="{Binding Path=Question.Quest}" TextWrapping="WrapWholeWords" TextAlignment="Center" Margin="0, 70, 0, 50" FontSize="24"/>
