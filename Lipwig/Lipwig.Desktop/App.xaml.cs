@@ -11,6 +11,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Telerik.Windows.Controls;
 
 namespace Lipwig.Desktop
 {
@@ -38,6 +39,7 @@ namespace Lipwig.Desktop
         private void ComposeObjects()
         {
             Current.MainWindow = this.container.Get<MainWindow>();
+            StyleManager.ApplicationTheme = new MaterialTheme();
         }
 
         private void RegisterBindings(IKernel kernel)

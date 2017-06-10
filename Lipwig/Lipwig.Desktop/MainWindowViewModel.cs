@@ -34,6 +34,10 @@ namespace Lipwig.Desktop
             this.CurrentViewModel = this.loginViewModel;
 
             this.NavigationCommand = new RelayCommand<string>(Navigate);
+
+            this.loginViewModel.RegistrationNavigateRequested += Navigate;
+
+            this.IsNavigationVisible = false;
         }
 
         private void LoadViewModels()
@@ -62,6 +66,8 @@ namespace Lipwig.Desktop
             }
         }
 
+        public bool IsNavigationVisible { get; set; }
+
         public RelayCommand<string> NavigationCommand { get; private set; }
 
         private void Navigate(string destination)
@@ -85,6 +91,9 @@ namespace Lipwig.Desktop
                     break;
                 case "settings":
                     this.CurrentViewModel = this.settingsViewModel;
+                    break;
+                case "register":
+                    this.CurrentViewModel = this.registerViewModel;
                     break;
                 default:
                     this.CurrentViewModel = this.loginViewModel;
