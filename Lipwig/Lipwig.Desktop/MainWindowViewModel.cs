@@ -5,6 +5,7 @@ using Lipwig.Desktop.Home;
 using Lipwig.Desktop.Income;
 using Lipwig.Desktop.Settings;
 using Lipwig.Desktop.Statistics;
+using Lipwig.Services.Contracts;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace Lipwig.Desktop
 {
     public class MainWindowViewModel : BindableBase
     {
+        private bool isNavigationVisible;
+
         private BindableBase currentViewModel;
 
         private LoginViewModel loginViewModel;
@@ -36,13 +39,14 @@ namespace Lipwig.Desktop
             this.NavigationCommand = new RelayCommand<string>(Navigate);
 
             this.loginViewModel.RegistrationNavigateRequested += Navigate;
+            this.registerViewModel.SuccessfulRegistrationRequested += AuthenticationRenavigate;
 
             this.IsNavigationVisible = false;
         }
 
         private void LoadViewModels()
         {
-            var kernel = new StandardKernel();
+            var kernel = IocContainer.Kernel;
 
             this.loginViewModel = kernel.Get<LoginViewModel>();
             this.registerViewModel = kernel.Get<RegisterViewModel>();
@@ -66,9 +70,25 @@ namespace Lipwig.Desktop
             }
         }
 
-        public bool IsNavigationVisible { get; set; }
+        public bool IsNavigationVisible
+        {
+            get
+            {
+                return this.isNavigationVisible;
+            }
+            set
+            {
+                SetProperty(ref this.isNavigationVisible, value);
+            }
+        }
 
         public RelayCommand<string> NavigationCommand { get; private set; }
+
+        private void AuthenticationRenavigate(string destination)
+        {
+            this.IsNavigationVisible = true;
+            this.Navigate(destination);
+        }
 
         private void Navigate(string destination)
         {

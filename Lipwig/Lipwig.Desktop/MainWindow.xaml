@@ -71,10 +71,14 @@
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Grid.Row="0" Background="#FF1A237E">
+            <Grid Grid.Column="0" Grid.Row="0" Background="#FF1A237E"
+                  Visibility="{Binding Path=IsNavigationVisible, Converter={StaticResource BoolToVis}}">
                 <TextBlock>Logo</TextBlock>
             </Grid>
-            <Grid Grid.Column="1" Grid.Row="0" Background="#DEDEDE"></Grid>
+            <Grid Grid.Column="1" Grid.Row="0" Background="#DEDEDE"
+                  Visibility="{Binding Path=IsNavigationVisible, Converter={StaticResource BoolToVis}}">
+                
+            </Grid>
             <Grid Grid.Column="0" Grid.Row="1" Background="Transparent" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>

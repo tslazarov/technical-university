@@ -76,6 +76,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Telerik.Windows.Controls, Version=2017.2.503.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls.Input, Version=2017.2.503.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
@@ -100,6 +101,7 @@
       <DependentUpon>ExpenseAddEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Expense\ExpenseAddEditViewModel.cs" />
+    <Compile Include="Factories\IViewModelFactory.cs" />
     <Compile Include="History\HistoryView.xaml.cs">
       <DependentUpon>HistoryView.xaml</DependentUpon>
     </Compile>
@@ -112,8 +114,10 @@
       <DependentUpon>IncomeAddEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Income\IncomeAddEditViewModel.cs" />
+    <Compile Include="IocContainer.cs" />
     <Compile Include="IocModules\DesktopModule.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Models\SimpleRegistrationUser.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>

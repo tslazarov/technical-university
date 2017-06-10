@@ -32,7 +32,7 @@ namespace Lipwig.Desktop
 
         private void ConfigureContainer()
         {
-            this.container = new StandardKernel();
+            this.container = IocContainer.Kernel;
             RegisterBindings(this.container);
         }
 

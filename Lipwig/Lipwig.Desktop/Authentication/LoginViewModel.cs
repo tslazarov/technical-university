@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Lipwig.Services.Contracts;
+using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +10,12 @@ namespace Lipwig.Desktop.Authentication
 {
     public class LoginViewModel : BindableBase
     {
-        public LoginViewModel()
+        private IUsersService usersService;
+
+        public LoginViewModel(IUsersService usersService)
         {
+            this.usersService = usersService;
+
             this.RegistrationNavigateCommand = new RelayCommand<string>(RegistrationNavigate);
         }
 
