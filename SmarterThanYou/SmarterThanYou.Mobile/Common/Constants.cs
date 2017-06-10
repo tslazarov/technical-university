@@ -2,7 +2,7 @@
 {
     public static class Constants
     {
-        public static string BaseUri = "http://a54301da.ngrok.io";
+        public static string BaseUri = "http://670a5c48.ngrok.io";
         public static string MediaType = "application/json";
 
         public static string ApiLogin = "api/account/login";
