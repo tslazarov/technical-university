@@ -19,8 +19,6 @@ namespace Lipwig.Models
             string email,
             string firstName,
             string lastName,
-            string salt,
-            string hashedPassword,
             decimal totalAmount,
             Currency currency)
         {
@@ -28,8 +26,6 @@ namespace Lipwig.Models
             this.Email = email;
             this.FirstName = firstName;
             this.LastName = lastName;
-            this.Salt = salt;
-            this.HashedPassword = hashedPassword;
             this.TotalAmount = totalAmount;
             this.CurrencyId = currency.Id;
             this.Currency = currency;

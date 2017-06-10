@@ -9,8 +9,6 @@ namespace Lipwig.Data.Factories
             string email,
             string firstName,
             string lastName,
-            string salt,
-            string hashedPassword,
             decimal totalAmount,
             Currency currency);
     }
