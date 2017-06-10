@@ -1,6 +1,4 @@
-﻿using Lipwig.Data.Contracts;
-using Lipwig.Services.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Lipwig.Desktop
+namespace Lipwig.Desktop.Statistics
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for StatisticsVIew.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StatisticsView : UserControl
     {
-        public MainWindow()
+        public StatisticsView()
         {
             InitializeComponent();
         }

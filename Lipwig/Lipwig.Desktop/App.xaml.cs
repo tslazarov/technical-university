@@ -42,6 +42,7 @@ namespace Lipwig.Desktop
 
         private void RegisterBindings(IKernel kernel)
         {
+            kernel.Load(new DesktopModule());
             kernel.Load(new DataModule());
             kernel.Load(new ServicesModule());
         }
