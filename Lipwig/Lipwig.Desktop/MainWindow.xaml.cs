@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Lipwig.Data.Contracts;
+using Lipwig.Services.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +22,12 @@ namespace Lipwig.Desktop
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly IUsersService usersService;
+
+        public MainWindow(IUsersService usersService)
         {
+            this.usersService = usersService;
+
             InitializeComponent();
         }
     }
