@@ -6,6 +6,7 @@ using Lipwig.Desktop.Income;
 using Lipwig.Desktop.Settings;
 using Lipwig.Desktop.Statistics;
 using Lipwig.Services.Contracts;
+using Lipwig.Utilities;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace Lipwig.Desktop
     public class MainWindowViewModel : BindableBase
     {
         private bool isNavigationVisible;
+        private decimal balance;
+        private string currencyType;
+        private string email;
 
         private BindableBase currentViewModel;
 
@@ -40,6 +44,7 @@ namespace Lipwig.Desktop
 
             this.loginViewModel.RegistrationNavigateRequested += Navigate;
             this.registerViewModel.SuccessfulRegistrationRequested += AuthenticationRenavigate;
+            this.loginViewModel.SuccessfulLoginRequested += AuthenticationRenavigate;
 
             this.IsNavigationVisible = false;
         }
@@ -82,11 +87,50 @@ namespace Lipwig.Desktop
             }
         }
 
+        public decimal Balance
+        {
+            get
+            {
+                return this.balance;
+            }
+            set
+            {
+                SetProperty(ref this.balance, value);
+            }
+        }
+
+        public string CurrencyType
+        {
+            get
+            {
+                return this.currencyType;
+            }
+            set
+            {
+                SetProperty(ref this.currencyType, value);
+            }
+        }
+
+        public string Email
+        {
+            get
+            {
+                return this.email;
+            }
+            set
+            {
+                SetProperty(ref this.email, value);
+            }
+        }
+
         public RelayCommand<string> NavigationCommand { get; private set; }
 
         private void AuthenticationRenavigate(string destination)
         {
             this.IsNavigationVisible = true;
+            this.Email = Constants.Email;
+            this.Balance = Constants.Balance;
+            this.CurrencyType = Constants.CurrencyType;
             this.Navigate(destination);
         }
 

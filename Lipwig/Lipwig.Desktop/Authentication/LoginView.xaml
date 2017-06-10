@@ -53,17 +53,21 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="70"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <telerik:Label Grid.Row="0" FontSize="14" HorizontalAlignment="Left" Content="Email"/>
-        <TextBox Grid.Row="0" HorizontalAlignment="Right" Width="150"/>
-        <telerik:Label Grid.Row="1" FontSize="14" HorizontalAlignment="Left" Content="Password"/>
-        <telerik:RadPasswordBox Grid.Row="1" HorizontalAlignment="Right" Width="150"/>
-        <Button Grid.Row="2" Margin="0, 20" HorizontalAlignment="Right" Width="150" 
-                Style="{StaticResource MaterialButton}" 
+        <telerik:Label Grid.Row="0" FontSize="14" HorizontalAlignment="Right" Content="{Binding Message}" Foreground="#FFD50000"/>
+        <telerik:Label Grid.Row="1" FontSize="14" HorizontalAlignment="Left" Content="Email"/>
+        <TextBox Grid.Row="1" Text="{Binding Email}" HorizontalAlignment="Right" Width="150"/>
+        <telerik:Label Grid.Row="2" FontSize="14" HorizontalAlignment="Left" Content="Password"/>
+        <telerik:RadPasswordBox Name="Password" Grid.Row="2" HorizontalAlignment="Right" Width="150"/>
+        <Button Grid.Row="3" Margin="0, 20" HorizontalAlignment="Right" Width="150" 
+                Style="{StaticResource MaterialButton}"
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding ElementName=Password}"
                 Content="Login"/>
-        <Button Grid.Row="3" HorizontalAlignment="Right" Width="150" 
+        <Button Grid.Row="4" HorizontalAlignment="Right" Width="150" 
                 Style="{StaticResource TransperantButton}" 
                 Content="Create a Lipwig account" 
                 Command="{Binding RegistrationNavigateCommand}"

@@ -4,6 +4,7 @@ using Lipwig.Desktop.Factories;
 using Lipwig.Desktop.Models;
 using Lipwig.Models;
 using Lipwig.Services.Contracts;
+using Lipwig.Utilities;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -80,7 +81,17 @@ namespace Lipwig.Desktop.Authentication
             try
             {
                 var password = (passwordBox as RadPasswordBox).Password;
-                var currencyId = this.Currency.Id;
+                
+                if(this.Currency != null)
+                {
+                    Constants.CurrencyValue = this.Currency.Value;
+                    Constants.CurrencyType = this.Currency.Name;
+                }
+                else
+                {
+                    throw new NullReferenceException();
+                }
+
                 var balance = decimal.Parse(this.User.Balance);
 
                 if(this.usersService.GetUserByEmail(this.User.Email) != null)
@@ -88,9 +99,12 @@ namespace Lipwig.Desktop.Authentication
                     existingUser = true;
                 }
 
-                var user = this.usersFactory.CreateUser(Guid.NewGuid(), this.User.Email, this.User.FirstName, this.User.LastName, balance, this.Currency);
+                var user = this.usersFactory.Create(Guid.NewGuid(), this.User.Email, this.User.FirstName, this.User.LastName, balance, this.Currency);
 
                 this.usersService.Register(user, password);
+
+                Constants.Email = this.user.Email;
+                Constants.Balance = balance;
 
                 this.SuccessfulRegistrationRequested("home");
             }

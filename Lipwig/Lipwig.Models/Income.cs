@@ -1,4 +1,5 @@
 ﻿using Lipwig.Models.Contracts;
+using Lipwig.Utilities;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,6 +7,8 @@ namespace Lipwig.Models
 {
     public class Income : ITransaction
     {
+        private decimal amount;
+
         public Income()
         {
 
@@ -33,7 +36,17 @@ namespace Lipwig.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public decimal Amount { get; set; }
+        public decimal Amount
+        {
+            get
+            {
+                return this.amount * Constants.CurrencyValue;
+            }
+            set
+            {
+                this.amount = value / Constants.CurrencyValue;
+            }
+        }
 
         [Required]
         [MinLength(3)]

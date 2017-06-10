@@ -64,6 +64,6 @@
                 Style="{StaticResource MaterialButton}"
                 Command="{Binding RegisterCommand}"
                 CommandParameter="{Binding ElementName=Password}"
-                Content="Login"/>
+                Content="Register"/>
     </Grid>
 </UserControl>

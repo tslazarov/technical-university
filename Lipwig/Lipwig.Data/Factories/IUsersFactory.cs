@@ -5,11 +5,11 @@ namespace Lipwig.Data.Factories
 {
     public interface IUsersFactory
     {
-        User CreateUser(Guid id,
+        User Create(Guid id,
             string email,
             string firstName,
             string lastName,
-            decimal totalAmount,
+            decimal balance,
             Currency currency);
     }
 }

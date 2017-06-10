@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lipwig.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,6 +8,7 @@ namespace Lipwig.Models
 {
     public class User
     {
+        private decimal balance;
         private ICollection<Income> incomes;
         private ICollection<Expense> expenses;
 
@@ -19,14 +21,14 @@ namespace Lipwig.Models
             string email,
             string firstName,
             string lastName,
-            decimal totalAmount,
+            decimal balance,
             Currency currency)
         {
             this.Id = id;
             this.Email = email;
             this.FirstName = firstName;
             this.LastName = lastName;
-            this.TotalAmount = totalAmount;
+            this.Balance = balance / Constants.CurrencyValue;
             this.CurrencyId = currency.Id;
             this.Currency = currency;
 
@@ -61,7 +63,16 @@ namespace Lipwig.Models
         [Required]
         public string HashedPassword { get; set; }
 
-        public decimal TotalAmount { get; set; }
+        public decimal Balance { get; set; }
+        
+        [NotMapped]
+        public decimal LocalizedBalance
+        {
+            get
+            {
+                return decimal.Round(this.Balance * this.Currency.Value);
+            }
+        }
 
         public Guid CurrencyId { get; set; }
 

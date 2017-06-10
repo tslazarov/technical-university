@@ -5,7 +5,7 @@ namespace Lipwig.Data.Factories
 {
     public interface IIncomesFactory
     {
-        Income CreateIncome(Guid id,
+        Income Create(Guid id,
             DateTime date,
             decimal amount,
             string side,

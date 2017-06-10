@@ -5,7 +5,7 @@ namespace Lipwig.Data.Factories
 {
     public interface IExpensesFactory
     {
-        Expense CreateExpense(Guid id,
+        Expense Create(Guid id,
             DateTime date,
             decimal amount,
             string side,

@@ -101,7 +101,7 @@
       <DependentUpon>ExpenseAddEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Expense\ExpenseAddEditViewModel.cs" />
-    <Compile Include="Factories\IViewModelFactory.cs" />
+    <Compile Include="Factories\IModelFactory.cs" />
     <Compile Include="History\HistoryView.xaml.cs">
       <DependentUpon>HistoryView.xaml</DependentUpon>
     </Compile>
@@ -214,6 +214,10 @@
     <ProjectReference Include="..\Lipwig.Services\Lipwig.Services.csproj">
       <Project>{55e473cd-2efe-4ae6-b5a6-50b3c6a09eb8}</Project>
       <Name>Lipwig.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lipwig.Utilities\Lipwig.Utilities.csproj">
+      <Project>{ed87b889-c5be-4f38-b248-be440bc71dc4}</Project>
+      <Name>Lipwig.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
