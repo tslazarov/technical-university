@@ -56,5 +56,32 @@ namespace Lipwig.Models
         public string Description { get; set; }
 
         public PaymentType PaymentType { get; set; }
+
+        [NotMapped]
+        public string CategoryName
+        {
+            get
+            {
+                return "N/A";
+            }
+        }
+
+        [NotMapped]
+        public bool IsExpense
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        [NotMapped]
+        public bool IsIncome
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

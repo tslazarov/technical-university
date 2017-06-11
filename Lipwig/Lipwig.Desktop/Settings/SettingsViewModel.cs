@@ -20,7 +20,6 @@ namespace Lipwig.Desktop.Settings
         private string messageColor;
         private Currency currency;
         private SimpleEditUser user;
-        private bool initial;
 
         private IUsersService usersService;
         private ICurrenciesService currenciesService;
@@ -39,7 +38,7 @@ namespace Lipwig.Desktop.Settings
             this.User = this.modelFactory.CreateSimpleEditUser();
 
             this.Currencies = this.currenciesService.GetCurrencies();
-            this.initial = true;
+            this.PopulateFields();
         }
 
         public string Message
@@ -97,11 +96,6 @@ namespace Lipwig.Desktop.Settings
         {
             get
             {
-                if (this.initial)
-                {
-                    this.initial = false;
-                    this.PopulateFields();
-                }
                 return this.user;
             }
             set

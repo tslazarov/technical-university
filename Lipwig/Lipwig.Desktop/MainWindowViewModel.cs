@@ -22,6 +22,7 @@ namespace Lipwig.Desktop
         private decimal balance;
         private string currencyType;
         private string email;
+        private IKernel kernel;
 
         private BindableBase currentViewModel;
 
@@ -36,34 +37,12 @@ namespace Lipwig.Desktop
 
         public MainWindowViewModel()
         {
-            this.LoadViewModels();
-
-            this.CurrentViewModel = this.loginViewModel;
+            this.kernel = IocContainer.Kernel;
 
             this.NavigationCommand = new RelayCommand<string>(Navigate);
-
-            this.loginViewModel.RegistrationNavigateRequested += Navigate;
-            this.registerViewModel.SuccessfulRegistrationRequested += AuthenticationRenavigate;
-            this.loginViewModel.SuccessfulLoginRequested += AuthenticationRenavigate;
-            this.incomeAddEditViewModel.SuccessfulIncomeRequested += UpdateBalance;
-            this.expenseAddEditViewModel.SuccessfulExpenseRequested += UpdateBalance;
-            this.settingsViewModel.SuccessfulUserInformationRequested += UpdateUserInformation;
-
             this.IsNavigationVisible = false;
-        }
 
-        private void LoadViewModels()
-        {
-            var kernel = IocContainer.Kernel;
-
-            this.loginViewModel = kernel.Get<LoginViewModel>();
-            this.registerViewModel = kernel.Get<RegisterViewModel>();
-            this.expenseAddEditViewModel = kernel.Get<ExpenseAddEditViewModel>();
-            this.historyViewModel = kernel.Get<HistoryViewModel>();
-            this.homeViewModel = kernel.Get<HomeViewModel>();
-            this.incomeAddEditViewModel = kernel.Get<IncomeAddEditViewModel>();
-            this.settingsViewModel = kernel.Get<SettingsViewModel>();
-            this.statisticsViewModel = kernel.Get<StatisticsViewModel>();
+            this.Navigate("login");
         }
 
         public BindableBase CurrentViewModel
@@ -142,27 +121,72 @@ namespace Lipwig.Desktop
             switch (destination)
             {
                 case "home":
-                    this.CurrentViewModel = this.homeViewModel;
+                    this.CurrentViewModel = kernel.Get<HomeViewModel>();
                     break;
+
                 case "expense":
+                    if(this.expenseAddEditViewModel != null)
+                    {
+                        this.expenseAddEditViewModel.SuccessfulExpenseRequested -= UpdateBalance;
+
+                    }
+                    this.expenseAddEditViewModel = kernel.Get<ExpenseAddEditViewModel>();
+                    this.expenseAddEditViewModel.SuccessfulExpenseRequested += UpdateBalance;
+
                     this.CurrentViewModel = this.expenseAddEditViewModel;
                     break;
+
                 case "income":
+                    if(this.incomeAddEditViewModel != null)
+                    {
+                        this.incomeAddEditViewModel.SuccessfulIncomeRequested -= UpdateBalance;
+                    }
+                    this.incomeAddEditViewModel = kernel.Get<IncomeAddEditViewModel>();
+                    this.incomeAddEditViewModel.SuccessfulIncomeRequested += UpdateBalance;
+
                     this.CurrentViewModel = this.incomeAddEditViewModel;
                     break;
+
                 case "history":
-                    this.CurrentViewModel = this.historyViewModel;
+                    this.CurrentViewModel = kernel.Get<HistoryViewModel>();
                     break;
+
                 case "statistics":
-                    this.CurrentViewModel = this.statisticsViewModel;
+                    this.CurrentViewModel = kernel.Get<StatisticsViewModel>();
                     break;
+
                 case "settings":
+                    if(this.settingsViewModel != null)
+                    {
+                        this.settingsViewModel.SuccessfulUserInformationRequested -= UpdateUserInformation;
+                    }
+                    this.settingsViewModel = kernel.Get<SettingsViewModel>();
+                    this.settingsViewModel.SuccessfulUserInformationRequested += UpdateUserInformation;
+
                     this.CurrentViewModel = this.settingsViewModel;
                     break;
+
                 case "register":
+                    if (this.registerViewModel != null)
+                    {
+                        this.registerViewModel.SuccessfulRegistrationRequested -= AuthenticationRenavigate;
+                    }
+                    this.registerViewModel = kernel.Get<RegisterViewModel>();
+                    this.registerViewModel.SuccessfulRegistrationRequested += AuthenticationRenavigate;
+
                     this.CurrentViewModel = this.registerViewModel;
                     break;
+
                 default:
+                    if(this.loginViewModel != null)
+                    {
+                        this.loginViewModel.RegistrationNavigateRequested -= Navigate;
+                        this.loginViewModel.SuccessfulLoginRequested -= AuthenticationRenavigate;
+                    }
+                    this.loginViewModel = kernel.Get<LoginViewModel>();
+                    this.loginViewModel.RegistrationNavigateRequested += Navigate;
+                    this.loginViewModel.SuccessfulLoginRequested += AuthenticationRenavigate;
+
                     this.CurrentViewModel = this.loginViewModel;
                     break;
             }

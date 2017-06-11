@@ -60,5 +60,32 @@ namespace Lipwig.Models
         public PaymentType PaymentType { get; set; }
 
         public CategoryType CategoryType { get; set; }
+
+        [NotMapped]
+        public string CategoryName
+        {
+            get
+            {
+                return this.CategoryType.ToString("F");
+            }
+        }
+
+        [NotMapped]
+        public bool IsExpense
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        [NotMapped]
+        public bool IsIncome
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }
