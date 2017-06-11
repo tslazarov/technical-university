@@ -49,7 +49,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid VerticalAlignment="Center" Width="250" HorizontalAlignment="Center" Margin="-130,0,0,0">
+    <Grid VerticalAlignment="Center" Width="320" HorizontalAlignment="Center" Margin="-130,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
@@ -62,26 +62,26 @@
         </Grid.RowDefinitions>
         <telerik:Label Grid.Row="0" FontSize="14" HorizontalAlignment="Right" Content="{Binding Message}" Foreground="{Binding MessageColor}"/>
         <telerik:Label Grid.Row="1" FontSize="14" HorizontalAlignment="Left" Content="To"/>
-        <TextBox Grid.Row="1" Text="{Binding Expense.Side}" HorizontalAlignment="Right" Width="150"/>
+        <TextBox Grid.Row="1" Text="{Binding Expense.Side}" HorizontalAlignment="Right" Width="220"/>
         <telerik:Label Grid.Row="2" FontSize="14" HorizontalAlignment="Left" Content="Amount"/>
-        <TextBox Grid.Row="2" Text="{Binding Expense.Amount}" HorizontalAlignment="Right" Width="150"/>
+        <TextBox Grid.Row="2" Text="{Binding Expense.Amount}" HorizontalAlignment="Right" Width="220"/>
         <telerik:Label Grid.Row="3" FontSize="14" HorizontalAlignment="Left" Content="Description"/>
-        <TextBox Grid.Row="3" Text="{Binding Expense.Description}" HorizontalAlignment="Right" Width="150"/>
+        <TextBox Grid.Row="3" Text="{Binding Expense.Description}" HorizontalAlignment="Right" Width="220"/>
         <telerik:Label Grid.Row="4" FontSize="14" HorizontalAlignment="Left" Content="Date"/>
-        <telerik:RadDatePicker Grid.Row="4" SelectedValue="{Binding Date}" HorizontalAlignment="Right" Width="150" />
+        <telerik:RadDatePicker Grid.Row="4" SelectedValue="{Binding Date}" HorizontalAlignment="Right" Width="220" />
         <telerik:Label Grid.Row="5" FontSize="14" HorizontalAlignment="Left" Content="Payment type"/>
         <telerik:RadComboBox ItemsSource="{Binding Source={StaticResource PaymentEnum}}"
                   SelectedItem="{Binding Path=PaymentType}"
                   Background="Transparent" 
                   BorderBrush="#1E0000"
-                  BorderThickness="0" Grid.Row="5" HorizontalAlignment="Right" Height="25"  Width="150"  />
+                  BorderThickness="0" Grid.Row="5" HorizontalAlignment="Right" Height="25"  Width="220"  />
         <telerik:Label Grid.Row="6" FontSize="14" HorizontalAlignment="Left" Content="Category type" />
         <telerik:RadComboBox ItemsSource="{Binding Source={StaticResource CategoryEnum}}"
                   SelectedItem="{Binding Path=CategoryType}"
                   Background="Transparent" 
                   BorderBrush="#1E0000"
-                  BorderThickness="0" Grid.Row="6" HorizontalAlignment="Right" Height="25"  Width="150"  />
-        <Button Grid.Row="7" Margin="0, 20" HorizontalAlignment="Right" Width="150" 
+                  BorderThickness="0" Grid.Row="6" HorizontalAlignment="Right" Height="25"  Width="220"  />
+        <Button Grid.Row="7" Margin="0, 20" HorizontalAlignment="Right" Width="220" 
                 Style="{StaticResource MaterialButton}"
                 Command="{Binding SaveCommand}"
                 Content="Save"/>

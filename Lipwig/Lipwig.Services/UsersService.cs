@@ -77,5 +77,37 @@ namespace Lipwig.Services
 
             this.data.SaveChanges();
         }
+
+        public void UpdateUser(User user)
+        {
+            this.data.UsersRepository.Update(user);
+            this.data.SaveChanges();
+        }
+
+        public bool UpdateUserPassword(string email, string oldPassword, string newPassword)
+        {
+            var user = this.GetUserByEmail(email);
+
+            if (user != null)
+            {
+                var hashedOldPassword = PasswordHelper.CreatePasswordHash(oldPassword, user.Salt);
+
+                if (user.HashedPassword != hashedOldPassword)
+                {
+                    return false;
+                }
+            }
+
+            var salt = PasswordHelper.CreateSalt(10);
+            var hashedNewPassword = PasswordHelper.CreatePasswordHash(newPassword, salt);
+
+            user.Salt = salt;
+            user.HashedPassword = hashedNewPassword;
+
+            this.data.UsersRepository.Update(user);
+            this.data.SaveChanges();
+
+            return true;
+        }
     }
 }

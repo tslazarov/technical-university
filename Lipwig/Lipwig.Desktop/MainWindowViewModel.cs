@@ -47,6 +47,7 @@ namespace Lipwig.Desktop
             this.loginViewModel.SuccessfulLoginRequested += AuthenticationRenavigate;
             this.incomeAddEditViewModel.SuccessfulIncomeRequested += UpdateBalance;
             this.expenseAddEditViewModel.SuccessfulExpenseRequested += UpdateBalance;
+            this.settingsViewModel.SuccessfulUserInformationRequested += UpdateUserInformation;
 
             this.IsNavigationVisible = false;
         }
@@ -169,6 +170,13 @@ namespace Lipwig.Desktop
 
         private void UpdateBalance()
         {
+            this.Balance = Constants.Balance;
+        }
+
+        private void UpdateUserInformation()
+        {
+            this.CurrencyType = Constants.CurrencyType;
+            this.Email = Constants.Email;
             this.Balance = Constants.Balance;
         }
     }

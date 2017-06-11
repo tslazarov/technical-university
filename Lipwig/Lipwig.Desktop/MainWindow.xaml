@@ -12,7 +12,7 @@
         xmlns:set="clr-namespace:Lipwig.Desktop.Settings"
         xmlns:stat="clr-namespace:Lipwig.Desktop.Statistics"
         mc:Ignorable="d"
-        Title="Lipwig" Height="400" Width="800">
+        Title="Lipwig" MinHeight="540" MinWidth="960">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>

@@ -13,6 +13,8 @@ namespace Lipwig.Desktop.Factories
     {
         SimpleRegistrationUser CreateSimpleRegistrationUser();
 
+        SimpleEditUser CreateSimpleEditUser();
+
         SimpleIncome CreateSimpleIncome();
 
         SimpleExpense CreateSimpleExpense();
