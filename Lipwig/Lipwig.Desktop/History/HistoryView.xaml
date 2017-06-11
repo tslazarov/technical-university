@@ -48,7 +48,11 @@
                         <telerik:FilteringControl/>
                     </telerik:GridViewDataColumn.FilteringControl>
                 </telerik:GridViewDataColumn>
-                <telerik:GridViewDataColumn IsReadOnly="True" DataMemberBinding="{Binding CategoryName}" Header="Category" UniqueName="Category" />
+                <telerik:GridViewDataColumn IsReadOnly="True" DataMemberBinding="{Binding CategoryName}" Header="Category" UniqueName="Category">
+                    <telerik:GridViewDataColumn.FilteringControl>
+                        <telerik:FilteringControl/>
+                    </telerik:GridViewDataColumn.FilteringControl>
+                </telerik:GridViewDataColumn>
             </telerik:RadGridView.Columns>
         </telerik:RadGridView>
         <telerik:RadDataPager x:Name="radDataPager" Grid.Row="1"
