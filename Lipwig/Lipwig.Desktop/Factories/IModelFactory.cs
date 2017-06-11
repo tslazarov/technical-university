@@ -12,5 +12,7 @@ namespace Lipwig.Desktop.Factories
     public interface IModelFactory
     {
         SimpleRegistrationUser CreateSimpleRegistrationUser();
+
+        SimpleIncome CreateSimpleIncome();
     }
 }

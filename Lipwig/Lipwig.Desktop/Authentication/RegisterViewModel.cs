@@ -108,7 +108,7 @@ namespace Lipwig.Desktop.Authentication
 
                 this.SuccessfulRegistrationRequested("home");
             }
-            catch(Exception e)
+            catch
             {
                 if (existingUser)
                 {

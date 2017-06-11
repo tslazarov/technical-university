@@ -45,6 +45,7 @@ namespace Lipwig.Desktop
             this.loginViewModel.RegistrationNavigateRequested += Navigate;
             this.registerViewModel.SuccessfulRegistrationRequested += AuthenticationRenavigate;
             this.loginViewModel.SuccessfulLoginRequested += AuthenticationRenavigate;
+            this.incomeAddEditViewModel.SuccessfulIncomeRequested += UpdateBalance;
 
             this.IsNavigationVisible = false;
         }
@@ -163,6 +164,11 @@ namespace Lipwig.Desktop
                     this.CurrentViewModel = this.loginViewModel;
                     break;
             }
+        }
+
+        private void UpdateBalance()
+        {
+            this.Balance = Constants.Balance;
         }
     }
 }

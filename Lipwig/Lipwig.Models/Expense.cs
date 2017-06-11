@@ -2,13 +2,12 @@
 using Lipwig.Utilities;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lipwig.Models
 {
     public class Expense : ITransaction
     {
-        private decimal amount;
-
         public Expense()
         {
 
@@ -24,7 +23,7 @@ namespace Lipwig.Models
         {
             this.Id = id;
             this.Date = date;
-            this.Amount = amount;
+            this.Amount = amount / Constants.CurrencyValue;
             this.Side = side;
             this.Description = description;
             this.PaymentType = paymentType;
@@ -38,15 +37,14 @@ namespace Lipwig.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public decimal Amount
+        public decimal Amount { get; set; }
+
+        [NotMapped]
+        public decimal LocalizedAmount
         {
             get
             {
-                return this.amount * Constants.CurrencyValue;
-            }
-            set
-            {
-                this.amount = value / Constants.CurrencyValue;
+                return decimal.Round(this.Amount * Constants.CurrencyValue);
             }
         }
 

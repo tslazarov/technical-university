@@ -117,6 +117,7 @@
     <Compile Include="IocContainer.cs" />
     <Compile Include="IocModules\DesktopModule.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Models\SimpleIncome.cs" />
     <Compile Include="Models\SimpleRegistrationUser.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Settings\SettingsView.xaml.cs">

@@ -59,5 +59,14 @@ namespace Lipwig.Services
             this.data.UsersRepository.Add(user);
             this.data.SaveChanges();
         }
+
+        public void SaveIncome(string email, Income income)
+        {
+            var user = this.GetUserByEmail(email);
+            user.Incomes.Add(income);
+            user.Balance += income.Amount;
+
+            this.data.SaveChanges();
+        }
     }
 }

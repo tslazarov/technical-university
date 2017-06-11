@@ -16,5 +16,7 @@ namespace Lipwig.Services.Contracts
         User Login(string email, string password);
 
         void Register(User user, string password);
+
+        void SaveIncome(string email, Income income);
     }
 }
