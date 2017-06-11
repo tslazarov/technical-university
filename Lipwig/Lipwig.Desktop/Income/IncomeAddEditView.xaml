@@ -9,6 +9,10 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" 
+                    Command="{Binding SaveCommand}"/>
+    </UserControl.InputBindings>
     <UserControl.Resources>
         <ObjectDataProvider x:Key="paymentEnum" MethodName="GetValues"
                             ObjectType="{x:Type sys:Enum}">

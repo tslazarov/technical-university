@@ -7,6 +7,10 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="300">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" 
+                    Command="{Binding RegisterCommand}"/>
+    </UserControl.InputBindings>
     <UserControl.Resources>
         <telerik:MaterialTheme  x:Key="Theme" />
         <Style TargetType="TextBox">

@@ -14,5 +14,7 @@ namespace Lipwig.Desktop.Factories
         SimpleRegistrationUser CreateSimpleRegistrationUser();
 
         SimpleIncome CreateSimpleIncome();
+
+        SimpleExpense CreateSimpleExpense();
     }
 }

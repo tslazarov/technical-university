@@ -46,6 +46,7 @@ namespace Lipwig.Desktop
             this.registerViewModel.SuccessfulRegistrationRequested += AuthenticationRenavigate;
             this.loginViewModel.SuccessfulLoginRequested += AuthenticationRenavigate;
             this.incomeAddEditViewModel.SuccessfulIncomeRequested += UpdateBalance;
+            this.expenseAddEditViewModel.SuccessfulExpenseRequested += UpdateBalance;
 
             this.IsNavigationVisible = false;
         }

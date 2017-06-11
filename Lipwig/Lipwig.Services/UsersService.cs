@@ -68,5 +68,14 @@ namespace Lipwig.Services
 
             this.data.SaveChanges();
         }
+
+        public void SaveExpense(string email, Expense expense)
+        {
+            var user = this.GetUserByEmail(email);
+            user.Expenses.Add(expense);
+            user.Balance -= expense.Amount;
+
+            this.data.SaveChanges();
+        }
     }
 }
