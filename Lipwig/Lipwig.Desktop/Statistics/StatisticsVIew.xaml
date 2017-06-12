@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Lipwig.Desktop.Statistics"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:mod="clr-namespace:Lipwig.Desktop.Models"
+             xmlns:util="clr-namespace:Lipwig.Utilities;assembly=Lipwig.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="510" d:DesignWidth="840">
     <UserControl.Resources>
@@ -20,36 +21,62 @@
         <Style TargetType="TextBox">
             <Setter Property="telerik:StyleManager.Theme" Value="{StaticResource Theme}"/>
         </Style>
+        <Style x:Key="MaterialButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FF1A237E" />
+            <Setter Property="Foreground" Value="#EFEFEF" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" Margin="0,5,0,5" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FF9FA8DA"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" Background="#3F51B5"/>
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
             <telerik:RadComboBox ItemsSource="{Binding Source={StaticResource dateEnum}}"
                   SelectedItem="{Binding Path=DateType}"
                   Background="Transparent" 
                   BorderBrush="#1E0000"
                   BorderThickness="0" 
                   Width="150"
-                  Margin="40,5,0,5"/>
+                  Margin="40,10,0,10"/>
             <Grid>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsBase, Converter={StaticResource BoolToVis}}">
-                    <telerik:RadDatePicker DateSelectionMode="{Binding DateSelectionMode}" Culture="{Binding CalendarDateCulture}" DateTimeWatermarkContent="{Binding DateSelectionMode}"  SelectedValue="{Binding StartDate}" HorizontalAlignment="Right" Margin="30,5,0,5" Width="150" Background="Transparent"/>
+                    <telerik:RadDatePicker DateSelectionMode="{Binding DateSelectionMode}" Culture="{Binding CalendarDateCulture}" DateTimeWatermarkContent="{Binding DateSelectionMode}"  SelectedValue="{Binding PeriodDate}" HorizontalAlignment="Right" Margin="30,10,0,10" Width="150" Background="Transparent"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsPeriod, Converter={StaticResource BoolToVis}}">
-                    <telerik:RadDatePicker DateSelectionMode="Day" DateTimeWatermarkContent="Start date"  SelectedValue="{Binding StartDate}" HorizontalAlignment="Right" Margin="30,5,0,5" Width="150" Background="Transparent"/>
-                    <telerik:RadDatePicker DateSelectionMode="Day" DateTimeWatermarkContent="End date" SelectedValue="{Binding EndDate}" HorizontalAlignment="Right" Margin="30,5,0,5" Width="150" Background="Transparent" />
+                    <telerik:RadDatePicker DateSelectionMode="Day" DateTimeWatermarkContent="Start date"  SelectedValue="{Binding StartDate}" HorizontalAlignment="Right" Margin="30,10,0,10" Width="150" Background="Transparent"/>
+                    <telerik:RadDatePicker DateSelectionMode="Day" DateTimeWatermarkContent="End date" SelectedValue="{Binding EndDate}" HorizontalAlignment="Right" Margin="30,10,0,10" Width="150" Background="Transparent" />
                 </StackPanel>
             </Grid>
         </StackPanel>
-        <telerik:RadCartesianChart Palette="Material" Grid.Column="0" Grid.Row="1" >
+        <Button Grid.Row="1" Grid.Column="1" Margin="0, 10, 30, 10" HorizontalAlignment="Right" Width="150" 
+                Style="{StaticResource MaterialButton}"
+                Command="{Binding FilterCommand}"
+                Content="Filter"/>
+        <telerik:RadCartesianChart Palette="Material" Grid.Column="0" Grid.Row="2" >
+            <telerik:RadCartesianChart.Grid>
+                <telerik:CartesianChartGrid MajorLinesVisibility="Y" StripLinesVisibility="Y" />
+            </telerik:RadCartesianChart.Grid>
             <telerik:RadCartesianChart.HorizontalAxis>
                 <telerik:CategoricalAxis />
             </telerik:RadCartesianChart.HorizontalAxis>
@@ -57,7 +84,7 @@
                 <telerik:LinearAxis/>
             </telerik:RadCartesianChart.VerticalAxis>
             <telerik:RadCartesianChart.Series>
-                <telerik:BarSeries ItemsSource="{Binding Data2}"
+                <telerik:BarSeries ItemsSource="{Binding CartesianData}"
                                    ValueBinding="Value"
                                    CategoryBinding="Date"
                                    FontSize="12"
@@ -65,20 +92,25 @@
                 </telerik:BarSeries>
             </telerik:RadCartesianChart.Series>
         </telerik:RadCartesianChart>
-        <telerik:RadPieChart Margin="30, 0" Grid.Column="1" Grid.Row="1" Palette="Material">
+        <telerik:RadPieChart Margin="30, 0" Grid.Column="1" Grid.Row="2" Palette="Material">
             <telerik:RadPieChart.SmartLabelsStrategy>
                 <telerik:PieChartSmartLabelsStrategy DisplayMode="Outside" />
             </telerik:RadPieChart.SmartLabelsStrategy>
             <telerik:RadPieChart.Series>
                 <telerik:DoughnutSeries ShowLabels="True" DisplayName="" ValueBinding="Value"
-                        ItemsSource="{Binding Data}">
+                        ItemsSource="{Binding PieChartData}">
                     <telerik:DoughnutSeries.LabelDefinitions>
                         <telerik:ChartSeriesLabelDefinition>
                             <telerik:ChartSeriesLabelDefinition.Template>
                                 <DataTemplate>
-                                    <StackPanel VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding DataItem.Category}"/>
-                                        <TextBlock Text="{Binding Value}"/>
+                                    <StackPanel>
+                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                            <TextBlock Text="{Binding DataItem.Category}"/>
+                                        </StackPanel>
+                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Value}"/>
+                                            <TextBlock Text="{x:Static util:Constants.CurrencyType}" Margin="5,0,0,0"/>
+                                        </StackPanel>
                                     </StackPanel>
                                 </DataTemplate>
                             </telerik:ChartSeriesLabelDefinition.Template>

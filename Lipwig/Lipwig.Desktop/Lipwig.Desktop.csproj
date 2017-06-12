@@ -124,12 +124,12 @@
     <Compile Include="IocContainer.cs" />
     <Compile Include="IocModules\DesktopModule.cs" />
     <Compile Include="MainWindowViewModel.cs" />
-    <Compile Include="Models\CategoryData.cs" />
+    <Compile Include="Models\PieChartData.cs" />
     <Compile Include="Models\SimpleEditUser.cs" />
     <Compile Include="Models\SimpleExpense.cs" />
     <Compile Include="Models\SimpleIncome.cs" />
     <Compile Include="Models\SimpleRegistrationUser.cs" />
-    <Compile Include="Models\StatisticsData.cs" />
+    <Compile Include="Models\CartesianData.cs" />
     <Compile Include="Models\StatisticsDateType.cs" />
     <Compile Include="PasswordConverter.cs" />
     <Compile Include="RelayCommand.cs" />

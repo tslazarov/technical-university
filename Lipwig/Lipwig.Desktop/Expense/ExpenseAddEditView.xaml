@@ -68,7 +68,7 @@
         <telerik:Label Grid.Row="3" FontSize="14" HorizontalAlignment="Left" Content="Description"/>
         <TextBox Grid.Row="3" Text="{Binding Expense.Description}" HorizontalAlignment="Right" Width="220"/>
         <telerik:Label Grid.Row="4" FontSize="14" HorizontalAlignment="Left" Content="Date"/>
-        <telerik:RadDatePicker Grid.Row="4" SelectedValue="{Binding Date}" HorizontalAlignment="Right" Width="220" />
+        <telerik:RadDatePicker Grid.Row="4" SelectedValue="{Binding Date}" HorizontalAlignment="Right" Background="Transparent" Width="220" />
         <telerik:Label Grid.Row="5" FontSize="14" HorizontalAlignment="Left" Content="Payment type"/>
         <telerik:RadComboBox ItemsSource="{Binding Source={StaticResource PaymentEnum}}"
                   SelectedItem="{Binding Path=PaymentType}"
