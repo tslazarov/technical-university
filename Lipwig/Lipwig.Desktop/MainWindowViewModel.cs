@@ -203,7 +203,7 @@ namespace Lipwig.Desktop
             }
         }
 
-        private void EditIncome(Guid obj)
+        private void EditIncome(Guid id)
         {
 
             if (this.incomeAddEditViewModel != null)
@@ -214,6 +214,7 @@ namespace Lipwig.Desktop
             this.incomeAddEditViewModel.SuccessfulIncomeRequested += UpdateBalance;
 
             this.CurrentViewModel = this.incomeAddEditViewModel;
+            (this.CurrentViewModel as IncomeAddEditViewModel).PopulateEditView(id);
         }
 
         private void EditExpense(Guid id)

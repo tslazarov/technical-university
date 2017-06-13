@@ -14,6 +14,7 @@
                     Command="{Binding SaveCommand}"/>
     </UserControl.InputBindings>
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <ObjectDataProvider x:Key="paymentEnum" MethodName="GetValues"
                             ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -55,11 +56,11 @@
         </Grid.RowDefinitions>
         <telerik:Label Grid.Row="0" FontSize="14" HorizontalAlignment="Right" Content="{Binding Message}" Foreground="{Binding MessageColor}"/>
         <telerik:Label Grid.Row="1" FontSize="14" HorizontalAlignment="Left" Content="From"/>
-        <TextBox Grid.Row="1" Text="{Binding Income.Side}" HorizontalAlignment="Right" Width="220"/>
+        <TextBox Grid.Row="1" Text="{Binding SimpleIncome.Side}" HorizontalAlignment="Right" Width="220"/>
         <telerik:Label Grid.Row="2" FontSize="14" HorizontalAlignment="Left" Content="Amount"/>
-        <TextBox Grid.Row="2" Text="{Binding Income.Amount}" HorizontalAlignment="Right" Width="220"/>
+        <TextBox Grid.Row="2" Text="{Binding SimpleIncome.Amount}" HorizontalAlignment="Right" Width="220"/>
         <telerik:Label Grid.Row="3" FontSize="14" HorizontalAlignment="Left" Content="Description"/>
-        <TextBox Grid.Row="3" Text="{Binding Income.Description}" HorizontalAlignment="Right" Width="220"/>
+        <TextBox Grid.Row="3" Text="{Binding SimpleIncome.Description}" HorizontalAlignment="Right" Width="220"/>
         <telerik:Label Grid.Row="4" FontSize="14" HorizontalAlignment="Left" Content="Date"/>
         <telerik:RadDatePicker Grid.Row="4" SelectedValue="{Binding Date}" HorizontalAlignment="Right" Background="Transparent" Width="220" />
         <telerik:Label Grid.Row="5" FontSize="14" HorizontalAlignment="Left" Content="Payment type"/>
@@ -69,8 +70,14 @@
                   BorderBrush="#1E0000"
                   BorderThickness="0" Grid.Row="5" HorizontalAlignment="Right" Height="25"  Width="220"  />
         <Button Grid.Row="6" Margin="0, 20" HorizontalAlignment="Right" Width="220" 
+                Visibility="{Binding Path=IsSaveMode, Converter={StaticResource BoolToVis}}"
                 Style="{StaticResource MaterialButton}"
                 Command="{Binding SaveCommand}"
                 Content="Save"/>
+        <Button Grid.Row="6" Margin="0, 20" HorizontalAlignment="Right" Width="220" 
+                Visibility="{Binding Path=IsEditMode, Converter={StaticResource BoolToVis}}"
+                Style="{StaticResource MaterialButton}"
+                Command="{Binding EditCommand}"
+                Content="Edit"/>
     </Grid>
 </UserControl>
