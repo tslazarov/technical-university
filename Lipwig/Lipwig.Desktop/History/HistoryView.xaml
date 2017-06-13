@@ -5,10 +5,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lipwig.Desktop.History"
              xmlns:util="clr-namespace:Lipwig.Utilities;assembly=Lipwig.Utilities"
+             xmlns:desk="clr-namespace:Lipwig.Desktop"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <desk:PasswordConverter x:Key="passwordConverter"/>
+        <Style x:Key="TransperantButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#FF1A237E" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FF9FA8DA"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>   
     <Grid>
         <Grid.RowDefinitions>
@@ -52,6 +72,18 @@
                     <telerik:GridViewDataColumn.FilteringControl>
                         <telerik:FilteringControl/>
                     </telerik:GridViewDataColumn.FilteringControl>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Grid.Row="10" Margin="0, 20" HorizontalAlignment="Right" Width="220" 
+                                    Style="{StaticResource TransperantButton}"
+                                    Command="{Binding DataContext.DeleteTransactionCommand, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                    CommandParameter="{Binding}"
+                                    Content="Delete">
+                            </Button>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
                 </telerik:GridViewDataColumn>
             </telerik:RadGridView.Columns>
         </telerik:RadGridView>

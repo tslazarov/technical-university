@@ -148,7 +148,14 @@ namespace Lipwig.Desktop
                     break;
 
                 case "history":
-                    this.CurrentViewModel = kernel.Get<HistoryViewModel>();
+                    if (this.settingsViewModel != null)
+                    {
+                        this.historyViewModel.SuccessfulDeleteRequested -= UpdateBalance;
+                    }
+                    this.historyViewModel = kernel.Get<HistoryViewModel>();
+                    this.historyViewModel.SuccessfulDeleteRequested += UpdateBalance;
+
+                    this.CurrentViewModel = this.historyViewModel;
                     break;
 
                 case "statistics":
