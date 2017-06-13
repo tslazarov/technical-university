@@ -151,9 +151,13 @@ namespace Lipwig.Desktop
                     if (this.settingsViewModel != null)
                     {
                         this.historyViewModel.SuccessfulDeleteRequested -= UpdateBalance;
+                        this.historyViewModel.SuccessfulExpenseEditRequested -= EditExpense;
+                        this.historyViewModel.SuccessfulIncomeEditRequested -= EditIncome;
                     }
                     this.historyViewModel = kernel.Get<HistoryViewModel>();
                     this.historyViewModel.SuccessfulDeleteRequested += UpdateBalance;
+                    this.historyViewModel.SuccessfulExpenseEditRequested += EditExpense;
+                    this.historyViewModel.SuccessfulIncomeEditRequested += EditIncome;
 
                     this.CurrentViewModel = this.historyViewModel;
                     break;
@@ -197,6 +201,33 @@ namespace Lipwig.Desktop
                     this.CurrentViewModel = this.loginViewModel;
                     break;
             }
+        }
+
+        private void EditIncome(Guid obj)
+        {
+
+            if (this.incomeAddEditViewModel != null)
+            {
+                this.incomeAddEditViewModel.SuccessfulIncomeRequested -= UpdateBalance;
+            }
+            this.incomeAddEditViewModel = kernel.Get<IncomeAddEditViewModel>();
+            this.incomeAddEditViewModel.SuccessfulIncomeRequested += UpdateBalance;
+
+            this.CurrentViewModel = this.incomeAddEditViewModel;
+        }
+
+        private void EditExpense(Guid id)
+        {
+            if (this.expenseAddEditViewModel != null)
+            {
+                this.expenseAddEditViewModel.SuccessfulExpenseRequested -= UpdateBalance;
+
+            }
+            this.expenseAddEditViewModel = kernel.Get<ExpenseAddEditViewModel>();
+            this.expenseAddEditViewModel.SuccessfulExpenseRequested += UpdateBalance;
+
+            this.CurrentViewModel = this.expenseAddEditViewModel;
+            (this.CurrentViewModel as ExpenseAddEditViewModel).PopulateEditView(id);
         }
 
         private void UpdateBalance()

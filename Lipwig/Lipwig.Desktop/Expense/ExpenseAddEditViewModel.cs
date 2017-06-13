@@ -17,24 +17,33 @@ namespace Lipwig.Desktop.Expense
     {
         private string message;
         private string messageColor;
-        private SimpleExpense expense;
+        private bool isEditMode;
+        private bool isSaveMode;
+        private SimpleExpense simpleExpense;
         private DateTime date;
 
         private IUsersService usersService;
+        private IExpensesService expensesService;
         private IExpensesFactory expensesFactory;
         private IModelFactory modelFactory;
 
         public ExpenseAddEditViewModel(IUsersService usersService,
+            IExpensesService expensesService,
             IExpensesFactory expensesFactory,
             IModelFactory modelFactory)
         {
             this.usersService = usersService;
+            this.expensesService = expensesService;
             this.expensesFactory = expensesFactory;
             this.modelFactory = modelFactory;
 
-            this.SaveCommand = new RelayCommand(Save);
-            this.Expense = this.modelFactory.CreateSimpleExpense();
+            this.SimpleExpense = this.modelFactory.CreateSimpleExpense();
             this.Date = DateTime.Today;
+            this.IsEditMode = false;
+            this.IsSaveMode = true;
+
+            this.SaveCommand = new RelayCommand(Save);
+            this.EditCommand = new RelayCommand(Edit);
         }
 
         public string Message
@@ -61,17 +70,43 @@ namespace Lipwig.Desktop.Expense
             }
         }
 
-        public SimpleExpense Expense
+        public bool IsEditMode
         {
             get
             {
-                return this.expense;
+                return this.isEditMode;
             }
             set
             {
-                SetProperty(ref this.expense, value);
+                SetProperty(ref isEditMode, value);
             }
         }
+
+        public bool IsSaveMode
+        {
+            get
+            {
+                return this.isSaveMode;
+            }
+            set
+            {
+                SetProperty(ref isSaveMode, value);
+            }
+        }
+
+        public SimpleExpense SimpleExpense
+        {
+            get
+            {
+                return this.simpleExpense;
+            }
+            set
+            {
+                SetProperty(ref this.simpleExpense, value);
+            }
+        }
+
+        private Lipwig.Models.Expense Expense { get; set; }
 
         public DateTime Date
         {
@@ -91,14 +126,82 @@ namespace Lipwig.Desktop.Expense
 
         public RelayCommand SaveCommand { get; private set; }
 
+        public RelayCommand EditCommand { get; private set; }
+
         public event Action SuccessfulExpenseRequested = delegate { };
+
+        public void PopulateEditView(Guid id)
+        {
+            this.Expense = this.expensesService.GetExpense(id);
+
+            this.Date = this.Expense.Date;
+            this.CategoryType = this.Expense.CategoryType;
+            this.PaymentType = this.Expense.PaymentType;
+            this.SimpleExpense.Amount = this.Expense.LocalizedAmount.ToString();
+            this.SimpleExpense.Side = this.Expense.Side;
+            this.SimpleExpense.Description = this.Expense.Description;
+
+            this.IsSaveMode = false;
+            this.IsEditMode = true;
+        }
+
+        private void Edit()
+        {
+            try
+            {
+                var amount = decimal.Parse(this.SimpleExpense.Amount);
+
+                var difference = this.Expense.LocalizedAmount - amount;
+
+                this.Expense.Date = this.Date;
+                this.Expense.Amount = amount / Constants.CurrencyValue;
+                this.Expense.Side = this.SimpleExpense.Side;
+                this.Expense.Description = this.SimpleExpense.Description;
+                this.Expense.CategoryType = this.CategoryType;
+                this.Expense.PaymentType = this.PaymentType;
+
+                var user = this.usersService.GetUserByEmail(Constants.Email);
+
+                if(user != null)
+                {
+                    user.Balance += difference / Constants.CurrencyValue;
+                    Constants.Balance = user.LocalizedBalance;
+
+                    this.usersService.UpdateUser(user);
+                }
+                
+                this.expensesService.UpdateExpense(this.Expense);
+
+                this.Message = "Expense update was successful";
+                this.MessageColor = "#2CB144";
+
+                Task.Factory.StartNew(() => Thread.Sleep(2 * 1000))
+                    .ContinueWith((t) =>
+                    {
+                        this.Message = string.Empty;
+                    });
+
+                this.SuccessfulExpenseRequested();
+            }
+            catch
+            {
+                this.Message = "Expense save was unsuccessful";
+                this.MessageColor = "#FFD50000";
+
+                Task.Factory.StartNew(() => Thread.Sleep(2 * 1000))
+                    .ContinueWith((t) =>
+                    {
+                        this.Message = string.Empty;
+                    });
+            }
+        }
 
         private void Save()
         {
             try
             {
-                var amount = decimal.Parse(this.Expense.Amount);
-                var expense = this.expensesFactory.Create(Guid.NewGuid(), this.Date, amount, this.Expense.Side, this.Expense.Description, this.PaymentType, this.CategoryType);
+                var amount = decimal.Parse(this.SimpleExpense.Amount);
+                var expense = this.expensesFactory.Create(Guid.NewGuid(), this.Date, amount, this.SimpleExpense.Side, this.SimpleExpense.Description, this.PaymentType, this.CategoryType);
 
                 this.usersService.SaveExpense(Constants.Email, expense);
                 var user = this.usersService.GetUserByEmail(Constants.Email);
@@ -116,7 +219,7 @@ namespace Lipwig.Desktop.Expense
 
                 this.SuccessfulExpenseRequested();
 
-                this.Expense = this.modelFactory.CreateSimpleExpense();
+                this.SimpleExpense = this.modelFactory.CreateSimpleExpense();
                 this.Date = DateTime.Today;
             }
             catch

@@ -29,6 +29,7 @@ namespace Lipwig.Desktop.History
             this.PopulateTransactions();
 
             this.DeleteTransactionCommand = new RelayCommand<object>(DeleteTransaction);
+            this.EditTransactionCommand = new RelayCommand<object>(EditTransaction);
         }
 
         public ObservableCollection<ITransaction> Transactions
@@ -45,6 +46,14 @@ namespace Lipwig.Desktop.History
 
         public RelayCommand<object> DeleteTransactionCommand { get; private set; }
 
+        public RelayCommand<object> EditTransactionCommand { get; private set; }
+
+        public event Action SuccessfulDeleteRequested = delegate { };
+
+        public event Action<Guid> SuccessfulIncomeEditRequested = delegate { };
+
+        public event Action<Guid> SuccessfulExpenseEditRequested = delegate { };
+
         private void PopulateTransactions()
         {
             var user = this.usersService.GetUserByEmail(Constants.Email);
@@ -59,7 +68,19 @@ namespace Lipwig.Desktop.History
             }
         }
 
-        public event Action SuccessfulDeleteRequested = delegate { };
+        private void EditTransaction(object parameter)
+        {
+            var transaction = (ITransaction)parameter;
+
+            if (transaction.IsExpense)
+            {
+                this.SuccessfulExpenseEditRequested(transaction.Id);
+            }
+            else
+            {
+                this.SuccessfulIncomeEditRequested(transaction.Id);
+            }
+        }
 
         private void DeleteTransaction(object parameter)
         {

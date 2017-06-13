@@ -6,12 +6,46 @@ using System.Threading.Tasks;
 
 namespace Lipwig.Desktop.Models
 {
-    public class SimpleExpense
+    public class SimpleExpense : BindableBase
     {
-        public string Side { get; set; }
+        private string side;
+        private string description;
+        private string amount;
 
-        public string Description { get; set; }
+        public string Side
+        {
+            get
+            {
+                return this.side;
+            }
+            set
+            {
+                SetProperty(ref this.side, value);
+            }
+        }
 
-        public string Amount { get; set; }
+        public string Description
+        {
+            get
+            {
+                return this.description;
+            }
+            set
+            {
+                SetProperty(ref this.description, value);
+            }
+        }
+
+        public string Amount
+        {
+            get
+            {
+                return this.amount;
+            }
+            set
+            {
+                SetProperty(ref this.amount, value);
+            }
+        }
     }
 }
