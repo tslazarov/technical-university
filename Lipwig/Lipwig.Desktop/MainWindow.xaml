@@ -60,6 +60,24 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="TransperantButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#FF1A237E" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FF9FA8DA"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid Background="#EFEFEF">
@@ -79,9 +97,12 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
                     <TextBlock Text="{Binding Email}" Margin="0,0,15,0"  FontWeight="Bold" />
                     <TextBlock Text="{Binding Balance}" Margin="0,0,5,0" />
-                    <TextBlock Text="{Binding CurrencyType}" />
+                    <TextBlock Text="{Binding CurrencyType}" Margin="0,0,10,0" />
+                    <Button HorizontalAlignment="Right" Width="60" 
+                        Style="{StaticResource TransperantButton}" 
+                        Content="Logout" 
+                        Command="{Binding LogoutCommand}" />
                 </StackPanel>
-               
             </Grid>
             <Grid Grid.Column="0" Grid.Row="1" Background="Transparent" >
                 <Grid.ColumnDefinitions>
@@ -137,6 +158,5 @@
                 <ContentControl Content="{Binding CurrentViewModel}"/>
             </Grid>
         </Grid>
-        
     </Grid>
 </Window>

@@ -40,6 +40,7 @@ namespace Lipwig.Desktop
             this.kernel = IocContainer.Kernel;
 
             this.NavigationCommand = new RelayCommand<string>(Navigate);
+            this.LogoutCommand = new RelayCommand(Logout);
             this.IsNavigationVisible = false;
 
             this.Navigate("login");
@@ -107,6 +108,8 @@ namespace Lipwig.Desktop
 
         public RelayCommand<string> NavigationCommand { get; private set; }
 
+        public RelayCommand LogoutCommand { get; private set; }
+
         private void AuthenticationRenavigate(string destination)
         {
             this.IsNavigationVisible = true;
@@ -116,12 +119,25 @@ namespace Lipwig.Desktop
             this.Navigate(destination);
         }
 
+        private void Logout()
+        {
+            this.IsNavigationVisible = false;
+            Constants.Balance = 0M;
+            Constants.CurrencyValue = 0M;
+            Constants.CurrencyType = string.Empty;
+            Constants.Email = string.Empty;
+
+            this.Navigate("login");
+        }
+
         private void Navigate(string destination)
         {
             switch (destination)
             {
                 case "home":
-                    this.CurrentViewModel = kernel.Get<HomeViewModel>();
+                    this.homeViewModel = kernel.Get<HomeViewModel>();
+
+                    this.CurrentViewModel = this.homeViewModel;
                     break;
 
                 case "expense":
@@ -163,7 +179,9 @@ namespace Lipwig.Desktop
                     break;
 
                 case "statistics":
-                    this.CurrentViewModel = kernel.Get<StatisticsViewModel>();
+                    this.statisticsViewModel = kernel.Get<StatisticsViewModel>();
+
+                    this.CurrentViewModel = this.statisticsViewModel;
                     break;
 
                 case "settings":
