@@ -1,10 +1,6 @@
 ﻿using Lipwig.Services.Contracts;
 using Lipwig.Utilities;
-using Ninject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Telerik.Windows.Controls;
@@ -22,7 +18,6 @@ namespace Lipwig.Desktop.Authentication
             this.usersService = usersService;
 
             this.RegistrationNavigateCommand = new RelayCommand<string>(RegistrationNavigate);
-
             this.LoginCommand = new RelayCommand<object>(Login);
         }
 
@@ -36,7 +31,7 @@ namespace Lipwig.Desktop.Authentication
             }
             set
             {
-                SetProperty(ref this.message, value);
+                this.SetProperty(ref this.message, value);
             }
         }
         public RelayCommand<object> LoginCommand { get; private set; }
@@ -61,10 +56,10 @@ namespace Lipwig.Desktop.Authentication
                     throw new NullReferenceException();
                 }
 
-                Constants.CurrencyType = user.Currency.Name;
-                Constants.CurrencyValue = user.Currency.Value;
-                Constants.Balance = user.LocalizedBalance;
-                Constants.Email = user.Email;
+                ViewBag.CurrencyType = user.Currency.Name;
+                ViewBag.CurrencyValue = user.Currency.Value;
+                ViewBag.Balance = user.LocalizedBalance;
+                ViewBag.Email = user.Email;
 
                 this.SuccessfulLoginRequested("home");
             }

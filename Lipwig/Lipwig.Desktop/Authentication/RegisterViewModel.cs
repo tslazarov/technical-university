@@ -1,15 +1,11 @@
-﻿using Lipwig.Data.Contracts;
-using Lipwig.Data.Factories;
+﻿using Lipwig.Data.Factories;
 using Lipwig.Desktop.Factories;
 using Lipwig.Desktop.Models;
 using Lipwig.Models;
 using Lipwig.Services.Contracts;
 using Lipwig.Utilities;
-using Ninject;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Telerik.Windows.Controls;
@@ -52,7 +48,7 @@ namespace Lipwig.Desktop.Authentication
             }
             set
             {
-                SetProperty(ref this.user, value);
+               this.SetProperty(ref this.user, value);
             }
         }
 
@@ -66,7 +62,7 @@ namespace Lipwig.Desktop.Authentication
             }
             set
             {
-                SetProperty(ref this.message, value);
+               this.SetProperty(ref this.message, value);
             }
         }
 
@@ -84,8 +80,8 @@ namespace Lipwig.Desktop.Authentication
                 
                 if(this.Currency != null)
                 {
-                    Constants.CurrencyValue = this.Currency.Value;
-                    Constants.CurrencyType = this.Currency.Name;
+                    ViewBag.CurrencyValue = this.Currency.Value;
+                    ViewBag.CurrencyType = this.Currency.Name;
                 }
                 else
                 {
@@ -103,8 +99,8 @@ namespace Lipwig.Desktop.Authentication
 
                 this.usersService.Register(user, password);
 
-                Constants.Email = this.user.Email;
-                Constants.Balance = balance;
+                ViewBag.Email = this.user.Email;
+                ViewBag.Balance = balance;
 
                 this.SuccessfulRegistrationRequested("home");
             }

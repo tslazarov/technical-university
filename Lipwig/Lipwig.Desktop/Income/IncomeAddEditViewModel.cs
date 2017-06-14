@@ -5,10 +5,6 @@ using Lipwig.Models;
 using Lipwig.Services.Contracts;
 using Lipwig.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -55,7 +51,7 @@ namespace Lipwig.Desktop.Income
             }
             set
             {
-                SetProperty(ref this.message, value);
+               this.SetProperty(ref this.message, value);
             }
         }
 
@@ -67,7 +63,7 @@ namespace Lipwig.Desktop.Income
             }
             set
             {
-                SetProperty(ref this.messageColor, value);
+               this.SetProperty(ref this.messageColor, value);
             }
         }
 
@@ -79,7 +75,7 @@ namespace Lipwig.Desktop.Income
             }
             set
             {
-                SetProperty(ref isEditMode, value);
+               this.SetProperty(ref isEditMode, value);
             }
         }
 
@@ -91,7 +87,7 @@ namespace Lipwig.Desktop.Income
             }
             set
             {
-                SetProperty(ref isSaveMode, value);
+               this.SetProperty(ref isSaveMode, value);
             }
         }
 
@@ -103,7 +99,7 @@ namespace Lipwig.Desktop.Income
             }
             set
             {
-                SetProperty(ref this.simpleIncome, value);
+               this.SetProperty(ref this.simpleIncome, value);
             }
         }
 
@@ -118,7 +114,7 @@ namespace Lipwig.Desktop.Income
             }
             set
             {
-                SetProperty(ref this.date, value);
+               this.SetProperty(ref this.date, value);
             }
         }
 
@@ -153,17 +149,17 @@ namespace Lipwig.Desktop.Income
                 var difference = this.Income.LocalizedAmount - amount;
 
                 this.Income.Date = this.Date;
-                this.Income.Amount = amount / Constants.CurrencyValue;
+                this.Income.Amount = amount / ViewBag.CurrencyValue;
                 this.Income.Side = this.SimpleIncome.Side;
                 this.Income.Description = this.SimpleIncome.Description;
                 this.Income.PaymentType = this.PaymentType;
 
-                var user = this.usersService.GetUserByEmail(Constants.Email);
+                var user = this.usersService.GetUserByEmail(ViewBag.Email);
 
                 if (user != null)
                 {
-                    user.Balance -= difference / Constants.CurrencyValue;
-                    Constants.Balance = user.LocalizedBalance;
+                    user.Balance -= difference / ViewBag.CurrencyValue;
+                    ViewBag.Balance = user.LocalizedBalance;
 
                     this.usersService.UpdateUser(user);
                 }
@@ -197,10 +193,10 @@ namespace Lipwig.Desktop.Income
                 var amount = decimal.Parse(this.SimpleIncome.Amount);
                 var income = this.incomesFactory.Create(Guid.NewGuid(), this.Date, amount, this.SimpleIncome.Side, this.SimpleIncome.Description, this.PaymentType);
 
-                this.usersService.SaveIncome(Constants.Email, income);
-                var user = this.usersService.GetUserByEmail(Constants.Email);
+                this.usersService.SaveIncome(ViewBag.Email, income);
+                var user = this.usersService.GetUserByEmail(ViewBag.Email);
 
-                Constants.Balance = user.LocalizedBalance;
+                ViewBag.Balance = user.LocalizedBalance;
 
                 this.Message = "Income save was successful";
                 this.MessageColor = "#2CB144";

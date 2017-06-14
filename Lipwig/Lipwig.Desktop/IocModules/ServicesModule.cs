@@ -1,6 +1,4 @@
-﻿using Lipwig.Services;
-using Lipwig.Services.Assembly;
-using Lipwig.Services.Contracts;
+﻿using Lipwig.Services.Assembly;
 using Ninject.Extensions.Conventions;
 using Ninject.Modules;
 
@@ -15,8 +13,6 @@ namespace Lipwig.Desktop.IocModules
                     .SelectAllClasses()
                     .BindDefaultInterface()
                 );
-
-            this.Rebind<ICurrenciesService>().To<CurrenciesService>();
         }
     }
 }

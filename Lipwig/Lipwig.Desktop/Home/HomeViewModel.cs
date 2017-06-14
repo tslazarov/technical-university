@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lipwig.Desktop.Home
 {
@@ -16,17 +14,16 @@ namespace Lipwig.Desktop.Home
     {
         private ObservableCollection<CartesianData> cartesianData;
         private ObservableCollection<ITransaction> transactions;
-        private IUsersService usersService;
-
         private User user;
+
+        private IUsersService usersService;
 
         public HomeViewModel(IUsersService usersService)
         {
             this.usersService = usersService;
-            this.user = this.usersService.GetUserByEmail(Constants.Email);
+            this.user = this.usersService.GetUserByEmail(ViewBag.Email);
 
             this.DailyCartesianChart(DateTime.Today.AddDays(-6), DateTime.Today);
-            this.Transactions = new ObservableCollection<ITransaction>();
             this.PopulateTransactions(DateTime.Today.AddDays(-6), DateTime.Today);
         }
 
@@ -38,7 +35,7 @@ namespace Lipwig.Desktop.Home
             }
             set
             {
-                SetProperty(ref this.cartesianData, value);
+               this.SetProperty(ref this.cartesianData, value);
             }
         }
 
@@ -50,7 +47,7 @@ namespace Lipwig.Desktop.Home
             }
             set
             {
-                SetProperty(ref this.transactions, value);
+               this.SetProperty(ref this.transactions, value);
             }
         }
 

@@ -5,14 +5,9 @@ using Lipwig.Desktop.Home;
 using Lipwig.Desktop.Income;
 using Lipwig.Desktop.Settings;
 using Lipwig.Desktop.Statistics;
-using Lipwig.Services.Contracts;
 using Lipwig.Utilities;
 using Ninject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lipwig.Desktop
 {
@@ -39,11 +34,12 @@ namespace Lipwig.Desktop
         {
             this.kernel = IocContainer.Kernel;
 
-            this.NavigationCommand = new RelayCommand<string>(Navigate);
-            this.LogoutCommand = new RelayCommand(Logout);
             this.IsNavigationVisible = false;
 
             this.Navigate("login");
+
+            this.NavigationCommand = new RelayCommand<string>(Navigate);
+            this.LogoutCommand = new RelayCommand(Logout);
         }
 
         public BindableBase CurrentViewModel
@@ -54,7 +50,7 @@ namespace Lipwig.Desktop
             }
             set
             {
-                SetProperty(ref this.currentViewModel, value);
+               this.SetProperty(ref this.currentViewModel, value);
             }
         }
 
@@ -66,7 +62,7 @@ namespace Lipwig.Desktop
             }
             set
             {
-                SetProperty(ref this.isNavigationVisible, value);
+               this.SetProperty(ref this.isNavigationVisible, value);
             }
         }
 
@@ -78,7 +74,7 @@ namespace Lipwig.Desktop
             }
             set
             {
-                SetProperty(ref this.balance, value);
+               this.SetProperty(ref this.balance, value);
             }
         }
 
@@ -90,7 +86,7 @@ namespace Lipwig.Desktop
             }
             set
             {
-                SetProperty(ref this.currencyType, value);
+               this.SetProperty(ref this.currencyType, value);
             }
         }
 
@@ -102,7 +98,7 @@ namespace Lipwig.Desktop
             }
             set
             {
-                SetProperty(ref this.email, value);
+               this.SetProperty(ref this.email, value);
             }
         }
 
@@ -113,19 +109,19 @@ namespace Lipwig.Desktop
         private void AuthenticationRenavigate(string destination)
         {
             this.IsNavigationVisible = true;
-            this.Email = Constants.Email;
-            this.Balance = Constants.Balance;
-            this.CurrencyType = Constants.CurrencyType;
+            this.Email = ViewBag.Email;
+            this.Balance = ViewBag.Balance;
+            this.CurrencyType = ViewBag.CurrencyType;
             this.Navigate(destination);
         }
 
         private void Logout()
         {
             this.IsNavigationVisible = false;
-            Constants.Balance = 0M;
-            Constants.CurrencyValue = 0M;
-            Constants.CurrencyType = string.Empty;
-            Constants.Email = string.Empty;
+            ViewBag.Balance = 0M;
+            ViewBag.CurrencyValue = 0M;
+            ViewBag.CurrencyType = string.Empty;
+            ViewBag.Email = string.Empty;
 
             this.Navigate("login");
         }
@@ -251,14 +247,14 @@ namespace Lipwig.Desktop
 
         private void UpdateBalance()
         {
-            this.Balance = Constants.Balance;
+            this.Balance = ViewBag.Balance;
         }
 
         private void UpdateUserInformation()
         {
-            this.CurrencyType = Constants.CurrencyType;
-            this.Email = Constants.Email;
-            this.Balance = Constants.Balance;
+            this.CurrencyType = ViewBag.CurrencyType;
+            this.Email = ViewBag.Email;
+            this.Balance = ViewBag.Balance;
         }
     }
 }

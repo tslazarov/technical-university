@@ -28,7 +28,7 @@ namespace Lipwig.Models
             this.Email = email;
             this.FirstName = firstName;
             this.LastName = lastName;
-            this.Balance = balance / Constants.CurrencyValue;
+            this.Balance = balance / ViewBag.CurrencyValue;
             this.CurrencyId = currency.Id;
             this.Currency = currency;
 

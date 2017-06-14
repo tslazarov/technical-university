@@ -57,15 +57,15 @@
                         <StackPanel Grid.Row="1" Grid.Column="0">
                             <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsExpense, Converter={StaticResource BoolToVis}}">
                                 <TextBlock Text="{Binding LocalizedAmount}" Foreground="#FFD50000"/>
-                                <TextBlock Text="{x:Static util:Constants.CurrencyType}" Margin="5,0,0,0" Foreground="#FFD50000"/>
+                                <TextBlock Text="{x:Static util:ViewBag.CurrencyType}" Margin="5,0,0,0" Foreground="#FFD50000"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsIncome, Converter={StaticResource BoolToVis}}">
                                 <TextBlock Text="{Binding LocalizedAmount}" Foreground="#2CB144" />
-                                <TextBlock Text="{x:Static util:Constants.CurrencyType}" Margin="5,0,0,0" Foreground="#2CB144"/>
+                                <TextBlock Text="{x:Static util:ViewBag.CurrencyType}" Margin="5,0,0,0" Foreground="#2CB144"/>
                             </StackPanel>
                         </StackPanel>
                         <TextBlock Grid.Row="1" Grid.Column="1" Margin="40,0,0,0"
-                Text="{Binding Date, StringFormat='{}{0: dd MM, yyyy}'}" />
+                Text="{Binding Date, StringFormat='{}{0: dd MMM, yyyy}'}" />
                     </Grid>
                 </DataTemplate>
             </telerik:RadListBox.ItemTemplate>

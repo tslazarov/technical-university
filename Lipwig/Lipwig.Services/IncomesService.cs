@@ -1,12 +1,8 @@
-﻿using Lipwig.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lipwig.Models;
+﻿using Bytes2you.Validation;
 using Lipwig.Data.Contracts;
-using Bytes2you.Validation;
+using Lipwig.Models;
+using Lipwig.Services.Contracts;
+using System;
 
 namespace Lipwig.Services
 {

@@ -5,8 +5,6 @@ using Lipwig.Services.Contracts;
 using Lipwig.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Telerik.Windows.Controls;
@@ -33,12 +31,13 @@ namespace Lipwig.Desktop.Settings
             this.currenciesService = currenciesService;
             this.modelFactory = modelFactory;
 
-            this.SaveUserInformationCommand = new RelayCommand(SaveUserInformation);
-            this.SaveUserPasswordCommand = new RelayCommand<object>(SaveUserPassword);
             this.User = this.modelFactory.CreateSimpleEditUser();
 
             this.Currencies = this.currenciesService.GetCurrencies();
             this.PopulateFields();
+
+            this.SaveUserInformationCommand = new RelayCommand(SaveUserInformation);
+            this.SaveUserPasswordCommand = new RelayCommand<object>(SaveUserPassword);
         }
 
         public string Message
@@ -49,7 +48,7 @@ namespace Lipwig.Desktop.Settings
             }
             set
             {
-                SetProperty(ref this.message, value);
+               this.SetProperty(ref this.message, value);
             }
         }
 
@@ -61,7 +60,7 @@ namespace Lipwig.Desktop.Settings
             }
             set
             {
-                SetProperty(ref this.messagePassword, value);
+               this.SetProperty(ref this.messagePassword, value);
             }
         }
 
@@ -73,7 +72,7 @@ namespace Lipwig.Desktop.Settings
             }
             set
             {
-                SetProperty(ref this.messageColor, value);
+               this.SetProperty(ref this.messageColor, value);
             }
         }
 
@@ -87,7 +86,7 @@ namespace Lipwig.Desktop.Settings
             }
             set
             {
-                SetProperty(ref this.currency, value);
+               this.SetProperty(ref this.currency, value);
             }
         }
 
@@ -100,7 +99,7 @@ namespace Lipwig.Desktop.Settings
             }
             set
             {
-                SetProperty(ref this.user, value);
+               this.SetProperty(ref this.user, value);
             }
         }
         public RelayCommand SaveUserInformationCommand { get; private set; }
@@ -113,7 +112,7 @@ namespace Lipwig.Desktop.Settings
         {
             try
             {
-                var user = this.usersService.GetUserByEmail(Constants.Email);
+                var user = this.usersService.GetUserByEmail(ViewBag.Email);
 
                 user.Email = this.User.Email;
                 user.FirstName = this.User.FirstName;
@@ -123,10 +122,10 @@ namespace Lipwig.Desktop.Settings
 
                 this.usersService.UpdateUser(user);
 
-                Constants.Email = user.Email;
-                Constants.Balance = user.LocalizedBalance;
-                Constants.CurrencyType = user.Currency.Name;
-                Constants.CurrencyValue = user.Currency.Value;
+                ViewBag.Email = user.Email;
+                ViewBag.Balance = user.LocalizedBalance;
+                ViewBag.CurrencyType = user.Currency.Name;
+                ViewBag.CurrencyValue = user.Currency.Value;
 
                 this.Message = "User details save was successful";
                 this.MessageColor = "#2CB144";
@@ -163,7 +162,7 @@ namespace Lipwig.Desktop.Settings
                     throw new NullReferenceException();
                 }
 
-                result = this.usersService.UpdateUserPassword(Constants.Email, oldPassword, newPassword);
+                result = this.usersService.UpdateUserPassword(ViewBag.Email, oldPassword, newPassword);
 
                 if (result)
                 {
@@ -194,7 +193,7 @@ namespace Lipwig.Desktop.Settings
 
         private void PopulateFields()
         {
-            var user = this.usersService.GetUserByEmail(Constants.Email);
+            var user = this.usersService.GetUserByEmail(ViewBag.Email);
 
             if(user != null)
             {

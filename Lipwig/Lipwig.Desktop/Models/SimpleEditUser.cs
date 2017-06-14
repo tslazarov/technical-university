@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lipwig.Desktop.Models
+﻿namespace Lipwig.Desktop.Models
 {
     public class SimpleEditUser : BindableBase
     {
@@ -21,7 +15,7 @@ namespace Lipwig.Desktop.Models
             }
             set
             {
-                SetProperty(ref this.email, value);
+               this.SetProperty(ref this.email, value);
             }
         }
 
@@ -33,7 +27,7 @@ namespace Lipwig.Desktop.Models
             }
             set
             {
-                SetProperty(ref this.firstName, value);
+               this.SetProperty(ref this.firstName, value);
             }
         }
 
@@ -45,7 +39,7 @@ namespace Lipwig.Desktop.Models
             }
             set
             {
-                SetProperty(ref this.lastName, value);
+               this.SetProperty(ref this.lastName, value);
             }
         }
     }

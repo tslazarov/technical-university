@@ -4,20 +4,17 @@ using Lipwig.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Lipwig.Desktop.History
 {
     public class HistoryViewModel : BindableBase
     {
+        private ObservableCollection<ITransaction> transactions;
+
         private IUsersService usersService;
         private IExpensesService expensesService;
         private IIncomesService incomesService;
-        private ObservableCollection<ITransaction> transactions;
 
         public HistoryViewModel(IUsersService usersService,
             IExpensesService expensesService,
@@ -26,6 +23,7 @@ namespace Lipwig.Desktop.History
             this.expensesService = expensesService;
             this.incomesService = incomesService;
             this.usersService = usersService;
+
             this.PopulateTransactions();
 
             this.DeleteTransactionCommand = new RelayCommand<object>(DeleteTransaction);
@@ -56,7 +54,7 @@ namespace Lipwig.Desktop.History
 
         private void PopulateTransactions()
         {
-            var user = this.usersService.GetUserByEmail(Constants.Email);
+            var user = this.usersService.GetUserByEmail(ViewBag.Email);
 
             if(user != null)
             {
@@ -86,7 +84,7 @@ namespace Lipwig.Desktop.History
         {
             var transaction = (ITransaction)parameter;
 
-            var user = this.usersService.GetUserByEmail(Constants.Email);
+            var user = this.usersService.GetUserByEmail(ViewBag.Email);
 
             if (user != null)
             {
@@ -97,7 +95,7 @@ namespace Lipwig.Desktop.History
                     user.Expenses.Remove(expense);
                     user.Balance += expense.Amount;
 
-                    Constants.Balance = user.LocalizedBalance;
+                    ViewBag.Balance = user.LocalizedBalance;
 
                     this.usersService.UpdateUser(user);
                     this.expensesService.DeleteExpense(expense);
@@ -109,7 +107,7 @@ namespace Lipwig.Desktop.History
                     user.Incomes.Remove(income);
                     user.Balance -= income.Amount;
 
-                    Constants.Balance = user.LocalizedBalance;
+                    ViewBag.Balance = user.LocalizedBalance;
 
                     this.usersService.UpdateUser(user);
                     this.incomesService.DeleteIncome(income);

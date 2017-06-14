@@ -5,9 +5,6 @@ using Lipwig.Models;
 using Lipwig.Services.Contracts;
 using Lipwig.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -54,7 +51,7 @@ namespace Lipwig.Desktop.Expense
             }
             set
             {
-                SetProperty(ref this.message, value);
+               this.SetProperty(ref this.message, value);
             }
         }
 
@@ -66,7 +63,7 @@ namespace Lipwig.Desktop.Expense
             }
             set
             {
-                SetProperty(ref this.messageColor, value);
+               this.SetProperty(ref this.messageColor, value);
             }
         }
 
@@ -78,7 +75,7 @@ namespace Lipwig.Desktop.Expense
             }
             set
             {
-                SetProperty(ref isEditMode, value);
+               this.SetProperty(ref isEditMode, value);
             }
         }
 
@@ -90,7 +87,7 @@ namespace Lipwig.Desktop.Expense
             }
             set
             {
-                SetProperty(ref isSaveMode, value);
+               this.SetProperty(ref isSaveMode, value);
             }
         }
 
@@ -102,7 +99,7 @@ namespace Lipwig.Desktop.Expense
             }
             set
             {
-                SetProperty(ref this.simpleExpense, value);
+               this.SetProperty(ref this.simpleExpense, value);
             }
         }
 
@@ -116,7 +113,7 @@ namespace Lipwig.Desktop.Expense
             }
             set
             {
-                SetProperty(ref this.date, value);
+               this.SetProperty(ref this.date, value);
             }
         }
 
@@ -154,18 +151,18 @@ namespace Lipwig.Desktop.Expense
                 var difference = this.Expense.LocalizedAmount - amount;
 
                 this.Expense.Date = this.Date;
-                this.Expense.Amount = amount / Constants.CurrencyValue;
+                this.Expense.Amount = amount / ViewBag.CurrencyValue;
                 this.Expense.Side = this.SimpleExpense.Side;
                 this.Expense.Description = this.SimpleExpense.Description;
                 this.Expense.CategoryType = this.CategoryType;
                 this.Expense.PaymentType = this.PaymentType;
 
-                var user = this.usersService.GetUserByEmail(Constants.Email);
+                var user = this.usersService.GetUserByEmail(ViewBag.Email);
 
                 if(user != null)
                 {
-                    user.Balance += difference / Constants.CurrencyValue;
-                    Constants.Balance = user.LocalizedBalance;
+                    user.Balance += difference / ViewBag.CurrencyValue;
+                    ViewBag.Balance = user.LocalizedBalance;
 
                     this.usersService.UpdateUser(user);
                 }
@@ -199,10 +196,10 @@ namespace Lipwig.Desktop.Expense
                 var amount = decimal.Parse(this.SimpleExpense.Amount);
                 var expense = this.expensesFactory.Create(Guid.NewGuid(), this.Date, amount, this.SimpleExpense.Side, this.SimpleExpense.Description, this.PaymentType, this.CategoryType);
 
-                this.usersService.SaveExpense(Constants.Email, expense);
-                var user = this.usersService.GetUserByEmail(Constants.Email);
+                this.usersService.SaveExpense(ViewBag.Email, expense);
+                var user = this.usersService.GetUserByEmail(ViewBag.Email);
 
-                Constants.Balance = user.LocalizedBalance;
+                ViewBag.Balance = user.LocalizedBalance;
 
                 this.Message = "Expense save was successful";
                 this.MessageColor = "#2CB144";

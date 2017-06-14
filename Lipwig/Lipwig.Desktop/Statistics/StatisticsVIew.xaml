@@ -109,7 +109,7 @@
                                         </StackPanel>
                                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                             <TextBlock Text="{Binding Value}"/>
-                                            <TextBlock Text="{x:Static util:Constants.CurrencyType}" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{x:Static util:ViewBag.CurrencyType}" Margin="5,0,0,0"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </DataTemplate>

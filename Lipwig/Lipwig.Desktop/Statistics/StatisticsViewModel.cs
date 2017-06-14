@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lipwig.Desktop.Models;
-using System.Globalization;
-using System.Threading;
-using Lipwig.Services.Contracts;
+﻿using Lipwig.Desktop.Models;
 using Lipwig.Models;
+using Lipwig.Services.Contracts;
 using Lipwig.Utilities;
+using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
 
 namespace Lipwig.Desktop.Statistics
 {
@@ -25,19 +22,21 @@ namespace Lipwig.Desktop.Statistics
         private DateTime periodDate;
         private bool isPeriod;
         private bool isBase;
-        private IUsersService usersService;
         private User user;
+
+        private IUsersService usersService;
 
         public StatisticsViewModel(IUsersService usersService)
         {
             this.DateType = StatisticsDateType.Period;
-            this.FilterCommand = new RelayCommand(Filter);
 
             this.usersService = usersService;
-            this.user = this.usersService.GetUserByEmail(Constants.Email);
+            this.user = this.usersService.GetUserByEmail(ViewBag.Email);
 
             this.PeriodPieChart(this.StartDate, this.EndDate);
             this.DailyCartesianChart(this.StartDate, this.EndDate);
+
+            this.FilterCommand = new RelayCommand(Filter);
         }
 
         public CultureInfo CalendarDateCulture
@@ -48,7 +47,7 @@ namespace Lipwig.Desktop.Statistics
             }
             set
             {
-                SetProperty(ref this.calendarDateCulture, value);
+               this.SetProperty(ref this.calendarDateCulture, value);
             }
         }
 
@@ -60,7 +59,7 @@ namespace Lipwig.Desktop.Statistics
             }
             set
             {
-                SetProperty(ref this.dateSelectionMode, value);
+               this.SetProperty(ref this.dateSelectionMode, value);
             }
         }
 
@@ -72,7 +71,7 @@ namespace Lipwig.Desktop.Statistics
             }
             set
             {
-                SetProperty(ref this.dateType, value);
+               this.SetProperty(ref this.dateType, value);
                 this.UpdateCalendar();
             }
         }
@@ -86,7 +85,7 @@ namespace Lipwig.Desktop.Statistics
             }
             set
             {
-                SetProperty(ref this.isPeriod, value);
+               this.SetProperty(ref this.isPeriod, value);
             }
         }
 
@@ -98,7 +97,7 @@ namespace Lipwig.Desktop.Statistics
             }
             set
             {
-                SetProperty(ref this.isBase, value);
+               this.SetProperty(ref this.isBase, value);
             }
         }
 
@@ -110,7 +109,7 @@ namespace Lipwig.Desktop.Statistics
             }
             set
             {
-                SetProperty(ref this.startDate, value);
+               this.SetProperty(ref this.startDate, value);
             }
         }
 
@@ -122,7 +121,7 @@ namespace Lipwig.Desktop.Statistics
             }
             set
             {
-                SetProperty(ref this.endDate, value);
+               this.SetProperty(ref this.endDate, value);
             }
         }
 
@@ -134,11 +133,9 @@ namespace Lipwig.Desktop.Statistics
             }
             set
             {
-                SetProperty(ref this.periodDate, value);
+               this.SetProperty(ref this.periodDate, value);
             }
         }
-
-        public RelayCommand FilterCommand { get; private set; }
 
         public ObservableCollection<PieChartData> PieChartData
         {
@@ -148,7 +145,7 @@ namespace Lipwig.Desktop.Statistics
             }
             set
             {
-                SetProperty(ref this.pieChartData, value);
+               this.SetProperty(ref this.pieChartData, value);
             }
         }
         public ObservableCollection<CartesianData> CartesianData
@@ -159,9 +156,11 @@ namespace Lipwig.Desktop.Statistics
             }
             set
             {
-                SetProperty(ref this.cartesianData, value);
+               this.SetProperty(ref this.cartesianData, value);
             }
         }
+
+        public RelayCommand FilterCommand { get; private set; }
 
         private void UpdateCalendar()
         {

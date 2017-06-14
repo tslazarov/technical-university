@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lipwig.Desktop.Models
+﻿namespace Lipwig.Desktop.Models
 {
     public class SimpleExpense : BindableBase
     {
@@ -20,7 +14,7 @@ namespace Lipwig.Desktop.Models
             }
             set
             {
-                SetProperty(ref this.side, value);
+               this.SetProperty(ref this.side, value);
             }
         }
 
@@ -32,7 +26,7 @@ namespace Lipwig.Desktop.Models
             }
             set
             {
-                SetProperty(ref this.description, value);
+               this.SetProperty(ref this.description, value);
             }
         }
 
@@ -44,7 +38,7 @@ namespace Lipwig.Desktop.Models
             }
             set
             {
-                SetProperty(ref this.amount, value);
+               this.SetProperty(ref this.amount, value);
             }
         }
     }

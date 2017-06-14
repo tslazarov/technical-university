@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lipwig.Utilities
+﻿namespace Lipwig.Utilities
 {
-    public static class Constants
+    public static class ViewBag
     {
         public static string Email { get; set; }
 

@@ -23,7 +23,7 @@ namespace Lipwig.Models
         {
             this.Id = id;
             this.Date = date;
-            this.Amount = amount / Constants.CurrencyValue;
+            this.Amount = amount / ViewBag.CurrencyValue;
             this.Side = side;
             this.Description = description;
             this.PaymentType = paymentType;
@@ -44,7 +44,7 @@ namespace Lipwig.Models
         {
             get
             {
-                return decimal.Round(this.Amount * Constants.CurrencyValue);
+                return decimal.Round(this.Amount * ViewBag.CurrencyValue);
             }
         }
 
