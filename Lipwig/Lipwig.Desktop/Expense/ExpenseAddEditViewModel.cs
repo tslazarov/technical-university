@@ -175,19 +175,15 @@ namespace Lipwig.Desktop.Expense
                 this.Message = "Expense update was successful";
                 this.MessageColor = "#2CB144";
 
-                Task.Factory.StartNew(() => Thread.Sleep(2 * 1000))
-                    .ContinueWith((t) =>
-                    {
-                        this.Message = string.Empty;
-                    });
-
                 this.SuccessfulExpenseRequested();
             }
             catch
             {
                 this.Message = "Expense save was unsuccessful";
                 this.MessageColor = "#FFD50000";
-
+            }
+            finally
+            {
                 Task.Factory.StartNew(() => Thread.Sleep(2 * 1000))
                     .ContinueWith((t) =>
                     {
@@ -211,12 +207,6 @@ namespace Lipwig.Desktop.Expense
                 this.Message = "Expense save was successful";
                 this.MessageColor = "#2CB144";
 
-                Task.Factory.StartNew(() => Thread.Sleep(2 * 1000))
-                    .ContinueWith((t) =>
-                    {
-                        this.Message = string.Empty;
-                    });
-
                 this.SuccessfulExpenseRequested();
 
                 this.SimpleExpense = this.modelFactory.CreateSimpleExpense();
@@ -226,7 +216,9 @@ namespace Lipwig.Desktop.Expense
             {
                 this.Message = "Expense save was unsuccessful";
                 this.MessageColor = "#FFD50000";
-
+            }
+            finally
+            {
                 Task.Factory.StartNew(() => Thread.Sleep(2 * 1000))
                     .ContinueWith((t) =>
                     {

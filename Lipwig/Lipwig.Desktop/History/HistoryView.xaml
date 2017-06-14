@@ -76,7 +76,7 @@
                 <telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Grid.Row="10" Margin="0, 20" HorizontalAlignment="Right" Width="60" 
+                            <Button Grid.Row="10" Margin="0, 20" HorizontalAlignment="Right" Width="50" 
                                     Style="{StaticResource TransperantButton}"
                                     Command="{Binding DataContext.DeleteTransactionCommand, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                                     CommandParameter="{Binding}"
@@ -88,7 +88,7 @@
                 <telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Grid.Row="10" Margin="0, 20" HorizontalAlignment="Right" Width="60" 
+                            <Button Grid.Row="10" Margin="0, 20" HorizontalAlignment="Right" Width="50" 
                                     Style="{StaticResource TransperantButton}"
                                     Command="{Binding DataContext.EditTransactionCommand, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                                     CommandParameter="{Binding}"
@@ -101,6 +101,6 @@
         </telerik:RadGridView>
         <telerik:RadDataPager x:Name="radDataPager" Grid.Row="1"
                           Source="{Binding Items, ElementName=radGridView}"
-                          PageSize="6" />
+                          PageSize="5" />
     </Grid>
 </UserControl>

@@ -4,9 +4,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lipwig.Desktop.Home"
+             xmlns:util="clr-namespace:Lipwig.Utilities;assembly=Lipwig.Utilities"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
     <Grid>
-        <TextBlock>Home</TextBlock>  
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" Background="#3F51B5"/>
+        <telerik:RadCartesianChart Palette="Material" Grid.Column="0" Grid.Row="1" >
+            <telerik:RadCartesianChart.Grid>
+                <telerik:CartesianChartGrid MajorLinesVisibility="Y" StripLinesVisibility="Y" />
+            </telerik:RadCartesianChart.Grid>
+            <telerik:RadCartesianChart.HorizontalAxis>
+                <telerik:CategoricalAxis />
+            </telerik:RadCartesianChart.HorizontalAxis>
+            <telerik:RadCartesianChart.VerticalAxis>
+                <telerik:LinearAxis/>
+            </telerik:RadCartesianChart.VerticalAxis>
+            <telerik:RadCartesianChart.Series>
+                <telerik:LineSeries ItemsSource="{Binding CartesianData}"
+                                   ValueBinding="Value"
+                                   CategoryBinding="Date"
+                                   FontSize="12"
+                                   >
+                </telerik:LineSeries>
+            </telerik:RadCartesianChart.Series>
+        </telerik:RadCartesianChart>
+        <telerik:RadListBox Grid.Column="1" Grid.Row="1" Background="Transparent"
+                            ItemsSource="{Binding Transactions}">
+            <telerik:RadListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock FontWeight="Bold" Grid.ColumnSpan="2" Text="{Binding Side}" />
+                        <StackPanel Grid.Row="1" Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsExpense, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="{Binding LocalizedAmount}" Foreground="#FFD50000"/>
+                                <TextBlock Text="{x:Static util:Constants.CurrencyType}" Margin="5,0,0,0" Foreground="#FFD50000"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsIncome, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="{Binding LocalizedAmount}" Foreground="#2CB144" />
+                                <TextBlock Text="{x:Static util:Constants.CurrencyType}" Margin="5,0,0,0" Foreground="#2CB144"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Margin="40,0,0,0"
+                Text="{Binding Date, StringFormat='{}{0: dd MM, yyyy}'}" />
+                    </Grid>
+                </DataTemplate>
+            </telerik:RadListBox.ItemTemplate>
+        </telerik:RadListBox>
     </Grid>
 </UserControl>
