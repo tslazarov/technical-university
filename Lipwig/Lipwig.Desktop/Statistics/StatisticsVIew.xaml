@@ -61,11 +61,11 @@
                   Margin="40,10,0,10"/>
             <Grid>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsBase, Converter={StaticResource BoolToVis}}">
-                    <telerik:RadDatePicker DateSelectionMode="{Binding DateSelectionMode}" Culture="{Binding CalendarDateCulture}" DateTimeWatermarkContent="{Binding DateSelectionMode}"  SelectedValue="{Binding PeriodDate}" HorizontalAlignment="Right" Margin="30,10,0,10" Width="150" Background="Transparent"/>
+                    <telerik:RadDatePicker DateSelectionMode="{Binding DateSelectionMode}" Culture="{Binding CalendarDateCulture}" DateTimeWatermarkContent="{Binding DateSelectionMode}"  SelectedValue="{Binding PeriodDate}" HorizontalAlignment="Right" Margin="20,10,0,10" Width="150" Background="Transparent"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsPeriod, Converter={StaticResource BoolToVis}}">
-                    <telerik:RadDatePicker DateSelectionMode="Day" DateTimeWatermarkContent="Start date"  SelectedValue="{Binding StartDate}" HorizontalAlignment="Right" Margin="30,10,0,10" Width="150" Background="Transparent"/>
-                    <telerik:RadDatePicker DateSelectionMode="Day" DateTimeWatermarkContent="End date" SelectedValue="{Binding EndDate}" HorizontalAlignment="Right" Margin="30,10,0,10" Width="150" Background="Transparent" />
+                    <telerik:RadDatePicker DateSelectionMode="Day" DateTimeWatermarkContent="Start date"  SelectedValue="{Binding StartDate}" HorizontalAlignment="Right" Margin="20,10,0,10" Width="150" Background="Transparent"/>
+                    <telerik:RadDatePicker DateSelectionMode="Day" DateTimeWatermarkContent="End date" SelectedValue="{Binding EndDate}" HorizontalAlignment="Right" Margin="20,10,0,10" Width="150" Background="Transparent" />
                 </StackPanel>
             </Grid>
         </StackPanel>
