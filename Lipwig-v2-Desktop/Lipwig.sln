@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lipwig.Desktop", "Lipwig.Desktop\Lipwig.Desktop.csproj", "{573A7C96-F178-41CC-B686-7856BEDA4C73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lipwig.Data", "Lipwig.Data\Lipwig.Data.csproj", "{416024A2-E9C7-40DD-9A3B-9264995A5478}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lipwig.Utilities", "Lipwig.Utilities\Lipwig.Utilities.csproj", "{ED87B889-C5BE-4F38-B248-BE440BC71DC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lipwig.HttpUtilities", "Lipwig.HttpUtilities\Lipwig.HttpUtilities.csproj", "{04DE9827-B516-4E68-B936-FF0F8B1EBF62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lipwig.Models", "Lipwig.Models\Lipwig.Models.csproj", "{0716F97A-F096-464C-87D5-FD9209A45B18}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{573A7C96-F178-41CC-B686-7856BEDA4C73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{573A7C96-F178-41CC-B686-7856BEDA4C73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{573A7C96-F178-41CC-B686-7856BEDA4C73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{573A7C96-F178-41CC-B686-7856BEDA4C73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{416024A2-E9C7-40DD-9A3B-9264995A5478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{416024A2-E9C7-40DD-9A3B-9264995A5478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{416024A2-E9C7-40DD-9A3B-9264995A5478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{416024A2-E9C7-40DD-9A3B-9264995A5478}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED87B889-C5BE-4F38-B248-BE440BC71DC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED87B889-C5BE-4F38-B248-BE440BC71DC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED87B889-C5BE-4F38-B248-BE440BC71DC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED87B889-C5BE-4F38-B248-BE440BC71DC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04DE9827-B516-4E68-B936-FF0F8B1EBF62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04DE9827-B516-4E68-B936-FF0F8B1EBF62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04DE9827-B516-4E68-B936-FF0F8B1EBF62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04DE9827-B516-4E68-B936-FF0F8B1EBF62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0716F97A-F096-464C-87D5-FD9209A45B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0716F97A-F096-464C-87D5-FD9209A45B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0716F97A-F096-464C-87D5-FD9209A45B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0716F97A-F096-464C-87D5-FD9209A45B18}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
