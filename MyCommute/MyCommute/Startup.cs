@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -8,13 +9,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Localization.Routing;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using MyCommute.Data;
 using MyCommute.Data.Contracts;
 using MyCommute.Data.Managers;
+using MyCommute.Extensions;
 using MyCommute.Models;
 using MyCommute.Services;
 
@@ -70,7 +77,34 @@ namespace MyCommute
             })
             .AddCookie("Temporary");
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddMvc()
+                .AddViewLocalization(options => options.ResourcesPath = "Resources")
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            //services.Configure<RequestLocalizationOptions>(options =>
+            //{
+            //    var supportedCultures = new List<CultureInfo>
+            //    {
+            //        new CultureInfo("en"),
+            //        new CultureInfo("bg"),
+            //    };
+            //    options.DefaultRequestCulture = new RequestCulture("bg");
+            //    options.SupportedCultures = supportedCultures;
+            //    options.SupportedUICultures = supportedCultures;
+            //    var provider = new RouteDataRequestCultureProvider();
+            //    provider.RouteDataStringKey = "lang";
+            //    provider.UIRouteDataStringKey = "lang";
+            //    provider.Options = options;
+            //    options.RequestCultureProviders = new[] { provider };
+            //});
+
+            services.Configure<RouteOptions>(options =>
+            {
+                options.ConstraintMap.Add("lang", typeof(LanguageRouteConstraint));
+            });
         }
 
         private void RegisterDependencies(IServiceCollection services)
@@ -100,15 +134,24 @@ namespace MyCommute
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseAuthentication();
 
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: "Default",
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
+                routes.MapRoute(
+                    name: "LocalizedDefault",
+                    template: "{lang:lang=bg}/{controller=Home}/{action=Index}/{id?}"
+                );
             });
         }
     }

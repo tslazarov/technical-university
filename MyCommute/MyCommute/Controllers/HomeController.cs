@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using MyCommute.Data.Contracts;
-using MyCommute.Models;
+using Microsoft.Extensions.Localization;
+using MyCommute.Extensions;
 using MyCommute.Services;
 
 namespace MyCommute.Controllers
 {
+    [MiddlewareFilter(typeof(LocalizationPipeline))]
     public class HomeController : Controller
     {
-        private IUsersService authenticationService;
+        private readonly IUsersService authenticationService;
+        private readonly IStringLocalizer<HomeController> localizer;
 
-        public HomeController(IUsersService authenticationService)
+        public HomeController(IUsersService authenticationService, IStringLocalizer<HomeController> localizer)
         {
             this.authenticationService = authenticationService;
+            this.localizer = localizer;
         }
 
         public IActionResult Index()

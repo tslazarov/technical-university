@@ -144,7 +144,6 @@ namespace MyCommute.Controllers
         }
 
         [Route("signout")]
-        [HttpPost]
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

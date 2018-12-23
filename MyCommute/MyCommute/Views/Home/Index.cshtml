@@ -1,4 +1,10 @@
-﻿<div class="jumbotron">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@using MyCommute.Controllers
+
+@inject IHtmlLocalizer<HomeController> Localizer
+
+<div class="jumbotron">
     @if (User.Identity.IsAuthenticated)
     {
         <h1>Hello @User.Identity.Name!</h1>
@@ -7,6 +13,9 @@
     {
         <h1>Hello World!</h1>
     }
+
+    <h1>@Localizer["Hello"]</h1>
+
     <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
     @if (!User.Identity.IsAuthenticated)
     {
