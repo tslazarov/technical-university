@@ -9,21 +9,23 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using MyCommute.Models;
 using MyCommute.Models.Auth;
+using MyCommute.Extensions.Localization;
+using Microsoft.Extensions.Localization;
 
 namespace MyCommute.Controllers
 {
-    [Route("auth")]
+    [MiddlewareFilter(typeof(LocalizationPipeline))]
     public class AuthController : Controller
     {
         private IUsersService usersService;
+        private readonly IStringLocalizer<AuthController> localizer;
 
-        public AuthController(IUsersService usersService)
+        public AuthController(IUsersService usersService, IStringLocalizer<AuthController> localizer)
         {
             this.usersService = usersService;
+            this.localizer = localizer;
         }
 
-
-        [Route("signin")]
         public async Task<IActionResult> SignIn()
         {
             var authResult = await HttpContext.AuthenticateAsync("Temporary");
@@ -34,8 +36,6 @@ namespace MyCommute.Controllers
 
             return View();
         }
-
-        [Route("signin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(SignInViewModel model, string returnUrl = null)
@@ -56,8 +56,7 @@ namespace MyCommute.Controllers
             return View(model);
         }
 
-        [Route("signin/{provider}")]
-        public IActionResult SignIn(string provider, string returnUrl = null)
+        public IActionResult SignInExternal(string provider, string returnUrl = null)
         {
             var redirectUri = Url.Action("Profile");
             if (returnUrl != null)
@@ -68,7 +67,6 @@ namespace MyCommute.Controllers
             return Challenge(new AuthenticationProperties { RedirectUri = redirectUri }, provider);
         }
 
-        [Route("signin/profile")]
         public async Task<IActionResult> Profile(string returnUrl = null)
         {
             var authResult = await HttpContext.AuthenticateAsync("Temporary");
@@ -90,7 +88,6 @@ namespace MyCommute.Controllers
             return View(model);
         }
 
-        [Route("signin/profile")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Profile(ProfileViewModel model, string returnUrl = null)
@@ -117,13 +114,11 @@ namespace MyCommute.Controllers
             return View(model);
         }
 
-        [Route("signup")]
         public IActionResult SignUp()
         {
             return View(new SignUpViewModel());
         }
 
-        [Route("signup")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp(SignUpViewModel model, string returnUrl = null)
@@ -143,7 +138,6 @@ namespace MyCommute.Controllers
             return View(model);
         }
 
-        [Route("signout")]
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

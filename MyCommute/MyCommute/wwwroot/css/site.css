@@ -23,6 +23,26 @@ body {
     width: 100%;
 }
 
+.btn-facebook {
+    border-color: #405993;
+    color: #405993;
+}
+
+.btn-facebook:hover {
+    background-color: #405993;
+    color: #ffffff;
+}
+
+.btn-google {
+    border-color: #e34133;
+    color: #e34133;
+}
+
+.btn-google:hover {
+    background-color: #e34133;
+    color: #ffffff;
+}
+
 /* QR code generator */
 #qrCode {
     margin: 15px;

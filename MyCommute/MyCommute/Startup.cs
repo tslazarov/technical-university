@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Hangfire;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Localization.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Routing;
@@ -21,9 +14,11 @@ using Microsoft.Extensions.Options;
 using MyCommute.Data;
 using MyCommute.Data.Contracts;
 using MyCommute.Data.Managers;
-using MyCommute.Extensions;
+using MyCommute.Extensions.Hangfire;
+using MyCommute.Extensions.Localization;
 using MyCommute.Models;
 using MyCommute.Services;
+using System;
 
 namespace MyCommute
 {
@@ -47,6 +42,7 @@ namespace MyCommute
             });
 
             services.AddIdentity<User, IdentityRole>();
+            services.AddHttpClient();
 
             services.AddDbContext<MyCommuteContext>(configurations =>
             {
@@ -77,34 +73,21 @@ namespace MyCommute
             })
             .AddCookie("Temporary");
 
+            services.AddHangfire(config => config.UseSqlServerStorage(Configuration.GetConnectionString("MyCommuteHangifreConnectionString")));
+
+
+            services.Configure<RouteOptions>(options =>
+            {
+                options.ConstraintMap.Add("lang", typeof(LanguageRouteConstraint));
+                options.LowercaseUrls = true;
+            });
+
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc()
                 .AddViewLocalization(options => options.ResourcesPath = "Resources")
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            //services.Configure<RequestLocalizationOptions>(options =>
-            //{
-            //    var supportedCultures = new List<CultureInfo>
-            //    {
-            //        new CultureInfo("en"),
-            //        new CultureInfo("bg"),
-            //    };
-            //    options.DefaultRequestCulture = new RequestCulture("bg");
-            //    options.SupportedCultures = supportedCultures;
-            //    options.SupportedUICultures = supportedCultures;
-            //    var provider = new RouteDataRequestCultureProvider();
-            //    provider.RouteDataStringKey = "lang";
-            //    provider.UIRouteDataStringKey = "lang";
-            //    provider.Options = options;
-            //    options.RequestCultureProviders = new[] { provider };
-            //});
-
-            services.Configure<RouteOptions>(options =>
-            {
-                options.ConstraintMap.Add("lang", typeof(LanguageRouteConstraint));
-            });
         }
 
         private void RegisterDependencies(IServiceCollection services)
@@ -117,11 +100,14 @@ namespace MyCommute
             services.AddScoped<IEfRepository<Ride>, EfRepository<Ride>>();
             services.AddScoped<IUsersManager, UsersManager>();
             services.AddScoped<ICarsManager, CarsManager>();
+            services.AddScoped<IFuelsManager, FuelsManager>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<FuelPriceFetcher>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -139,20 +125,40 @@ namespace MyCommute
 
             app.UseAuthentication();
 
+            app.UseHangfireServer();
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions()
+            {
+                Authorization = new[] { new CustomDashboardAuthorizationFilter() }
+            });
+
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "Default",
-                    template: "{controller=Home}/{action=Index}/{id?}"
-                );
-                routes.MapRoute(
                     name: "LocalizedDefault",
                     template: "{lang:lang=bg}/{controller=Home}/{action=Index}/{id?}"
                 );
+                routes.MapRoute(
+                    name: "Default",
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
             });
+
+            var fetcher = serviceProvider.GetService<FuelPriceFetcher>();
+            RecurringJob.AddOrUpdate("fuel-price-fetcher", () => fetcher.FetchData(), "* 10 * * *");
+
+            lifetime.ApplicationStarted.Register(OnApplicationStarted);
+            lifetime.ApplicationStopped.Register(OnApplicationStopped);
+        }
+
+        public void OnApplicationStarted()
+        {
+        }
+
+        public void OnApplicationStopped()
+        {
         }
     }
 }

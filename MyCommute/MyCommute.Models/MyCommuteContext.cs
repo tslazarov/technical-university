@@ -54,7 +54,7 @@ namespace MyCommute.Models
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.FuelPrice).HasColumnType("numeric(4, 0)");
+                entity.Property(e => e.FuelPrice).HasColumnType("numeric(18, 2)");
 
                 entity.Property(e => e.FuelType)
                     .IsRequired()
@@ -69,7 +69,7 @@ namespace MyCommute.Models
 
                 entity.Property(e => e.FromCity).HasMaxLength(50);
 
-                entity.Property(e => e.Price).HasColumnType("numeric(2, 0)");
+                entity.Property(e => e.Price).HasColumnType("numeric(18, 2)");
 
                 entity.Property(e => e.ToCity).HasMaxLength(50);
 

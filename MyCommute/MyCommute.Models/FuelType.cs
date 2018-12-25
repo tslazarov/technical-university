@@ -6,11 +6,9 @@ namespace MyCommute.Models
 {
     public enum FuelType
     {
-        Unleaded95 = 1,
+        Gasoline = 1,
         Diesel = 2,
-        LPG = 3,
-        Unleaded98 = 4,
-        CNG = 5,
-        DieselPremium = 6
+        Lpg = 3,
+        Methane = 4
     }
 }

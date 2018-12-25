@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using MyCommute.Extensions;
+using MyCommute.Extensions.Localization;
 using MyCommute.Services;
 
 namespace MyCommute.Controllers
