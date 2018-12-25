@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
 @using MyCommute.Controllers
 
 @inject IHtmlLocalizer<AuthController> Localizer
@@ -6,29 +7,22 @@
 
 @model MyCommute.Models.Auth.SignInViewModel
 
-@if (!ViewContext.ModelState.IsValid)
-{
-    <div asp-validation-summary="All" class="form-validation"></div>
-}
-
 <form class="form-signin" asp-action="SignIn" asp-route-returnUrl="@Context.Request.Query["returnUrl"]">
-
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <img class="img-responsive center-block" src="~/images/profile-login.svg" />
-        <h2 class="text-center">@Localizer["Login"]</h2>
-
+        <img class="img-responsive center-block signin-image" src="~/images/profile-signin.svg" />
         <div class="form-group">
-            <label class="sr-only">Email</label>
             <input type="text" class="form-control" placeholder="@Localizer["SignIn_Email"]" asp-for="Email" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label class="sr-only">Password</label>
-            <input type="password" class="form-control" placeholder="Password" asp-for="Password" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <input type="password" class="form-control" placeholder="@Localizer["SignIn_Password"]" asp-for="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        <button class="btn btn-primary btn-block">Sign In</button>
+        <button class="btn btn-primary btn-block">@Localizer["SignIn_SignIn"]</button>
+        <div class="text-center signin-label">
+            @Localizer["SignIn_UseExternal"]
+        </div>
         @foreach (var provider in await schemeProvider.GetRequestHandlerSchemesAsync())
         {
             <a class="btn btn-block btn-@provider.Name.ToLower()" asp-action="SignInExternal"

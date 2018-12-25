@@ -18,6 +18,7 @@ using MyCommute.Extensions.Hangfire;
 using MyCommute.Extensions.Localization;
 using MyCommute.Models;
 using MyCommute.Services;
+using MyCommute.Utilities;
 using System;
 
 namespace MyCommute
@@ -86,7 +87,13 @@ namespace MyCommute
             services.AddMvc()
                 .AddViewLocalization(options => options.ResourcesPath = "Resources")
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization()
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                    {
+                        return factory.Create(typeof(SharedResources));
+                    };
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -102,6 +109,8 @@ namespace MyCommute
             services.AddScoped<ICarsManager, CarsManager>();
             services.AddScoped<IFuelsManager, FuelsManager>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IPasswordHelper, PasswordHelper>();
+            services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<FuelPriceFetcher>();
         }
 

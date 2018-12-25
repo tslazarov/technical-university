@@ -3,6 +3,7 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-image: url("../images/background.jpg");
 }
 
 /* Wrapping element */
@@ -26,6 +27,7 @@ body {
 .btn-facebook {
     border-color: #405993;
     color: #405993;
+    margin: 10px 0px;
 }
 
 .btn-facebook:hover {
@@ -36,11 +38,28 @@ body {
 .btn-google {
     border-color: #e34133;
     color: #e34133;
+    margin: 10px 0px;
 }
 
 .btn-google:hover {
     background-color: #e34133;
     color: #ffffff;
+}
+
+div.body-wrapper {
+    margin: 50px;
+    background-color: #ffffff;
+    height: auto;
+    padding: 50px;
+    overflow: auto;
+}
+
+.signin-image {
+    margin-bottom: 30px;
+}
+
+.signin-label {
+    margin: 20px 0px;
 }
 
 /* QR code generator */

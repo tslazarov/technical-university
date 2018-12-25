@@ -1,16 +1,47 @@
-﻿@model MyCommute.Models.Auth.ProfileViewModel
-@if (!ViewContext.ModelState.IsValid)
-{
-    <div asp-validation-summary="All" class="form-validation"></div>
-}
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using MyCommute.Controllers
 
-    <form class="form-profile"
-          asp-action="Profile"
-          asp-route-returnUrl="@Context.Request.Query["returnUrl"]">
-        <h2>Please add the following information</h2>
-        <label class="sr-only">First name</label>
-        <input type="text" class="form-control" placeholder="First name" asp-for="FirstName" />
-        <label class="sr-only">Last name</label>
-        <input type="text" class="form-control" placeholder="Last name" asp-for="LastName" />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-    </form>
+@inject IHtmlLocalizer<AuthController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Auth.ProfileViewModel
+
+<form class="form-profile" asp-action="Profile" asp-route-returnUrl="@Context.Request.Query["returnUrl"]" enctype="multipart/form-data">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <img class="img-responsive center-block signin-image" src="~/images/profile-information.svg" />
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="@Localizer["Profile_FirstName"]" asp-for="FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" placeholder="@Localizer["Profile_LastName"]" asp-for="LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" placeholder="@Localizer["Profile_PhoneNumber"]" asp-for="PhoneNumber" />
+            <div class="text-right">
+                <span>@Localizer["Profile_Optional"]</span>
+            </div>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="file" class="filestyle" id="profile-image" name="image" data-icon="false">
+            <div class="text-right">
+                <span>@Localizer["Profile_Optional"]</span>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-block">@Localizer["Profile_Save"]</button>
+    </div>
+    <div class="col-md-4"></div>
+
+</form>
+
+<script src="~/js/bootstrap-filestyle.min.js"></script>
+<script>
+    $(document).ready(() => {
+        $(".bootstrap-filestyle input").attr("placeholder", "@Localizer["Profile_ProfileImage"]");
+        $(".bootstrap-filestyle span.buttonText").text("@Localizer["Profile_ChooseFile"]");
+    });
+</script>

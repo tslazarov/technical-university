@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MyCommute.Utilities
 {
-    public class PasswordHelper
+    public class PasswordHelper : IPasswordHelper
     {
-        internal static string CreateSalt(int size)
+        public string CreateSalt(int size)
         {
             //Generate a cryptographic random number.
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
@@ -20,7 +20,7 @@ namespace MyCommute.Utilities
             return Convert.ToBase64String(buff);
         }
 
-        internal static string CreatePasswordHash(string password, string salt)
+        public string CreatePasswordHash(string password, string salt)
         {
             HashAlgorithm sha256 = new SHA256Managed();
 

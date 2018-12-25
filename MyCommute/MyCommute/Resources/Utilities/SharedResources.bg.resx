@@ -117,49 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Profile_ChooseFile" xml:space="preserve">
-    <value>Избери файл</value>
+  <data name="Layout_Bulgarian" xml:space="preserve">
+    <value>Български</value>
   </data>
-  <data name="Profile_FirstName" xml:space="preserve">
-    <value>Име</value>
+  <data name="Layout_English" xml:space="preserve">
+    <value>Английски</value>
   </data>
-  <data name="Profile_LastName" xml:space="preserve">
-    <value>Фамилия</value>
+  <data name="Layout_Home" xml:space="preserve">
+    <value>Начало</value>
   </data>
-  <data name="Profile_Optional" xml:space="preserve">
-    <value>опционално</value>
+  <data name="Layout_Profile" xml:space="preserve">
+    <value>Профил</value>
   </data>
-  <data name="Profile_PhoneNumber" xml:space="preserve">
-    <value>Телефонен номер</value>
-  </data>
-  <data name="Profile_ProfileImage" xml:space="preserve">
-    <value>Профилна снимка</value>
-  </data>
-  <data name="Profile_Save" xml:space="preserve">
-    <value>Запази</value>
-  </data>
-  <data name="SignIn_Email" xml:space="preserve">
-    <value>Имейл</value>
-  </data>
-  <data name="SignIn_Password" xml:space="preserve">
-    <value>Парола</value>
-  </data>
-  <data name="SignIn_SignIn" xml:space="preserve">
+  <data name="Layout_SignIn" xml:space="preserve">
     <value>Вход</value>
   </data>
-  <data name="SignIn_UseExternal" xml:space="preserve">
-    <value>или използвай своя акаунт в</value>
+  <data name="Layout_SignOut" xml:space="preserve">
+    <value>Изход</value>
   </data>
-  <data name="SignUp_ConfirmPassword" xml:space="preserve">
-    <value>Потвърди парола</value>
+  <data name="Profile_FirstNameRegular" xml:space="preserve">
+    <value>Моля въведете валидно име</value>
   </data>
-  <data name="SignUp_Email" xml:space="preserve">
-    <value>Имейл</value>
+  <data name="Profile_FirstNameRequired" xml:space="preserve">
+    <value>Моля въведете име</value>
   </data>
-  <data name="SignUp_Password" xml:space="preserve">
-    <value>Парола</value>
+  <data name="Profile_LastNameRegular" xml:space="preserve">
+    <value>Моля въведете валидна фамилия</value>
   </data>
-  <data name="SignUp_SignUp" xml:space="preserve">
-    <value>Регистрация</value>
+  <data name="Profile_LastNameRequired" xml:space="preserve">
+    <value>Моля въведете фамилия</value>
+  </data>
+  <data name="Profile_PhoneNumberRegular" xml:space="preserve">
+    <value>Моля въведете 10-цифрен телефонен номер</value>
+  </data>
+  <data name="SignIn_EmailRequired" xml:space="preserve">
+    <value>Моля въведете имейл</value>
+  </data>
+  <data name="SignIn_PasswordRequired" xml:space="preserve">
+    <value>Моля въведете парола</value>
+  </data>
+  <data name="SignUp_ConfirmPasswordMatch" xml:space="preserve">
+    <value>Моля въведете съвпадаща парола за потвърждаване</value>
+  </data>
+  <data name="SignUp_ConfirmPasswordRequired" xml:space="preserve">
+    <value>Моля въвете парола за потвърждаване</value>
+  </data>
+  <data name="SignUp_EmailRegular" xml:space="preserve">
+    <value>Моля въведете валиден имейл</value>
+  </data>
+  <data name="SignUp_EmailRequired" xml:space="preserve">
+    <value>Моля въведете имейл</value>
+  </data>
+  <data name="SignUp_PasswordLength" xml:space="preserve">
+    <value>Моля въведете парола по-дълга от 6 символа</value>
+  </data>
+  <data name="SignUp_PasswordRequired" xml:space="preserve">
+    <value>Моля въведете парола</value>
   </data>
 </root>

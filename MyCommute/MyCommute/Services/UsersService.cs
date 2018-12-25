@@ -10,11 +10,13 @@ namespace MyCommute.Services
 {
     public class UsersService : IUsersService
     {
-        private IManager usersManager;
+        private readonly IManager usersManager;
+        private readonly IPasswordHelper passwordHelper;
 
-        public UsersService(IUsersManager usersManager)
+        public UsersService(IUsersManager usersManager, IPasswordHelper passwordHelper)
         {
             this.usersManager = usersManager as IManager;
+            this.passwordHelper = passwordHelper;
         }
 
         public Task<User> AddExternalUser(string email, string firstName, string lastName, string provider = null)
@@ -37,8 +39,8 @@ namespace MyCommute.Services
 
         public Task<User> AddLocalUser(string email, string password, string provider = null)
         {
-            var salt = PasswordHelper.CreateSalt(10);
-            var hashedPassword = PasswordHelper.CreatePasswordHash(password, salt);
+            var salt = this.passwordHelper.CreateSalt(10);
+            var hashedPassword = this.passwordHelper.CreatePasswordHash(password, salt);
 
             var user = new User()
             {
@@ -67,6 +69,14 @@ namespace MyCommute.Services
             return Task.FromResult<User>(null);
         }
 
+        public void UpdateImage(User user, string path)
+        {
+            user.Image = path;
+
+            this.usersManager.UpdateItem(user);
+            this.usersManager.SaveChanges();
+        }
+
         public Task<User> UpdateLocalUser(string email, string firstName, string lastName, string provider = null)
         {
             var user = this.GetUserByIdentifier(email, provider).Result;
@@ -91,7 +101,7 @@ namespace MyCommute.Services
 
             if (user != null)
             {
-                string hashedPassword = PasswordHelper.CreatePasswordHash(password, user.Salt);
+                string hashedPassword = this.passwordHelper.CreatePasswordHash(password, user.Salt);
 
                 if (user.HashedPassword == hashedPassword)
                 {

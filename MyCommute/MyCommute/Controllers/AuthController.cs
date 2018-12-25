@@ -11,6 +11,9 @@ using MyCommute.Models;
 using MyCommute.Models.Auth;
 using MyCommute.Extensions.Localization;
 using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using MyCommute.Utilities;
 
 namespace MyCommute.Controllers
 {
@@ -18,12 +21,12 @@ namespace MyCommute.Controllers
     public class AuthController : Controller
     {
         private IUsersService usersService;
-        private readonly IStringLocalizer<AuthController> localizer;
+        private IImageHelper imageHelper;
 
-        public AuthController(IUsersService usersService, IStringLocalizer<AuthController> localizer)
+        public AuthController(IUsersService usersService, IImageHelper imageHelper)
         {
             this.usersService = usersService;
-            this.localizer = localizer;
+            this.imageHelper = imageHelper;
         }
 
         public async Task<IActionResult> SignIn()
@@ -72,6 +75,10 @@ namespace MyCommute.Controllers
             var authResult = await HttpContext.AuthenticateAsync("Temporary");
             if (!authResult.Succeeded)
             {
+                if (User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
                 return RedirectToAction("SignIn");
             }
             var user = await this.usersService.GetUserByIdentifier(authResult.Principal.FindFirst(ClaimTypes.Email).Value, authResult.Principal.Identity.AuthenticationType);
@@ -90,7 +97,7 @@ namespace MyCommute.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Profile(ProfileViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Profile(IFormFile image, ProfileViewModel model, string returnUrl = null)
         {
             var authResult = await HttpContext.AuthenticateAsync("Temporary");
             if (!authResult.Succeeded)
@@ -100,16 +107,25 @@ namespace MyCommute.Controllers
 
             if (ModelState.IsValid)
             {
-                if(authResult.Principal.Identity.AuthenticationType == "Cookies")
+                User user = null;
+
+                if (authResult.Principal.Identity.AuthenticationType == "Cookies")
                 {
-                    var user = await this.usersService.UpdateLocalUser(authResult.Principal.FindFirst(ClaimTypes.Email).Value, model.FirstName, model.LastName, "Default");
-                    return await SignInUser(user, returnUrl);
+                    user = await this.usersService.UpdateLocalUser(authResult.Principal.FindFirst(ClaimTypes.Email).Value, model.FirstName, model.LastName, "Default");
                 }
                 else
                 {
-                    var user = await this.usersService.AddExternalUser(authResult.Principal.FindFirst(ClaimTypes.Email).Value, model.FirstName, model.LastName, authResult.Principal.Identity.AuthenticationType);
-                    return await SignInUser(user, returnUrl);
+                    user = await this.usersService.AddExternalUser(authResult.Principal.FindFirst(ClaimTypes.Email).Value, model.FirstName, model.LastName, authResult.Principal.Identity.AuthenticationType);
                 }
+
+                var imagePath = this.imageHelper.UploadImage(image, user.Id.ToString());
+
+                if (user != null && !string.IsNullOrEmpty(imagePath))
+                {
+                    this.usersService.UpdateImage(user, imagePath);
+                };
+
+                return await SignInUser(user, returnUrl);
             }
             return View(model);
         }

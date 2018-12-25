@@ -4,10 +4,10 @@ namespace MyCommute.Models.Auth
 {
     public class SignInViewModel
     {
-        [Required(ErrorMessage = "Have to supply a username")]
+        [Required(ErrorMessage = "SignIn_EmailRequired")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Have to supply a password")]
+        [Required(ErrorMessage = "SignIn_PasswordRequired")]
         public string Password { get; set; }
     }
 }

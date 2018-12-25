@@ -8,14 +8,16 @@ namespace MyCommute.Models.Auth
 {
     public class SignUpViewModel
     {
-        [Required(ErrorMessage = "Have to supply an email")]
+        [Required(ErrorMessage = "SignUp_EmailRequired")]
+        [RegularExpression(@"^([\w\-\.]+)@((\[([0-9]{1,3}\.){3}[0-9]{1,3}\])|(([\w\-]+\.)+)([a-zA-Z]{2,4}))$", ErrorMessage = "SignUp_EmailRegular")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Have to supply a password")]
+        [Required(ErrorMessage = "SignUp_PasswordRequired")]
+        [StringLength(30, MinimumLength = 6, ErrorMessage = "SignUp_PasswordLength")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Have to supply a confirm password")]
-        [Compare("Password")]
+        [Required(ErrorMessage = "SignUp_ConfirmPasswordRequired")]
+        [Compare("Password", ErrorMessage = "SignUp_ConfirmPasswordMatch")]
         public string ConfirmPassword { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace MyCommute.Services
         Task<User> AddLocalUser(string email, string password, string provider);
         Task<User> UpdateLocalUser(string email, string firstName, string lastName, string provider);
         Task<User> AddExternalUser(string email, string firstName, string lastName, string provider);
+        void UpdateImage(User user, string path);
     }
 }

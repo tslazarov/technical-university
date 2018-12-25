@@ -1,12 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using MyCommute.Utilities
+
+@inject IHtmlLocalizer<SharedResources> Localizer
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MyCommute</title>
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -18,11 +24,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">MyCommute</a>
+                <a href="~/@ViewContext.RouteData.Values["lang"]" class="navbar-brand">MyCommute</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/home">Home</a></li>
+                    <li><a href="~/@ViewContext.RouteData.Values["lang"]/home">@Localizer["Layout_Home"]</a></li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
                     <li class="nav-item dropdown">
@@ -30,33 +36,34 @@
                             <img src="~/images/icons/globe.svg" />
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a id="en" class="language-item dropdown-item" href="">English</a></li>
-                            <li><a id="bg" class="language-item dropdown-item" href="">Български</a></li>
+                            <li><a id="bg" class="language-item dropdown-item" href="">@Localizer["Layout_Bulgarian"]</a></li>
+                            <li><a id="en" class="language-item dropdown-item" href="">@Localizer["Layout_English"]</a></li>
                         </ul>
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @User.Identity.Name
+                                <img src="~/images/icons/profile.svg" />
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a asp-controller="Auth" asp-action="SignOut">Sign Out</a></li>
+                                <li><a class="dropdown-item" href="#">@Localizer["Layout_Profile"]</a></li>
+                                <li><a href="~/@ViewContext.RouteData.Values["lang"]/auth/signout">@Localizer["Layout_SignOut"]</a></li>
                             </ul>
                         </li>
                     }
                     else
                     {
-                        <li role="presentation"><a asp-controller="Auth" asp-action="SignIn">Sign In</a></li>
+                        <li role="presentation"><a href="~/@ViewContext.RouteData.Values["lang"]/auth/signin">@Localizer["Layout_SignIn"]</a></li>
                     }
                 </ul>
             </div>
         </div>
     </nav>
-    @RenderBody()
+    <div class="body-wrapper">
+        @RenderBody()
+    </div>
     <footer class="footer"></footer>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
