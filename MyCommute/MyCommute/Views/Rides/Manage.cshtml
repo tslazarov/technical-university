@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using MyCommute.Controllers
+
+@inject IHtmlLocalizer<RidesController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Rides.ManageRidesViewModel
+
+@if (Model.TotalCount > 0)
+{
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <a class="btn btn-primary btn-block" href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")rides/create">
+                @Localizer["RideManage_Create"]
+            </a>
+        </div>
+    </div>
+</div>
+<hr class="col-xs-12">
+<div class="row">
+    <div class="col-md-12 ride-list-wrapper">
+        @foreach (var ride in Model.Rides)
+            {
+        <div class="ride-line-wrapper">
+            <div class="col-md-6">
+                <div class="col-md-5 text-center">@ride.FromCity</div>
+                <div class="col-md-2 text-center">
+                    <img src="~/images/icons/arrow.svg" />
+                </div>
+                <div class="col-md-5 text-center">@ride.ToCity</div>
+            </div>
+            <div class="col-md-2 text-center">@ride.TravelDate.Value.ToString("dd MMM yyyy")</div>
+            <div class="col-md-2 text-center">@ride.Price @Localizer["RideBrowse_Currency"]</div>
+            <div class="col-md-2 text-center">
+                <form id="form-remove-ride-@ride.Id" asp-action="Remove">
+                    <a class="custom-anchor" href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")rides/edit/@ride.Id">
+                        <img src="~/images/icons/edit.svg" />
+                    </a>
+                    <a class="custom-anchor" href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")rides/detail/@ride.Id">
+                        <img src="~/images/icons/learn-more.svg" />
+                    </a>
+                    <input name="id" type="hidden" value="@ride.Id" />
+                    <a class="custom-anchor" href="#" onclick="document.getElementById('form-remove-ride-@ride.Id').submit();">
+                        <img src="~/images/icons/remove.svg" />
+                    </a>
+                </form>
+            </div>
+        </div>
+            }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul id="pager" class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i += 1)
+                {
+                    if (i == Model.Page)
+                    {
+            <li class="page-item active"><a class="page-link" href="@Context.Request.Host@Context.Request.Path?page=@i">@i</a></li>
+                    }
+                    else
+                    {
+            <li class="page-item"><a class="page-link" href="@Context.Request.Host@Context.Request.Path?page=@i">@i</a></li>
+                    }
+
+                }
+        </ul>
+    </div>
+</div>
+}
+else
+{
+<div class="col-md-12">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-center">
+        <img class="img-responsive center-block signin-image" src="~/images/profile-signin.svg" />
+
+        <p class="lead">Create your first ride</p>
+        <p class="home-button-wrapper">
+            <a class="btn btn-custom-lng btn-success" href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")rides/create">
+                @Localizer["RideManage_Create"]
+            </a>
+        </p>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+    }

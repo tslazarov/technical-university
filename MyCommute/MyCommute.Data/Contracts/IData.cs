@@ -15,6 +15,12 @@ namespace MyCommute.Data.Contracts
 
         IEfRepository<Ride> RidesRepository { get; }
 
+        IEfRepository<RidesUser> RidesUsersRepository { get; }
+
+        IEfRepository<FriendRequest> FriendRequestsUsersRepository { get; }
+
+        IEfRepository<Rating> RatingsRepository { get; }
+
         void SaveChanges();
     }
 }

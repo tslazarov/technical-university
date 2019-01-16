@@ -3,35 +3,56 @@
 
 @inject IHtmlLocalizer<HomeController> Localizer
 
-<div class="jumbotron">
-    @if (User.Identity.IsAuthenticated)
-    {
-        <h1>Hello @User.Identity.Name!</h1>
-    }
-    else
-    {
-        <h1>Hello World!</h1>
-    }
+@model MyCommute.Models.Home.HomeViewModel
 
-    <h1>@Localizer["Hello"]</h1>
-
-    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-    @if (!User.Identity.IsAuthenticated)
-    {
-        <p>
-            <a class="btn btn-lg btn-success" asp-controller="Auth" asp-action="SignUp">
-                Sign Up
-            </a>
-        </p>
-    }
-</div>
-<div class="row marketing">
-    <div class="col-lg-6">
-        <h4>Subheading</h4>
-        <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+<div class="row">
+    <div class="col-md-5">
+        <div class="dashboard">
+            <h1>@Localizer["Home_Welcome"]</h1>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p class="lead">@Localizer["Home_BeginJourney"]</p>
+                <p class="home-button-wrapper">
+                    <a class="btn btn-success" href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")rides/manage">
+                        @Localizer["Home_ManageRides"]
+                    </a>
+                </p>
+            }
+            else
+            {
+                <p class="lead">@Localizer["Home_BePart"]</p>
+                <p>
+                    <a class="btn btn-success" href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")auth/signup">
+                        @Localizer["Home_SignUp"]
+                    </a>
+                </p>
+            }
+        </div>
+    
     </div>
-    <div class="col-lg-6">
-        <h4>Subheading</h4>
-        <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+    <div class="col-md-7">
+        <div class="dashboard">
+            <h3 class="text-center">@Localizer["Home_LatestRides"]</h3>
+            <div class="ride-line-wrapper">
+                @foreach (var ride in Model.Rides)
+                {
+                    <div class="ride-line-wrapper">
+                        <div class="col-md-5 text-center">@ride.FromCity</div>
+                        <div class="col-md-1 text-center">
+                            <img src="~/images/icons/arrow.svg" />
+                        </div>
+                        <div class="col-md-5 text-center">@ride.ToCity</div>
+                        <div class="col-md-1 text-center">
+                            <a href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")rides/detail/@ride.Id">
+                                <img src="~/images/icons/learn-more.svg" />
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="text-right">
+                <a class="custom-anchor" href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")rides/browse">View all</a>
+            </div>
+        </div>
     </div>
 </div>

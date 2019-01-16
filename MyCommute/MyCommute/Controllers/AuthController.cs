@@ -39,6 +39,7 @@ namespace MyCommute.Controllers
 
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(SignInViewModel model, string returnUrl = null)
@@ -156,6 +157,16 @@ namespace MyCommute.Controllers
 
         public async Task<IActionResult> SignOut()
         {
+            if (!string.IsNullOrEmpty(HttpContext.Request.Cookies[RatingNotificationsCookieName]))
+            {
+                HttpContext.Response.Cookies.Delete(RatingNotificationsCookieName);
+            }
+
+            if (!string.IsNullOrEmpty(HttpContext.Request.Cookies[FriendNotificationsCookieName]))
+            {
+                HttpContext.Response.Cookies.Delete(FriendNotificationsCookieName);
+            }
+
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
@@ -163,6 +174,12 @@ namespace MyCommute.Controllers
         private async Task<IActionResult> SignInUser(User user, string returnUrl = null)
         {
             await HttpContext.SignOutAsync("Temporary");
+
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddDays(30);
+            Response.Cookies.Append(RatingNotificationsCookieName, user.RatingNotifications.ToString(), option);
+            Response.Cookies.Append(FriendNotificationsCookieName, user.FriendNotifications.ToString(), option);
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -192,5 +209,8 @@ namespace MyCommute.Controllers
             return RedirectToAction("Profile");
 
         }
+
+        private const string RatingNotificationsCookieName = "ratingNotifications";
+        private const string FriendNotificationsCookieName = "friendNotifications";
     }
 }

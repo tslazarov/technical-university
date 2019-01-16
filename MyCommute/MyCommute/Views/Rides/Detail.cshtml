@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using MyCommute.Controllers
+
+@inject IHtmlLocalizer<RidesController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Rides.RideDetailViewModel
+
+<div class="row">
+    <div class="col-md-12 ride-list-wrapper">
+            <div class="ride-line-wrapper">
+                <div class="col-md-5 text-center detail-city">@Model.FromCity</div>
+                <div class="col-md-2 text-center">
+                    <img src="~/images/icons/arrow-big.svg" />
+                </div>
+                <div class="col-md-5 text-center detail-city">@Model.ToCity</div>
+            </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#information" data-toggle="tab">@Localizer["RideDetail_Information"]</a></li>
+            @if (Model.CurrentUserId == Model.DriverId.ToString())
+            {
+                <li><a href="#passengers" data-toggle="tab">@Localizer["RideDetail_Passengers"]</a></li>
+            }
+        </ul>
+        <div id="rideTab" class="tab-content">
+            <div class="tab-pane fade active in" id="information">
+                <div class="tab-wrapper">
+                    <div class="tab-line">
+                        <span class="bold">@Localizer["RideDetail_Driver"]</span>
+                        <a class="custom-anchor" href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")users/detail/@Model.DriverId">
+                            @Model.DriverName
+                        </a>
+                    </div>
+                    <div class="tab-line">
+                        <span class="bold">@Localizer["RideDetail_TravelDate"]</span>@Model.TravelDate.Value.ToString("dd MMM yyyy")
+                    </div>
+                    <div class="tab-line">
+                        <span class="bold">@Localizer["RideDetail_PricePerPerson"]</span>@Model.Price @Localizer["RideDetail_Currency"]
+                    </div>
+                    <div class="tab-line">
+                        <span class="bold">@Localizer["RideDetail_AvailableSeats"]</span>@Model.FreeSeats
+                    </div>
+                    <div class="tab-line">
+                        <span class="bold">@Localizer["RideDetail_AdditionalInformation"]</span>
+                    </div>
+                    <div class="tab-line">
+                        @Model.AdditionalInformation
+                    </div>
+                </div>
+            </div>
+            @if (Model.CurrentUserId == Model.DriverId.ToString())
+            {
+            <div class="tab-pane fade" id="passengers">
+                <div class="tab-wrapper">
+                    @foreach (var rideUser in Model.RideUsers)
+                    {
+                        <div class="tab-line">
+                            <a class="custom-anchor" href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")users/detail/@rideUser.UserId">
+                            @rideUser.User.FirstName @rideUser.User.LastName
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <hr />
+        @if (Model.CurrentUserId != Model.DriverId.ToString())
+        {
+            if (Model.RideUsers.Any(p => p.UserId.ToString() == Model.CurrentUserId))
+            {
+                <form id="form-unsubscribe-ride" class="form-unsubscribe-ride" asp-action="Unsubscribe">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="text-center">
+                        <button class="btn btn-danger btn-custom-lng">@Localizer["RideDetail_Unsubscribe"]</button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                if (Model.FreeSeats == 0)
+                {
+
+                    <div class="text-center">
+                        <button class="btn btn-success disabled btn-custom-lng">@Localizer["RideDetail_Subscribe"]</button>
+                    </div> 
+                }
+                else
+                {
+                    <form id="form-subscribe-ride" class="form-unsubscribe-ride" asp-action="Subscribe">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="text-center">
+                            <button class="btn btn-success btn-custom-lng">@Localizer["RideDetail_Subscribe"]</button>
+                        </div>
+                    </form>
+                }
+            }
+        }
+    </div>
+</div>
+

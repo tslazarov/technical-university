@@ -1,0 +1,144 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using MyCommute.Controllers
+
+@inject IHtmlLocalizer<UsersController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Users.UsersViewModel
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <input id="name" type="text" class="form-control" placeholder="@Localizer["Users_Name"]" asp-for="Name" />
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <button class="btn btn-primary btn-block" onclick="search()">@Localizer["Users_Search"]</button>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <select id="order" class="selectpicker form-control" data-style="btn-secondary" asp-for="OrderBy" onchange="order()">
+                <option value="name">@Localizer["Users_Name"]</option>
+                <option value="driverRating">@Localizer["Users_DriverRating"]</option>
+                <option value="passengerRating">@Localizer["Users_PassengerRating"]</option>
+            </select>
+        </div>
+    </div>
+</div>
+@if (Model.TotalCount > 0)
+{
+    <div class="row">
+        <div class="user-line-wrapper bold">
+            <div class="col-md-4 text-center">@Localizer["Users_Name"]</div>
+            <div class="col-md-3 text-center">@Localizer["Users_Email"]</div>
+            <div class="col-md-2 text-center">@Localizer["Users_DriverRating"]</div>
+            <div class="col-md-2 text-center">@Localizer["Users_PassengerRating"]</div>
+        </div>
+    </div>
+    <hr class="custom-hr" />
+    <div class="row">
+        <div class="col-md-12 user-list-wrapper">
+            @foreach (var user in Model.Users)
+            {
+                <div class="user-line-wrapper">
+                    <div class="col-md-4 text-center">@user.Name</div>
+                    <div class="col-md-3 text-center">@user.Email</div>
+                    <div class="col-md-2 text-center">@user.DriverRating</div>
+                    <div class="col-md-2 text-center">@user.PassengerRating</div>
+                    <div class="col-md-1 text-center">
+                        <a href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")users/detail/@user.Id">
+                            <img src="~/images/icons/learn-more.svg" />
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ul id="pager" class="pagination">
+                @for (int i = 1; i <= Model.TotalPages; i += 1)
+                {
+                    if (i == Model.Page)
+                    {
+                        <li class="page-item active"><a class="page-link" href="">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" href="">@i</a></li>
+                    }
+
+                }
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-md-12">
+    </div>
+}
+<link rel="stylesheet" href="~/lib/bootstrap-select/dist/css/bootstrap-select.min.css" />
+<script src="~/lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+<script>
+
+    function search() {
+        var currentUrl = constructUrl();
+        window.location = currentUrl;
+    }
+
+    function order() {
+        var currentUrl = constructUrl();
+        window.location = currentUrl;
+    }
+
+    function pager(currentPage) {
+        var currentUrl = constructUrl(currentPage);
+        window.location = currentUrl;
+    }
+
+    function constructUrl(page) {
+        var currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        var name = $("#name").val();
+        var orderBy = $("#order").val();
+
+        var searchQuery = {
+            name: name,
+            order: orderBy,
+            page: page
+        };
+
+        var appendQuerySymbol = true;
+        var appendAndSymbol = false;
+        for (var key in searchQuery) {
+            var value = searchQuery[key];
+            if (value !== "" && value !== undefined && appendQuerySymbol) {
+                currentUrl += "?";
+                appendQuerySymbol = false;
+            };
+
+            if (value !== "" && value !== undefined && appendAndSymbol) {
+                currentUrl += "&";
+            }
+
+            if (value !== "" && value !== undefined) {
+                currentUrl += key + "=" + value;
+                appendAndSymbol = true;
+            }
+        }
+
+        return currentUrl;
+    }
+
+    $(document).ready(() => {
+        $("#pager li a.page-link").on("click", function (e) {
+            e.preventDefault();
+            var page = $(this)[0].innerText;
+            pager(page);
+        });
+    });
+</script>

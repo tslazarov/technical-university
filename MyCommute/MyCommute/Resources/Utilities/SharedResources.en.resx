@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Layout_Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
   <data name="Layout_Bulgarian" xml:space="preserve">
     <value>Bulgarian</value>
   </data>
@@ -126,6 +129,9 @@
   <data name="Layout_Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="Layout_ManageRides" xml:space="preserve">
+    <value>Manage rides</value>
+  </data>
   <data name="Layout_Profile" xml:space="preserve">
     <value>Profile</value>
   </data>
@@ -134,6 +140,27 @@
   </data>
   <data name="Layout_SignOut" xml:space="preserve">
     <value>Sign Out</value>
+  </data>
+  <data name="Layout_Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Profile_CarBrandRegular" xml:space="preserve">
+    <value>Please enter a valid car brand</value>
+  </data>
+  <data name="Profile_CarBrandRequired" xml:space="preserve">
+    <value>Please enter car brand</value>
+  </data>
+  <data name="Profile_CarModelRegular" xml:space="preserve">
+    <value>Please enter a valid car model</value>
+  </data>
+  <data name="Profile_CarModelRequired" xml:space="preserve">
+    <value>Please enter car model</value>
+  </data>
+  <data name="Profile_CarSeatsRegular" xml:space="preserve">
+    <value>Please enter a correct number of seats</value>
+  </data>
+  <data name="Profile_CarSeatsRequired" xml:space="preserve">
+    <value>Please enter number of seats</value>
   </data>
   <data name="Profile_FirstNameRegular" xml:space="preserve">
     <value>Please enter a valid first name</value>
@@ -149,6 +176,30 @@
   </data>
   <data name="Profile_PhoneNumberRegular" xml:space="preserve">
     <value>Please enter a 10-digit phone number</value>
+  </data>
+  <data name="RideCreateEdit_FreeSeatsRegular" xml:space="preserve">
+    <value>Please enter a correct number of free seats</value>
+  </data>
+  <data name="RideCreateEdit_FreeSeatsRequired" xml:space="preserve">
+    <value>Please enter number of free seats</value>
+  </data>
+  <data name="RideCreateEdit_FromCityRequired" xml:space="preserve">
+    <value>Please enter a city</value>
+  </data>
+  <data name="RideCreateEdit_PriceRange" xml:space="preserve">
+    <value>Please enter a positive price</value>
+  </data>
+  <data name="RideCreateEdit_PriceRegular" xml:space="preserve">
+    <value>Please enter a valid price</value>
+  </data>
+  <data name="RideCreateEdit_PriceRequired" xml:space="preserve">
+    <value>Please enter a price</value>
+  </data>
+  <data name="RideCreateEdit_ToCityRequired" xml:space="preserve">
+    <value>Please enter a city</value>
+  </data>
+  <data name="RideCreateEdit_TravelDateRequired" xml:space="preserve">
+    <value>Please enter a travel date</value>
   </data>
   <data name="SignIn_EmailRequired" xml:space="preserve">
     <value>Please enter an email</value>

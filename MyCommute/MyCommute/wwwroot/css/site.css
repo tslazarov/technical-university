@@ -54,12 +54,173 @@ div.body-wrapper {
     overflow: auto;
 }
 
+div.body-wrapper-home {
+    margin: 50px;
+    height: auto;
+    padding: 50px;
+    overflow: auto;
+}
+
 .signin-image {
     margin-bottom: 30px;
 }
 
 .signin-label {
     margin: 20px 0px;
+}
+
+.ride-list-wrapper {
+    margin-top: 10px;
+}
+
+.ride-line-wrapper {
+    padding: 10px 0px;
+    height: auto;
+    overflow: hidden;
+}
+
+.user-list-wrapper {
+    margin-top: 10px;
+}
+
+.user-line-wrapper {
+    padding: 10px 0px;
+    height: auto;
+    overflow: hidden;
+}
+
+.calculator-price-wrapper {
+    height: auto;
+    overflow: auto;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.custom-hr {
+    margin: 0px !important;
+}
+
+.ride-line-wrapper:nth-of-type(2n) {
+    background-color: #f5f5f5;
+}
+
+.user-line-wrapper:nth-of-type(2n) {
+    background-color: #f5f5f5;
+}
+
+a.custom-anchor:hover {
+    text-decoration: none;
+}
+
+.home-button-wrapper {
+    margin-top: 40px;
+}
+
+.dashboard {
+    background-color: #ffffff;
+    margin: 30px 0px;
+    padding: 40px;
+}
+
+.unresizable {
+    resize: none;
+}
+
+.detail-city {
+    font-size: 24px;
+}
+
+.tab-wrapper {
+    margin: 25px 0px 0px 0px;
+    font-size: 14px;
+}
+
+.tab-line {
+    margin: 5px 0px;
+}
+
+.btn-custom-lng {
+    width: 250px;
+}
+
+.btn-custom-md {
+    width: 150px;
+}
+
+.user-line {
+    line-height: 38px;
+}
+
+.profile-image {
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+}
+
+.equal-div {
+    min-height: 150px;
+}
+
+.friend-request-wrapper {
+    text-align: right;
+}
+
+.rating-group {
+    margin: 10px 0px;
+}
+
+@media(min-width: 992px)  {
+    .profile-bottom-text-wrapper {
+        position: absolute;
+        bottom: 0px;
+        left: 60px;
+    }
+
+    .profile-bottom {
+        position: relative;
+    }
+
+    .profile-bottom-button-wrapper {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+    }
+
+    .friend-request-wrapper {
+        text-align: center;
+    }
+}
+
+@media(min-width: 1200px) {
+    .profile-bottom-text-wrapper {
+        position: absolute;
+        bottom: 0px;
+        left: 20px;
+    }
+
+    .profile-bottom {
+        position: relative;
+    }
+
+    .friend-request-wrapper {
+        text-align: right;
+    }
+}
+
+@media(max-width: 992px) {
+    .equal-div {
+        min-height: 0px;
+    }
+
+    .profile-bottom {
+        text-align: center;
+    }
+}
+
+.user-name {
+    font-size: 36px;
 }
 
 /* QR code generator */

@@ -1,0 +1,149 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using MyCommute.Controllers
+
+@inject IHtmlLocalizer<ProfileController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Profile.ProfileRatingsViewModel
+
+<div class="row">
+    <div class="col-md-10">
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <select id="filter" class="selectpicker form-control" data-style="btn-secondary" asp-for="FilterBy" onchange="filter()">
+                <option value="all">@Localizer["Profile_All"]</option>
+                <option value="driverRating">@Localizer["Profile_DriverRatings"]</option>
+                <option value="passengerRating">@Localizer["Profile_PassengerRatings"]</option>
+            </select>
+        </div>
+    </div>
+</div>
+@if (Model.TotalCount > 0)
+{
+    <div class="row">
+        <div class="user-line-wrapper bold">
+            <div class="col-md-4 text-center">@Localizer["Profile_Name"]</div>
+            <div class="col-md-3 text-center">@Localizer["Profile_Rating"]</div>
+            <div class="col-md-3 text-center">@Localizer["Profile_Type"]</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 user-list-wrapper">
+            @foreach (var rating in Model.Ratings)
+            {
+                <div class="user-line-wrapper">
+                    <div class="col-md-4 text-center user-line">
+                        <a href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")users/detail/@rating.UserId">
+                            @rating.Name
+                        </a>
+                    </div>
+                    <div class="col-md-3 text-center user-line">
+                        @rating.Value
+                    </div>
+                    <div class="col-md-3 text-center user-line">
+                        @rating.Type
+                    </div>
+                    <div class="col-md-2 text-center user-line">
+                        <a href="#" class="custom-anchor" type="button" data-toggle="modal" data-target="#@rating.RatingId">
+                            @Localizer["Profile_ViewComment"]
+                        </a>
+                    </div>
+                    <div id="@rating.RatingId" class="modal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">@Localizer["Profile_Comment"]</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @rating.Comment
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">@Localizer["Profile_Close"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ul id="pager" class="pagination">
+                @for (int i = 1; i <= Model.TotalPages; i += 1)
+                {
+                    if (i == Model.Page)
+                    {
+                        <li class="page-item active"><a class="page-link" href="">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" href="">@i</a></li>
+                    }
+
+                }
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-md-12">
+    </div>
+}
+<link rel="stylesheet" href="~/lib/bootstrap-select/dist/css/bootstrap-select.min.css" />
+<script src="~/lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+<script>
+    function filter() {
+        var currentUrl = constructUrl();
+        window.location = currentUrl;
+    }
+
+    function pager(currentPage) {
+        var currentUrl = constructUrl(currentPage);
+        window.location = currentUrl;
+    }
+
+    function constructUrl(page) {
+        var currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        var filterBy = $("#filter").val();
+
+        var searchQuery = {
+            filterBy: filterBy,
+            page: page
+        };
+
+        var appendQuerySymbol = true;
+        var appendAndSymbol = false;
+        for (var key in searchQuery) {
+            var value = searchQuery[key];
+            if (value !== "" && value !== undefined && appendQuerySymbol) {
+                currentUrl += "?";
+                appendQuerySymbol = false;
+            };
+
+            if (value !== "" && value !== undefined && appendAndSymbol) {
+                currentUrl += "&";
+            }
+
+            if (value !== "" && value !== undefined) {
+                currentUrl += key + "=" + value;
+                appendAndSymbol = true;
+            }
+        }
+
+        return currentUrl;
+    }
+
+    $(document).ready(() => {
+        $("#pager li a.page-link").on("click", function (e) {
+            e.preventDefault();
+            var page = $(this)[0].innerText;
+            pager(page);
+        });
+    });
+</script>

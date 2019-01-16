@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace MyCommute.Models
 {
-    public partial class RidesUser
+    public partial class RidesUser : IDataItem
     {
         public Guid RideId { get; set; }
-        public Guid PassengerId { get; set; }
+        public Guid UserId { get; set; }
 
-        public User Passenger { get; set; }
         public Ride Ride { get; set; }
+        public User User { get; set; }
     }
 }

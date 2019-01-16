@@ -20,13 +20,6 @@
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <input class="form-control" placeholder="@Localizer["Profile_PhoneNumber"]" asp-for="PhoneNumber" />
-            <div class="text-right">
-                <span>@Localizer["Profile_Optional"]</span>
-            </div>
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-        </div>
-        <div class="form-group">
             <input type="file" class="filestyle" id="profile-image" name="image" data-icon="false">
             <div class="text-right">
                 <span>@Localizer["Profile_Optional"]</span>
@@ -35,7 +28,6 @@
         <button class="btn btn-primary btn-block">@Localizer["Profile_Save"]</button>
     </div>
     <div class="col-md-4"></div>
-
 </form>
 
 <script src="~/js/bootstrap-filestyle.min.js"></script>

@@ -1,0 +1,160 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using MyCommute.Controllers
+
+@inject IHtmlLocalizer<ProfileController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Profile.ProfileFriendsViewModel
+
+<div class="row">
+    <div class="col-md-12 user-list-wrapper">
+        @foreach (var pendingRequest in Model.PendingFriendRequests)
+        {
+        <div class="user-line-wrapper">
+            <div class="col-md-4 text-center user-line">
+                <a href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")users/detail/@pendingRequest.UserId">
+                    @pendingRequest.Name
+                </a>
+            </div>
+            <div class="col-md-4 text-center user-line">
+                @pendingRequest.Email
+            </div>
+            <div class="col-md-2 text-center">
+                <form id="form-add-friend" asp-action="ApproveFriend">
+                    <input name="id" type="hidden" value="@pendingRequest.FriendRequestId" />
+                    <div>
+                        <button id="approveFriend" class="btn btn-primary btn-custom-md">@Localizer["Profile_Confirm"]</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2 text-center">
+                <form id="form-add-friend" asp-action="RemoveFriend">
+                    <input name="id" type="hidden" value="@pendingRequest.FriendRequestId" />
+                    <div>
+                        <button id="cancelFriend" class="btn btn-default btn-custom-md">@Localizer["Profile_Cancel"]</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <input id="name" type="text" class="form-control" placeholder="@Localizer["Profile_Name"]" asp-for="Name" />
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <button class="btn btn-primary btn-block" onclick="search()">@Localizer["Profile_Search"]</button>
+        </div>
+    </div>
+</div>
+@if (Model.TotalCount > 0)
+{
+    <div class="row">
+        <div class="col-md-12 user-list-wrapper">
+            @foreach (var approvedRequest in Model.ApprovedFriendRequests)
+            {
+            <div class="user-line-wrapper">
+                <div class="col-md-4 text-center user-line">
+                    <a href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")users/detail/@approvedRequest.UserId">
+                        @approvedRequest.Name
+                    </a>
+                </div>
+                <div class="col-md-4 text-center user-line">
+                    @approvedRequest.Email
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 text-center">
+                    <form id="form-add-friend" asp-action="RemoveFriend">
+                        <input name="id" type="hidden" value="@approvedRequest.FriendRequestId" />
+                        <div>
+                            <button id="removeFriend" class="btn btn-default btn-custom-md">@Localizer["Profile_Remove"]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ul id="pager" class="pagination">
+                @for (int i = 1; i <= Model.TotalPages; i += 1)
+                {
+                    if (i == Model.Page)
+                    {
+                        <li class="page-item active"><a class="page-link" href="">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" href="">@i</a></li>
+                    }
+
+                }
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-md-12">
+    </div>
+}
+<link rel="stylesheet" href="~/lib/bootstrap-select/dist/css/bootstrap-select.min.css" />
+<script src="~/lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+<script>
+    function search() {
+        var currentUrl = constructUrl();
+        window.location = currentUrl;
+    }
+
+    function pager(currentPage) {
+        var currentUrl = constructUrl(currentPage);
+        window.location = currentUrl;
+    }
+
+    function constructUrl(page) {
+        var currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        var name = $("#name").val();
+
+        var searchQuery = {
+            name: name,
+            page: page
+        };
+
+        var appendQuerySymbol = true;
+        var appendAndSymbol = false;
+        for (var key in searchQuery) {
+            var value = searchQuery[key];
+            if (value !== "" && value !== undefined && appendQuerySymbol) {
+                currentUrl += "?";
+                appendQuerySymbol = false;
+            };
+
+            if (value !== "" && value !== undefined && appendAndSymbol) {
+                currentUrl += "&";
+            }
+
+            if (value !== "" && value !== undefined) {
+                currentUrl += key + "=" + value;
+                appendAndSymbol = true;
+            }
+        }
+
+        return currentUrl;
+    }
+
+    $(document).ready(() => {
+        $("#pager li a.page-link").on("click", function (e) {
+            e.preventDefault();
+            var page = $(this)[0].innerText;
+            pager(page);
+        });
+    });
+</script>

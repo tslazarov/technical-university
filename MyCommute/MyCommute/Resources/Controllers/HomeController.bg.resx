@@ -117,7 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Hello" xml:space="preserve">
-    <value>Здравей</value>
+  <data name="Home_BeginJourney" xml:space="preserve">
+    <value>Започнете вашето пътешествие. Създайте своето първо пътуване. </value>
+  </data>
+  <data name="Home_BePart" xml:space="preserve">
+    <value>Станете част от нашата общност. Присъединете се сега.</value>
+  </data>
+  <data name="Home_LatestRides" xml:space="preserve">
+    <value>Последни пътувания</value>
+  </data>
+  <data name="Home_ManageRides" xml:space="preserve">
+    <value>Управление на пътувания</value>
+  </data>
+  <data name="Home_SignUp" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="Home_Welcome" xml:space="preserve">
+    <value>Добре дошли в MyCommute</value>
   </data>
 </root>

@@ -17,9 +17,6 @@ namespace MyCommute.Models.Auth
         [RegularExpression(@"^[a-zA-Z ,.'-]+$", ErrorMessage = "Profile_LastNameRegular")]
         public string LastName { get; set; }
 
-        [RegularExpression("([0-9]{10})|^$", ErrorMessage = "Profile_PhoneNumberRegular")]
-        public string PhoneNumber { get; set; }
-
         public string Provider { get; set; }
     }
 }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Layout_Browse" xml:space="preserve">
+    <value>Търси</value>
+  </data>
   <data name="Layout_Bulgarian" xml:space="preserve">
     <value>Български</value>
   </data>
@@ -126,6 +129,9 @@
   <data name="Layout_Home" xml:space="preserve">
     <value>Начало</value>
   </data>
+  <data name="Layout_ManageRides" xml:space="preserve">
+    <value>Управление на пътувания</value>
+  </data>
   <data name="Layout_Profile" xml:space="preserve">
     <value>Профил</value>
   </data>
@@ -134,6 +140,27 @@
   </data>
   <data name="Layout_SignOut" xml:space="preserve">
     <value>Изход</value>
+  </data>
+  <data name="Layout_Users" xml:space="preserve">
+    <value>Потребители</value>
+  </data>
+  <data name="Profile_CarBrandRegular" xml:space="preserve">
+    <value>Моля въведете валидна марка кола</value>
+  </data>
+  <data name="Profile_CarBrandRequired" xml:space="preserve">
+    <value>Моля въведете марка кола</value>
+  </data>
+  <data name="Profile_CarModelRegular" xml:space="preserve">
+    <value>Моля въведете валиден модел на колата</value>
+  </data>
+  <data name="Profile_CarModelRequired" xml:space="preserve">
+    <value>Моля въведете модел на колата</value>
+  </data>
+  <data name="Profile_CarSeatsRegular" xml:space="preserve">
+    <value>Моля въведете коректен брой места</value>
+  </data>
+  <data name="Profile_CarSeatsRequired" xml:space="preserve">
+    <value>Моля въведете брой места</value>
   </data>
   <data name="Profile_FirstNameRegular" xml:space="preserve">
     <value>Моля въведете валидно име</value>
@@ -149,6 +176,30 @@
   </data>
   <data name="Profile_PhoneNumberRegular" xml:space="preserve">
     <value>Моля въведете 10-цифрен телефонен номер</value>
+  </data>
+  <data name="RideCreateEdit_FreeSeatsRegular" xml:space="preserve">
+    <value>Моля въведете коректен брой свободни места</value>
+  </data>
+  <data name="RideCreateEdit_FreeSeatsRequired" xml:space="preserve">
+    <value>Моля въведете брой свободни места</value>
+  </data>
+  <data name="RideCreateEdit_FromCityRequired" xml:space="preserve">
+    <value>Моля въведете град</value>
+  </data>
+  <data name="RideCreateEdit_PriceRange" xml:space="preserve">
+    <value>Моля въведете положителна цена</value>
+  </data>
+  <data name="RideCreateEdit_PriceRegular" xml:space="preserve">
+    <value>Моля въведете валидна цена</value>
+  </data>
+  <data name="RideCreateEdit_PriceRequired" xml:space="preserve">
+    <value>Моля въведете цена</value>
+  </data>
+  <data name="RideCreateEdit_ToCityRequired" xml:space="preserve">
+    <value>Моля въведете град</value>
+  </data>
+  <data name="RideCreateEdit_TravelDateRequired" xml:space="preserve">
+    <value>Моля въведете дата на пътуване</value>
   </data>
   <data name="SignIn_EmailRequired" xml:space="preserve">
     <value>Моля въведете имейл</value>

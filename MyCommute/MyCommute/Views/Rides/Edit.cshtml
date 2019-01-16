@@ -1,0 +1,267 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using MyCommute.Controllers
+
+@inject IHtmlLocalizer<RidesController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Rides.EditRideViewModel
+
+<form id="form-edit-ride" class="form-edit-ride" asp-action="Edit" asp-route-returnUrl="@Context.Request.Query["returnUrl"]">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <img class="img-responsive center-block signin-image" src="~/images/ride-create.svg" />
+        <input id="id" type="hidden" class="form-control" asp-for="Id" />
+        <div class="form-group">
+            <input id="fromCity" type="text" class="form-control" placeholder="@Localizer["RideCreateEdit_FromCity"]" asp-for="FromCity" />
+            <span asp-validation-for="FromCity" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input id="toCity" type="text" class="form-control" placeholder="@Localizer["RideCreateEdit_ToCity"]" asp-for="ToCity" />
+            <span asp-validation-for="ToCity" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class='input-group date' id='travelDate'>
+                <input id="travelDate" type="text" class="form-control" placeholder="@Localizer["RideCreateEdit_TravelDate"]" asp-for="TravelDate" />
+                <span class="input-group-addon">
+                    <img src="~/images/icons/calendar.svg" />
+                </span>
+            </div>
+            <span asp-validation-for="TravelDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="@Localizer["RideCreateEdit_FreeSeats"]" asp-for="FreeSeats" />
+            <span asp-validation-for="FreeSeats" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">@Localizer["RideCreateEdit_Currency"]</span>
+                <input id="price" type="text" asp-for="Price" placeholder="@Localizer["RideCreateEdit_PricePerPerson"]" class="form-control">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#calculator">@Localizer["RideCreateEdit_Calculator"]</button>
+                </span>
+            </div>
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <textarea rows="5" class="unresizable form-control" placeholder="@Localizer["RideCreateEdit_AdditionalInformation"]" asp-for="AdditionalInformation"></textarea>
+        </div>
+        <button class="btn btn-primary btn-block">@Localizer["RideCreateEdit_Edit"]</button>
+    </div>
+    <div class="col-md-4"></div>
+</form>
+
+<div id="calculator" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@Localizer["RideCreateEdit_Calculator"]</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="fuelType" class="selectpicker form-control" data-style="btn-secondary" onchange="changeFuel()">
+                        <option value="diesel">@Localizer["RideCreateEdit_Diesel"]</option>
+                        <option value="gasoline">@Localizer["RideCreateEdit_Gasoline"]</option>
+                        <option value="lpg">@Localizer["RideCreateEdit_Lpg"]</option>
+                        <option value="methane">@Localizer["RideCreateEdit_Methane"]</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input id="distance" type="text" class="calculator-input form-control" placeholder="@Localizer["RideCreateEdit_Distance"]" />
+                    <span id="distance-required" class="text-danger">@Localizer["RideCreateEdit_DistanceRequired"]</span>
+                    <span id="distance-regular" class="text-danger">@Localizer["RideCreateEdit_DistanceRegular"]</span>
+                    <span id="distance-range" class="text-danger">@Localizer["RideCreateEdit_DistanceRange"]</span>
+                </div>
+                <div class="form-group">
+                    <input id="consumption" type="text" class="calculator-input form-control" placeholder="@Localizer["RideCreateEdit_Consumption"]" />
+                    <span id="consumption-required" class="text-danger">@Localizer["RideCreateEdit_ConsumptionRequired"]</span>
+                    <span id="consumption-regular" class="text-danger">@Localizer["RideCreateEdit_ConsumptionRegular"]</span>
+                    <span id="consumption-range" class="text-danger">@Localizer["RideCreateEdit_ConsumptionRange"]</span>
+                </div>
+                <div class="form-group">
+                    <input id="seats" type="text" class="calculator-input form-control" placeholder="@Localizer["RideCreateEdit_FreeSeats"]" />
+                    <span id="seats-required" class="text-danger">@Localizer["RideCreateEdit_SeatsRequired"]</span>
+                    <span id="seats-regular" class="text-danger">@Localizer["RideCreateEdit_SeatsRegular"]</span>
+                    <span id="seats-range" class="text-danger">@Localizer["RideCreateEdit_SeatsRange"]</span>
+                </div>
+                <div class="row">
+                    <div class="col-md-7"></div>
+                    <div class="col-md-5 text-right">
+                        <div>
+                            <span>@Localizer["RideCreateEdit_FuelPrice"]</span>
+                            <span id="fuel-price" class="bold">@Localizer["RideCreateEdit_DefaultPrice"]</span>
+                            <span class="bold"> @Localizer["RideCreateEdit_Currency"]</span>
+                        </div>
+                        <div>
+                            <span>@Localizer["RideCreateEdit_TotalPrice"]</span>
+                            <span id="total-price" class="bold">@Localizer["RideCreateEdit_DefaultPrice"]</span>
+                            <span class="bold"> @Localizer["RideCreateEdit_Currency"]</span>
+                        </div>
+                        <div>
+                            <span>@Localizer["RideCreateEdit_PricePerPerson2"]</span>
+                            <span id="price-per-person" class="bold">@Localizer["RideCreateEdit_DefaultPrice"]</span>
+                            <span class="bold"> @Localizer["RideCreateEdit_Currency"]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@Localizer["RideCreateEdit_Close"]</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="save()">@Localizer["RideCreateEdit_Save"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/lib/bootstrap-datetimepicker/dist/css/bootstrap-datetimepicker.css" />
+<link rel="stylesheet" href="~/lib/bootstrap-select/dist/css/bootstrap-select.min.css" />
+<script src="~/lib/moment/dist/js/moment.js"></script>
+<script src="~/lib/bootstrap-datetimepicker/dist/js/bootstrap-datetimepicker.min.js"></script>
+<script src="~/lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+<script>
+    $(document).ready(() => {
+
+        $('#travelDate').datetimepicker({
+            minDate: new Date(),
+            format: 'YYYY/MM/DD HH:mm',
+            locale: "@ViewContext.RouteData.Values["lang"]"
+        });
+
+        $("#fromCity").on("input", function () {
+            var input = this.value;
+            if (input.length > 0) {
+                var url = window.location.protocol + "//" + window.location.host + "/placesautocomplete/query?input=" + input;
+                $.get(url, (data) => {
+                    $("#fromCity").autocomplete({
+                        source: data
+                    });
+                });
+            }
+        });
+
+        $("#toCity").on("input", function () {
+            var input = this.value;
+            if (input.length > 0) {
+                var url = window.location.protocol + "//" + window.location.host + "/placesautocomplete/query?input=" + input;
+                $.get(url, (data) => {
+                    $("#toCity").autocomplete({
+                        source: data
+                    });
+                });
+            }
+        });
+
+        $(".calculator-input").on("input", function () {
+            calculate();
+        });
+    });
+
+    function save() {
+        var pricePerPerson = $("#price-per-person").text();
+        console.log(pricePerPerson);
+        $("#price").val(pricePerPerson);
+    }
+
+    function changeFuel() {
+        var url = window.location.protocol + "//" + window.location.host + "/fuel/price?fuelType=" + $("#fuelType").val();
+
+        $.get(url, function (result) {
+            if (result) {
+                $("#fuel-price").text(result["fuelPrice"].toFixed(2).replace(/(\.|\,)/gi, "@Localizer["RideCreateEdit_Delimiter"]"));
+            }
+        });
+
+        calculate();
+    }
+
+    function calculate() {
+        if (validateCalculator()) {
+            var fuelType = $("#fuelType").val();
+            var distance = $("#distance").val();
+            var consumption = $("#consumption").val();
+            var seats = $("#seats").val();
+
+            var url = window.location.protocol + "//" + window.location.host + "/fuel/calculate";
+            var data = {
+                fuelType: fuelType,
+                distance: distance,
+                consumption: consumption,
+                seats: seats
+            };
+
+            $.post(url, data, function (result) {
+                if (result) {
+                    $("#fuel-price").text(result["fuelPrice"].toFixed(2).replace(/(\.|\,)/gi, "@Localizer["RideCreateEdit_Delimiter"]"));
+                    $("#total-price").text(result["totalPrice"].toFixed(2).replace(/(\.|\,)/gi, "@Localizer["RideCreateEdit_Delimiter"]"));
+                    $("#price-per-person").text(result["pricePerPerson"].toFixed(2).replace(/(\.|\,)/gi, "@Localizer["RideCreateEdit_Delimiter"]"));
+                }
+            });
+        }
+    }
+
+    function validateCalculator() {
+        resetModel();
+        var isValid = true;
+        var decimalRegExp = /^\d+(\,|\.)?\d{0,2}$/;
+        var numberRegExp = /^\d+$/;
+
+        var distance = $("#distance").val();
+
+        if (distance === "") {
+            $("#distance-required").show();
+            isValid = false;
+        } else if (!numberRegExp.test(distance)) {
+            $("#distance-regular").show();
+            isValid = false;
+        } else if (distance < 0 || distance > 999999) {
+            $("#distance-range").show();
+            isValid = false;
+        }
+
+        var consumption = $("#consumption").val();
+
+        if (consumption === "") {
+            $("#consumption-required").show();
+            isValid = false;
+        } else if (!decimalRegExp.test(consumption)) {
+            $("#consumption-regular").show();
+            isValid = false;
+        } else if (consumption < 0 || consumption > 100) {
+            $("#consumption-range").show();
+            isValid = false;
+        }
+
+        var seats = $("#seats").val();
+
+        if (seats === "") {
+            $("#seats-required").show();
+            isValid = false;
+        } else if (!numberRegExp.test(seats)) {
+            $("#seats-regular").show();
+            isValid = false;
+        } else if (seats < 0 || seats > 100) {
+            $("#seats-range").show();
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    function resetModel() {
+        $("#distance-required").hide();
+        $("#distance-regular").hide();
+        $("#distance-range").hide();
+        $("#consumption-required").hide();
+        $("#consumption-regular").hide();
+        $("#consumption-range").hide();
+        $("#seats-required").hide();
+        $("#seats-regular").hide();
+        $("#seats-range").hide();
+
+        $("#total-price").text("@Localizer["RideCreateEdit_DefaultPrice"]");
+        $("#price-per-person").text("@Localizer["RideCreateEdit_DefaultPrice"]");
+    }
+
+    resetModel();
+</script>

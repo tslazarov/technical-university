@@ -117,7 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Hello" xml:space="preserve">
-    <value>Hello</value>
+  <data name="Home_BeginJourney" xml:space="preserve">
+    <value>Begin your journey. Create your first ride.</value>
+  </data>
+  <data name="Home_BePart" xml:space="preserve">
+    <value>Become a part of our community. Join now.</value>
+  </data>
+  <data name="Home_LatestRides" xml:space="preserve">
+    <value>Latest rides</value>
+  </data>
+  <data name="Home_ManageRides" xml:space="preserve">
+    <value>Manage rides</value>
+  </data>
+  <data name="Home_SignUp" xml:space="preserve">
+    <value>Sign up</value>
+  </data>
+  <data name="Home_Welcome" xml:space="preserve">
+    <value>Welcome to MyCommute</value>
   </data>
 </root>

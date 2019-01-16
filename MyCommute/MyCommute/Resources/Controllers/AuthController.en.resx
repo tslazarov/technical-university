@@ -129,9 +129,6 @@
   <data name="Profile_Optional" xml:space="preserve">
     <value>optional</value>
   </data>
-  <data name="Profile_PhoneNumber" xml:space="preserve">
-    <value>Phone number</value>
-  </data>
   <data name="Profile_ProfileImage" xml:space="preserve">
     <value>Profile image</value>
   </data>

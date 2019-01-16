@@ -15,8 +15,9 @@ namespace MyCommute.Models
         public string FromCity { get; set; }
         public string ToCity { get; set; }
         public DateTime? TravelDate { get; set; }
-        public int? FreePlaces { get; set; }
-        public decimal? Price { get; set; }
+        public int FreePlaces { get; set; }
+        public decimal Price { get; set; }
+        public string AdditionalInformation { get; set; }
 
         public ICollection<RidesUser> RidesUsers { get; set; }
     }

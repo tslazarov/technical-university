@@ -1,0 +1,216 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using MyCommute.Controllers
+
+@inject IHtmlLocalizer<RidesController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Rides.BrowseRidesViewModel
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <input id="fromCity" type="text" class="form-control" placeholder="@Localizer["RideBrowse_FromCity"]" asp-for="FromCity" />
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <input id="toCity" type="text" class="form-control" placeholder="@Localizer["RideBrowse_ToCity"]" asp-for="ToCity" />
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class='input-group date' id='startDate'>
+            <input id="startDate" type="text" class="form-control" placeholder="@Localizer["RideBrowse_StartDate"]" asp-for="StartDate" />
+            <span class="input-group-addon">
+                <img src="~/images/icons/calendar.svg" />
+            </span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class='input-group date' id='endDate'>
+            <input id="endDate" type="text" class="form-control" placeholder="@Localizer["RideBrowse_EndDate"]" asp-for="EndDate" />
+            <span class="input-group-addon">
+                <img src="~/images/icons/calendar.svg" />
+            </span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <button class="btn btn-primary btn-block" onclick="search()">@Localizer["RideBrowse_Search"]</button>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <select id="order" class="selectpicker form-control" data-style="btn-secondary" asp-for="OrderBy" onchange="order()">
+                <option value="date">@Localizer["RideBrowse_Date"]</option>
+                <option value="price">@Localizer["RideBrowse_Price"]</option>
+            </select>
+        </div>
+    </div>
+</div>
+@if (Model.TotalCount > 0)
+{
+    <div class="row">
+        <div class="user-line-wrapper bold">
+            <div class="col-md-3 text-center">@Localizer["RideBrowse_FromCity"]</div>
+            <div class="col-md-1 text-center"></div>
+            <div class="col-md-3 text-center">@Localizer["RideBrowse_ToCity"]</div>
+            <div class="col-md-2 text-center">@Localizer["RideBrowse_TravelDate"]</div>
+            <div class="col-md-2 text-center">@Localizer["RideBrowse_Price"]</div>
+        </div>
+    </div>
+    <hr class="custom-hr" />
+    <div class="row">
+        <div class="col-md-12 ride-list-wrapper">
+            @foreach (var ride in Model.Rides)
+            {
+                <div class="ride-line-wrapper">
+                    <div class="col-md-3 text-center">@ride.FromCity</div>
+                    <div class="col-md-1 text-center">
+                        <img src="~/images/icons/arrow.svg" />
+                    </div>
+                    <div class="col-md-3 text-center">@ride.ToCity</div>
+                    <div class="col-md-2 text-center">@ride.TravelDate.Value.ToString("dd MMM yyyy")</div>
+                    <div class="col-md-2 text-center">@ride.Price @Localizer["RideBrowse_Currency"]</div>
+                    <div class="col-md-1 text-center">
+                        <a href="~/@(ViewContext.RouteData.Values["lang"] != null ? ViewContext.RouteData.Values["lang"] + "/" : "")rides/detail/@ride.Id">
+                            <img src="~/images/icons/learn-more.svg" />
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ul id="pager" class="pagination">
+                @for (int i = 1; i <= Model.TotalPages; i += 1)
+                {
+                    if (i == Model.Page)
+                    {
+                        <li class="page-item active"><a class="page-link" href="">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" href="">@i</a></li>
+                    }
+
+                }
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-md-12">
+    </div>
+}
+<link rel="stylesheet" href="~/lib/bootstrap-datetimepicker/dist/css/bootstrap-datetimepicker.css" />
+<link rel="stylesheet" href="~/lib/bootstrap-select/dist/css/bootstrap-select.min.css" />
+<script src="~/lib/moment/dist/js/moment.js"></script>
+<script src="~/lib/bootstrap-datetimepicker/dist/js/bootstrap-datetimepicker.min.js"></script>
+<script src="~/lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+<script>
+
+    function search() {
+        var currentUrl = constructUrl();
+        window.location = currentUrl;
+    }
+
+    function order() {
+        var currentUrl = constructUrl();
+        window.location = currentUrl;
+    }
+
+    function pager(currentPage) {
+        var currentUrl = constructUrl(currentPage);
+        window.location = currentUrl;
+    }
+
+    function constructUrl(page) {
+        var currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        var fromCity = $("#fromCity").val();
+        var toCity = $("#toCity").val();
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+        var orderBy = $("#order").val();
+
+        var searchQuery = {
+            from: fromCity,
+            to: toCity,
+            order: orderBy,
+            startDate: startDate,
+            endDate: endDate,
+            page: page
+        };
+
+        var appendQuerySymbol = true;
+        var appendAndSymbol = false;
+        for (var key in searchQuery) {
+            var value = searchQuery[key];
+            if (value !== "" && value !== undefined && appendQuerySymbol) {
+                currentUrl += "?";
+                appendQuerySymbol = false;
+            };
+
+            if (value !== "" && value !== undefined && appendAndSymbol) {
+                currentUrl += "&";
+            }
+
+            if (value !== "" && value !== undefined) {
+                currentUrl += key + "=" + value;
+                appendAndSymbol = true;
+            }
+        }
+
+        return currentUrl;
+    }
+
+    $(document).ready(() => {
+
+        $('#startDate').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm',
+            locale: "@ViewContext.RouteData.Values["lang"]"
+        });
+
+        $('#endDate').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm',
+            locale: "@ViewContext.RouteData.Values["lang"]"
+        });
+
+        $("#fromCity").on("input", function () {
+            var input = this.value;
+            console.log(input);
+            if (input.length > 0) {
+                var url = window.location.protocol + "//" + window.location.host + "/placesautocomplete/query?input=" + input;
+                $.get(url, (data) => {
+                    console.log(data);
+                    $("#fromCity").autocomplete({
+                        source: data
+                    });
+                });
+            }
+        });
+
+        $("#toCity").on("input", function () {
+            var input = this.value;
+            console.log(input);
+            if (input.length > 0) {
+                var url = window.location.protocol + "//" + window.location.host + "/placesautocomplete/query?input=" + input;
+                $.get(url, (data) => {
+                    console.log(data);
+                    $("#toCity").autocomplete({
+                        source: data
+                    });
+                });
+            }
+        });
+
+        $("#pager li a.page-link").on("click", function (e) {
+            e.preventDefault();
+            var page = $(this)[0].innerText;
+            pager(page);
+        });
+    });
+</script>

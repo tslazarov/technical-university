@@ -8,6 +8,10 @@ namespace MyCommute.Models
         public User()
         {
             Cars = new HashSet<Car>();
+            FriendRequestReceivers = new HashSet<FriendRequest>();
+            FriendRequestSenders = new HashSet<FriendRequest>();
+            RatingRaters = new HashSet<Rating>();
+            RatingReceivers = new HashSet<Rating>();
             RidesUsers = new HashSet<RidesUser>();
         }
 
@@ -20,8 +24,14 @@ namespace MyCommute.Models
         public string Image { get; set; }
         public bool IsExternal { get; set; }
         public string ProviderName { get; set; }
+        public int RatingNotifications { get; set; }
+        public int FriendNotifications { get; set; }
 
         public ICollection<Car> Cars { get; set; }
+        public ICollection<FriendRequest> FriendRequestReceivers { get; set; }
+        public ICollection<FriendRequest> FriendRequestSenders { get; set; }
+        public ICollection<Rating> RatingRaters { get; set; }
+        public ICollection<Rating> RatingReceivers { get; set; }
         public ICollection<RidesUser> RidesUsers { get; set; }
     }
 }

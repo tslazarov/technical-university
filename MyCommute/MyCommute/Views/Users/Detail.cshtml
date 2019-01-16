@@ -1,0 +1,204 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using MyCommute.Controllers
+
+@inject IHtmlLocalizer<UsersController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Users.UserDetailViewModel
+
+<div class="row">
+    <div class="col-md-12 ride-list-wrapper">
+        <div class="ride-line-wrapper">
+            <input type="hidden" value="@Model.Id" id="userId" />
+            <div class="col-md-2 text-center equal-div">
+                <img src="@Model.Image" class="profile-image img-circle" />
+            </div>
+            <div class="col-md-4 equal-div profile-bottom">
+                <div class="profile-bottom-text-wrapper">
+                    <div class="user-name">@Model.Name</div>
+                    <div class="user-email">@Model.Email</div>
+                </div>
+            </div>
+            <div class="col-md-6 equal-div profile-bottom">
+                @if (Model.IsFriend)
+                {
+                    <form id="form-add-friend" class="form-add-friend" asp-action="RemoveFriend">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="profile-bottom-button-wrapper">
+                            <button id="removeFriend" class="btn btn-default btn-custom-lng">@Localizer["UserDetail_RemoveFriend"]</button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    if (Model.IsPending)
+                    {
+                        <form id="form-add-friend" class="form-add-friend" asp-action="RemoveFriend">
+                            <input type="hidden" asp-for="Id" />
+                            <div class="profile-bottom-button-wrapper">
+                                <button id="cancelFriend" class="btn btn-default btn-custom-lng">@Localizer["UserDetail_CancelFriend"]</button>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <form id="form-add-friend" class="form-add-friend" asp-action="AddFriend">
+                            <input type="hidden" asp-for="Id" />
+                            <div class="profile-bottom-button-wrapper">
+                                <button id="addFriend" class="btn btn-primary btn-custom-lng">@Localizer["UserDetail_SendFriend"]</button>
+                            </div>
+                        </form>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#information" data-toggle="tab">@Localizer["UserDetail_UserInformation"]</a></li>
+            @if (Model.CurrentUserId != Model.Id)
+            {
+                <li><a href="#rateDriver" data-toggle="tab">@Localizer["UserDetail_RateAsDriver"]</a></li>
+                <li><a href="#ratePassenger" data-toggle="tab">@Localizer["UserDetail_RateAsPassenger"]</a></li>
+            }
+        </ul>
+        <div id="rideTab" class="tab-content">
+            <div class="tab-pane fade active in" id="information">
+                <div class="tab-wrapper">
+                    <div class="tab-line">
+                        <span class="bold">@Localizer["UserDetail_DriverRating"]</span>@Model.DriverRatingDisplayed
+                    </div>
+                    <div class="tab-line">
+                        <span class="bold">@Localizer["UserDetail_PassengerRating"]</span>@Model.PassengerRatingDisplayed
+                    </div>
+                    <div class="tab-line">
+                        <span class="bold">@Localizer["UserDetail_Car"]</span>@Model.CarBrand @Model.CarModel
+                    </div>
+                </div>
+            </div>
+            @if (Model.CurrentUserId != Model.Id)
+            {
+                <div class="tab-pane fade" id="rateDriver">
+                    <div class="tab-wrapper">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            @if (Model.IsRatedAsDriver)
+                            {
+                                <div class="text-center">
+                                    <h3>@Localizer["UserDetail_AlreadyRated"]</h3>
+                                    <div class="rating-group star-rating">
+                                        @for (int i = 1; i <= Model.DriverRating; i++)
+                                        {
+                                            <img id="@i-full" src="~/images/icons/full-start.svg" class="star-driver" />
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <form id="add-driver-rating" class="form-add-driver-rating" asp-action="AddRating">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden" name="RatingType" value="Driver" />
+                                    <div class="form-group">
+                                        <div class="rating-group star-rating">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <img id="@i-empty-driver" src="~/images/icons/empty-start.svg" class="star-driver" />
+                                                <img id="@i-full-driver" src="~/images/icons/full-start.svg" class="star-driver hidden" />
+                                            }
+                                        </div>
+                                        <input type="hidden" class="form-control" id="driverRating" name="RatingValue" value="0" />
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea rows="5" class="unresizable form-control" placeholder="@Localizer["UserDetail_Comment"]" name="RatingComment"></textarea>
+                                    </div>
+                                    <button id="rateUser" class="btn btn-primary btn-block">@Localizer["UserDetail_Rate"]</button>
+                                </form>
+                            }
+                            </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="ratePassenger">
+                    <div class="tab-wrapper">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            @if (Model.IsRatedAsPassenger)
+                            {
+                                <div class="text-center">
+                                    <h3>@Localizer["UserDetail_AlreadyRated"]</h3>
+                                    <div class="rating-group star-rating">
+                                        @for (int i = 1; i <= Model.PassengerRating; i++)
+                                        {
+                                            <img id="@i-full" src="~/images/icons/full-start.svg" class="star-passenger" />
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <form id="add-passenger-rating" class="form-add-driver-rating" asp-action="AddRating">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden" name="RatingType" value="Passenger" />
+                                    <div class="form-group">
+                                        <div class="rating-group star-rating">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <img id="@i-empty-passenger" src="~/images/icons/empty-start.svg" class="star-passenger" />
+                                                <img id="@i-full-passenger" src="~/images/icons/full-start.svg" class="star-passenger hidden" />
+                                            }
+                                        </div>
+                                        <input type="hidden" class="form-control" id="passengerRating" name="RatingValue" value="0" />
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea rows="5" class="unresizable form-control" placeholder="@Localizer["UserDetail_Comment"]" name="RatingComment"></textarea>
+                                    </div>
+                                    <button id="rateUser" class="btn btn-primary btn-block">@Localizer["UserDetail_Rate"]</button>
+                                </form>
+                            }
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".star-driver").click(function () {
+            var id = Number(event.target.id[0]);
+            for (var i = 1; i <= id; i += 1) {
+                $("#" + i + "-empty-driver").addClass("hidden");
+                $("#" + i + "-full-driver").removeClass("hidden");
+            }
+
+            for (var j = id + 1; j <= 5; j += 1) {
+                $("#" + j + "-empty-driver").removeClass("hidden");
+                $("#" + j + "-full-driver").addClass("hidden");
+            }
+            $("#driverRating").val(id);
+        });
+
+        $(".star-passenger").click(function () {
+            var id = Number(event.target.id[0]);
+            for (var i = 1; i <= id; i += 1) {
+                $("#" + i + "-empty-passenger").addClass("hidden");
+                $("#" + i + "-full-passenger").removeClass("hidden");
+            }
+
+            for (var j = id + 1; j <= 5; j += 1) {
+                $("#" + j + "-empty-passenger").removeClass("hidden");
+                $("#" + j + "-full-passenger").addClass("hidden");
+            }
+            $("#passengerRating").val(id);
+        });
+    });
+</script>
+

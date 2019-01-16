@@ -24,7 +24,7 @@ namespace MyCommute.Utilities
                 string rootPath = environment.WebRootPath;
                 string extension = image.ContentType == "image/png" ? "png" : "jpg";
                 string imagePath = $"{rootPath}\\user_files\\images\\{imageName}.{extension}";
-                string savedPath = $"~/user_files/images/{imageName}.{extension}";
+                string savedPath = $"/user_files/images/{imageName}.{extension}";
 
                 using (var stream = new FileStream(imagePath, FileMode.Create))
                 {

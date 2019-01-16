@@ -129,9 +129,6 @@
   <data name="Profile_Optional" xml:space="preserve">
     <value>опционално</value>
   </data>
-  <data name="Profile_PhoneNumber" xml:space="preserve">
-    <value>Телефонен номер</value>
-  </data>
   <data name="Profile_ProfileImage" xml:space="preserve">
     <value>Профилна снимка</value>
   </data>

@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using MyCommute.Controllers
+
+@inject IHtmlLocalizer<ProfileController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Profile.ProfilePersonalInformationViewModel
+
+<form id="profile-personal-information" asp-controller="Profile" asp-action="PersonalInformation"  method="post" enctype="multipart/form-data" data-ajax="true" data-ajax-update="#profile-personal-information" data-ajax-mode="replace">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="@Localizer["Profile_FirstName"]" asp-for="FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" placeholder="@Localizer["Profile_LastName"]" asp-for="LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <button class="btn btn-primary btn-block">@Localizer["Profile_Save"]</button>
+    </div>
+    <div class="col-md-4"></div>
+</form>

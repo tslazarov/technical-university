@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using MyCommute.Controllers
+@using MyCommute.Models.Profile;
+
+@inject IHtmlLocalizer<ProfileController> Localizer
+@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+
+@model MyCommute.Models.Profile.ProfileDetailViewModel
+
+<script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
+
+<div class="row">
+    <div class="col-md-12 ride-list-wrapper">
+        <div class="ride-line-wrapper">
+            <input type="hidden" value="@Model.Id" id="userId" />
+            <div class="col-md-2 text-center equal-div">
+                <img src="@Model.Image" class="profile-image img-circle" />
+            </div>
+            <div class="col-md-4 equal-div profile-bottom">
+                <div class="profile-bottom-text-wrapper">
+                    <div class="user-name">@Model.Name</div>
+                    <div class="user-email">@Model.Email</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <hr />
+    <div class="col-md-2">
+        <ul class="nav nav-pills nav-stacked text-center">
+            <li class="active"><a href="#personal" data-toggle="tab">@Localizer["Profile_PersonalInformation"]</a></li>
+            <li><a href="#car" data-toggle="tab">@Localizer["Profile_CarInformation"]</a></li>
+            <li><a href="#image" data-toggle="tab">@Localizer["Profile_ProfileImage"]</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="personal">
+                @await Html.PartialAsync("PersonalInformationPartial", Model.PersonalInformationViewModel)
+            </div>
+            <div class="tab-pane fade" id="car">
+                @await Html.PartialAsync("CarInformationPartial", Model.CarInformationViewModel)
+            </div>
+            <div class="tab-pane fade" id="image">
+                @await Html.PartialAsync("ProfileImagePartial")
+            </div>
+        </div>
+    </div>
+</div>
+
