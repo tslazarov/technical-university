@@ -8,6 +8,6 @@ namespace MyCommute.Utilities
 {
     public interface IImageHelper
     {
-        string UploadImage(IFormFile image, string imageName);
+        Task<string> UploadImage(IFormFile image, string imageName);
     }
 }

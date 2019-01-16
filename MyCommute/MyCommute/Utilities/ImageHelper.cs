@@ -17,7 +17,7 @@ namespace MyCommute.Utilities
             this.environment = environment;
         }
 
-        public string UploadImage(IFormFile image, string imageName)
+        public async Task<string> UploadImage(IFormFile image, string imageName)
         {
             if (image != null && image.Length > 0 && (image.ContentType == "image/png" || image.ContentType == "image/jpeg"))
             {
@@ -28,7 +28,7 @@ namespace MyCommute.Utilities
 
                 using (var stream = new FileStream(imagePath, FileMode.Create))
                 {
-                    image.CopyToAsync(stream);
+                    await image.CopyToAsync(stream);
                     return savedPath;
                 }
             }

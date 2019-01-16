@@ -119,7 +119,7 @@ namespace MyCommute.Controllers
                     user = await this.usersService.AddExternalUser(authResult.Principal.FindFirst(ClaimTypes.Email).Value, model.FirstName, model.LastName, authResult.Principal.Identity.AuthenticationType);
                 }
 
-                var imagePath = this.imageHelper.UploadImage(image, user.Id.ToString());
+                var imagePath = this.imageHelper.UploadImage(image, user.Id.ToString()).Result;
 
                 if (user != null && !string.IsNullOrEmpty(imagePath))
                 {

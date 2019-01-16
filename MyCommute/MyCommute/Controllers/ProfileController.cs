@@ -324,7 +324,7 @@ namespace MyCommute.Controllers
 
             if (user != null)
             {
-                var imagePath = this.imageHelper.UploadImage(image, user.Id.ToString());
+                var imagePath = this.imageHelper.UploadImage(image, user.Id.ToString()).Result;
                 if (!string.IsNullOrEmpty(imagePath))
                 {
                     user.Image = imagePath;
